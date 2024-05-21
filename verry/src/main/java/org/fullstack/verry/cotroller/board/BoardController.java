@@ -127,7 +127,7 @@ public class BoardController {
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             log.info("BoardController >> registPOST END");
             log.info("============================================");
-            return "redirect:/bbs/regist";
+            return "redirect:/notice/regist";
         }
         int result_idx = boardService.regist(boardDTO);
         redirectAttributes.addFlashAttribute("result_idx", result_idx);
@@ -138,7 +138,7 @@ public class BoardController {
         log.info("BoardController >> registPOST END");
         log.info("=================================================");
 
-        return "redirect:/bbs/list";
+        return "redirect:/notice/list";
     }
 
     @GetMapping("/notice/delete")
