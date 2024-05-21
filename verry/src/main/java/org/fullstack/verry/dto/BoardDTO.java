@@ -32,4 +32,5 @@ public class BoardDTO {
     private LocalDateTime reg_date;
     @JsonIgnore
     private LocalDateTime modify_date;
+    private Long reply_cnt;
 }
