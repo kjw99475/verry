@@ -37,7 +37,7 @@
 <div class="humberger__menu__overlay"></div>
 <div class="humberger__menu__wrapper">
     <div class="humberger__menu__logo">
-        <a href="#"><img th:src="@{/static/img/verrylogo.png}" alt=""></a>
+        <a href="#"><img src="/static/img/verrylogo.png" alt=""></a>
     </div>
     <div class="humberger__menu__widget">
         <div class="header__top__right__auth d-flex">
@@ -59,12 +59,12 @@
 <!-- Humberger End -->
 
 <!-- Header Section Begin -->
-<header class="header">
+<header class="header position-sticky bg-white" style="top:0; z-index: 10000;">
     <div class="container">
         <div class="row">
             <div class="col-lg-3">
                 <div class="header__logo">
-                    <a href="#"><img th:src="@{/static/img/verrylogo.png}" alt=""></a>
+                    <a href="#"><img src="/static/img/verrylogo.png" alt=""></a>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -92,24 +92,21 @@
 </header>
 <!-- Header Section End -->
 
-<!-- Hero Section Begin -->
-<section class="hero">
+<div class="container" layout:fragment="content">
+<!--<section class="breadcrumb-section hero__item set-bg" data-setbg="/static/img/strawberry.jpg">-->
+<section class="breadcrumb-section hero__item set-bg" data-setbg="/static/img/strawberry2.jpg">
     <div class="container">
         <div class="row">
-            <div class="col-lg-9">
-                <div class="hero__item set-bg" data-setbg="/static/img/hero/banner.jpg">
-                    <div class="hero__text">
-                        <span>FRUIT FRESH</span>
-                        <h2>Vegetable <br />100% Organic</h2>
-                        <p>Free Pickup and Delivery Available</p>
-                        <a href="#" class="primary-btn">SHOP NOW</a>
-                    </div>
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text hero__text">
+                    <span>FRUIT FRESH</span>
+                    <h2>Vegetable <br />100% Organic</h2>
+                    <a href="#" class="primary-btn">SHOP NOW</a>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<!-- Hero Section End -->
 
 <!-- Featured Section Begin -->
 <section class="featured spad">
@@ -117,7 +114,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-title">
-                    <h2>Used Shop</h2>
+                    <h2>Shop</h2>
                 </div>
                 <div class="featured__controls">
                     <ul>
@@ -135,13 +132,7 @@
         <div class="row featured__filter">
             <div class="col-lg-3 col-md-4 col-sm-6 mix category1">
                 <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="/static/img/featured/feature-1.jpg">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
+                    <div class="featured__item__pic set-bg" data-setbg="/static/img/featured/feature-1.jpg"></div>
                     <div class="featured__item__text">
                         <h6><a href="#">Crab Pool Security</a></h6>
                         <h5>$30.00</h5>
@@ -150,13 +141,7 @@
             </div>
             <div class="col-lg-3 col-md-4 col-sm-6 mix category2">
                 <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="/static/img/featured/feature-2.jpg">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
+                    <div class="featured__item__pic set-bg" data-setbg="/static/img/featured/feature-2.jpg"></div>
                     <div class="featured__item__text">
                         <h6><a href="#">Crab Pool Security</a></h6>
                         <h5>$30.00</h5>
@@ -165,13 +150,7 @@
             </div>
             <div class="col-lg-3 col-md-4 col-sm-6 mix category3">
                 <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="/static/img/featured/feature-3.jpg">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
+                    <div class="featured__item__pic set-bg" data-setbg="/static/img/featured/feature-3.jpg"></div>
                     <div class="featured__item__text">
                         <h6><a href="#">Crab Pool Security</a></h6>
                         <h5>$30.00</h5>
@@ -180,13 +159,7 @@
             </div>
             <div class="col-lg-3 col-md-4 col-sm-6 mix category4">
                 <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="/static/img/featured/feature-4.jpg">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
+                    <div class="featured__item__pic set-bg" data-setbg="/static/img/featured/feature-4.jpg"></div>
                     <div class="featured__item__text">
                         <h6><a href="#">Crab Pool Security</a></h6>
                         <h5>$30.00</h5>
@@ -195,13 +168,7 @@
             </div>
             <div class="col-lg-3 col-md-4 col-sm-6 mix category5">
                 <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="/static/img/featured/feature-5.jpg">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
+                    <div class="featured__item__pic set-bg" data-setbg="/static/img/featured/feature-5.jpg"></div>
                     <div class="featured__item__text">
                         <h6><a href="#">Crab Pool Security</a></h6>
                         <h5>$30.00</h5>
@@ -210,13 +177,7 @@
             </div>
             <div class="col-lg-3 col-md-4 col-sm-6 mix category6">
                 <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="/static/img/featured/feature-6.jpg">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
+                    <div class="featured__item__pic set-bg" data-setbg="/static/img/featured/feature-6.jpg"></div>
                     <div class="featured__item__text">
                         <h6><a href="#">Crab Pool Security</a></h6>
                         <h5>$30.00</h5>
@@ -339,23 +300,40 @@
         </div>
     </div>
 </section>
+</div>
 <!-- Blog Section End -->
 
 <!-- Footer Section Begin -->
 <footer class="footer spad">
     <div class="container">
-        <div class="footer__widget">
-            <nav class="d-flex justify-content-around">
-                <div>
-                    <a href="#"><img style="filter: grayscale(100%); height: 40px;" src="/static/img/verrylogo.png" alt=""></a>
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="footer__about">
+                    <div class="footer__about__logo">
+                        <a href="#"><img style="filter: grayscale(100%); height: 40px;" src="/static/img/verrylogo.png" alt=""></a>
+                    </div>
+                    <ul class="w-100">
+                        <li><span class="font-weight-bold">(주)베리마켓</span> 서울특별시 금천구 디지털로9길 23</li>
+                        <li>Tel: 02.222.2222</li>
+                        <li>Email: hello@verrymarket.com</li>
+                    </ul>
                 </div>
-                <ul class="d-flex justify-content-around font-weight-bold" style="line-height: 40px;">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Shop</a></li>
-                    <li><a href="#">Notice</a></li>
-                    <li><a href="#">Community</a></li>
-                </ul>
-            </nav>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Useful Links</h6>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Shop</a></li>
+                        <li><a href="#">Notice</a></li>
+                        <li><a href="#">Community</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="#">이용약관</a></li>
+                        <li><a href="#">개인정보처리방침</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
@@ -372,16 +350,16 @@
 <!-- Footer Section End -->
 
 <!-- Js Plugins -->
-<script src="/static/js/jquery-3.3.1.min.js"></script>
-<script src="/static/js/bootstrap.min.js"></script>
-<script src="/static/js/jquery.nice-select.min.js"></script>
-<script src="/static/js/jquery-ui.min.js"></script>
-<script src="/static/js/jquery.slicknav.js"></script>
-<script src="/static/js/mixitup.min.js"></script>
-<script src="/static/js/owl.carousel.min.js"></script>
-<script src="/static/js/main.js"></script>
+<script th:src="@{/static/js/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/static/js/bootstrap.min.js}"></script>
+<script th:src="@{/static/js/jquery.nice-select.min.js}"></script>
+<script th:src="@{/static/js/jquery-ui.min.js}"></script>
+<script th:src="@{/static/js/jquery.slicknav.js}"></script>
+<script th:src="@{/static/js/mixitup.min.js}"></script>
+<script th:src="@{/static/js/owl.carousel.min.js}"></script>
+<script th:src="@{/static/js/main.js}"></script>
 
-
+<th:block layout:fragment="script"></th:block>
 
 </body>
 
