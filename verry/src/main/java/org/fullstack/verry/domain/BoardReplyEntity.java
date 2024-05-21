@@ -13,7 +13,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Table(name="tbl_board_reply")
+@Table(
+        name="tbl_board_reply",
+        indexes = {
+                @Index(name="board_reply_idx_tbl_board_reply_board_idx", columnList = "boardIdx")
+        }
+)
 public class BoardReplyEntity {
 
     @Id
@@ -31,6 +36,7 @@ public class BoardReplyEntity {
     @Column(name="reg_date", updatable = false, columnDefinition = "DATETIME NULL DEFAULT NOW()")
     private LocalDateTime regDate;
 
-    @Column(nullable = true)
-    private int boardIdx;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private BoardEntity board;
+    //private int boardIdx;
 }
