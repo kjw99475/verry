@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/basic.html}">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -42,30 +40,30 @@
                         </tr>
                         </thead>
                         <tbody>
-<!--                        <tr th:each="dto:${pageREquestDTO.dtoList}">-->
-                            <tr>
+                        <tr th:each="dto,status:${pageResponseDTO.dtoList}">
+
                                 <td class="shoping__cart__item">
                                     <h5>글 제목[[${dto.title}]]</h5>
                                 </td>
                                 <td class="shoping__cart__price">
-                                    작성자 [[${dto.member_id}]]
+                                    작성자 [[${dto.memberId}]]
                                 </td>
                                 <td class="shoping__cart__quantity">
                                     <div class="quantity">
                                         <div class="pro-qty">
-                                            [[${dto.reg_date}]]
+
                                             <!--                    <input type="text" value="1">-->
                                         </div>
                                     </div>
                                 </td>
                                 <td class="shoping__cart__total">
-                                    $110.00 [[${test}]]
+                                    $110.00
                                 </td>
                                 <td class="shoping__cart__item__close">
                                     <!--                <span class="icon_close"></span>-->
                                 </td>
                             </tr>
-<!--                        </tr>-->
+
                         </tbody>
                     </table>
                 </div>
@@ -80,17 +78,7 @@
                         Upadate Cart</a>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="shoping__continue">
-                    <div class="shoping__discount">
-                        <h5>Discount Codes</h5>
-                        <form action="#">
-                            <input type="text" placeholder="Enter your coupon code">
-                            <button type="submit" class="site-btn">APPLY COUPON</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+
             <div class="col-lg-6">
                 <div class="shoping__checkout">
                     <h5>Cart Total</h5>
