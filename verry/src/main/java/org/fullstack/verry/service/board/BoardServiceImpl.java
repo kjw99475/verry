@@ -55,8 +55,8 @@ public class BoardServiceImpl implements BoardServiceIf{
     }
 
     @Override
-    public List<BoardDTO> list(String type) {
-        List<BoardDTO> dtoList = boardRepository.findAllByBoardType(type).stream().map(dto -> modelMapper.map(dto, BoardDTO.class)).collect(Collectors.toList());
+    public List<BoardDTO> list(String type, int block) {
+        List<BoardDTO> dtoList = boardRepository.findAllByBoardTypeAndLimit(type, block).stream().map(dto -> modelMapper.map(dto, BoardDTO.class)).collect(Collectors.toList());
         return dtoList;
 
 //        String[] types = pageRequestDTO.getSearch_types();
@@ -74,5 +74,10 @@ public class BoardServiceImpl implements BoardServiceIf{
 //                .total_count((int)result.getTotalElements())
 //                .build();
 
+    }
+
+    @Override
+    public int countAll(String type) {
+        return boardRepository.countAllByBoardType(type);
     }
 }

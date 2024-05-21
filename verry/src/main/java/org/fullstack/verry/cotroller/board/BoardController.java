@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -24,15 +25,27 @@ public class BoardController {
     private final BoardServiceIf boardService;
 
     @GetMapping("/bbs/list")
-    public void list( Model model) {
+    public void list(@RequestParam(name="block", defaultValue = "1") int block, Model model) {
         log.info("=================================================");
         log.info("BoardController >> list START");
 
         String type = "b";
-        List<BoardDTO> pageResponseDTO = boardService.list(type);
+        List<BoardDTO> pageResponseDTO = boardService.list(type, (block-1)*10);
+        int block_start = (int)(Math.ceil(block / (double)10) -1 ) * 10 + 1;
+        int total_count = boardService.countAll(type);
+        int block_end = 0;
+        if (total_count < 1) {
+            block_end = 1;
+        } else {
+            block_end = (int)Math.ceil(block/(double)10)*10;
+            block_end = (block_end < 1 ? 1 : block_end);
+            block_end = (total_count > block_end ? block_end : total_count);
+        }
 
         log.info("pageResponseDTO : {}", pageResponseDTO);
         model.addAttribute("pageResponseDTO", pageResponseDTO);
+        model.addAttribute("block_start", block_start);
+        model.addAttribute("block_end", block_end);
 
         log.info("BoardController >> list END");
         log.info("=================================================");
@@ -118,12 +131,27 @@ public class BoardController {
 
 
     @GetMapping("/notice/list")
-    public void listNotice(PageRequestDTO pageRequestDTO, Model model) {
+    public void listNotice(@RequestParam(name="block", defaultValue = "1") int block, PageRequestDTO pageRequestDTO, Model model) {
         log.info("=================================================");
         log.info("BoardController >> list START");
 
         String type = "n";
-        List<BoardDTO> pageResponseDTO = boardService.list(type);
+        List<BoardDTO> pageResponseDTO = boardService.list(type, (block-1)*10);
+        int block_start = (int)(Math.ceil(block / (double)10) -1 ) * 10 + 1;
+        int total_count = boardService.countAll(type);
+        int block_end = 0;
+        if (total_count < 1) {
+            block_end = 1;
+        } else {
+            block_end = (int)Math.ceil(block/(double)10)*10;
+            block_end = (block_end < 1 ? 1 : block_end);
+            block_end = (total_count > block_end ? block_end : total_count);
+        }
+
+        log.info("pageResponseDTO : {}", pageResponseDTO);
+        model.addAttribute("pageResponseDTO", pageResponseDTO);
+        model.addAttribute("block_start", block_start);
+        model.addAttribute("block_end", block_end);
 
         log.info("pageResponseDTO : {}", pageResponseDTO);
         model.addAttribute("pageResponseDTO", pageResponseDTO);

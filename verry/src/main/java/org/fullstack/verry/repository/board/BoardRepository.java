@@ -12,5 +12,10 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Integer>, Bo
     @Query(value = "select NOW()", nativeQuery = true)
     public String getNow();
 
-    List<BoardEntity> findAllByBoardType(String type);
+    //List<BoardEntity> findAllByBoardType(String type);
+
+    @Query(value = "select * from tbl_board where board_type=:bType limit :start, 10", nativeQuery = true)
+    List<BoardEntity> findAllByBoardTypeAndLimit(String bType, int start);
+
+    int countAllByBoardType(String boardType);
 }
