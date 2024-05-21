@@ -22,5 +22,5 @@ public class BoardReplyDTO {
     @NotEmpty
     private String memberId;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime reg_date;
+    private LocalDateTime regDate;
 }

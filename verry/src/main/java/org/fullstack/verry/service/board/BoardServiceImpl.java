@@ -42,11 +42,11 @@ public class BoardServiceImpl implements BoardServiceIf{
     }
 
     @Override
-    public void modify(BoardDTO boardDTO) {
+    public int modify(BoardDTO boardDTO) {
         Optional<BoardEntity> result = boardRepository.findById(boardDTO.getIdx());
         BoardEntity board = result.orElse(null);
         board.modify(boardDTO.getTitle(), boardDTO.getContent(), boardDTO.getOrgFileName(), boardDTO.getSaveFileName());
-        boardRepository.save(board);
+        return boardRepository.save(board).getIdx();
     }
 
     @Override
@@ -55,20 +55,24 @@ public class BoardServiceImpl implements BoardServiceIf{
     }
 
     @Override
-    public PageResponseDTO<BoardDTO> list(PageRequestDTO pageRequestDTO) {
-        String[] types = pageRequestDTO.getSearch_types();
-        String search_word = pageRequestDTO.getSearch_word();
-        PageRequest pageable = pageRequestDTO.getPageable();
-        Page<BoardDTO> result = boardRepository.searchWithReplyCnt(pageable, types, search_word);
-        List<BoardDTO> dtoList = result.getContent().stream()
-                .map(board -> modelMapper.map(board, BoardDTO.class))
-                .collect(Collectors.toList());
-        return PageResponseDTO.<BoardDTO>withAll()
-                .pageRequestDTO(pageRequestDTO)
-                .dtoList(dtoList)
-                .total_count((int)result.getTotalElements())
-                .build();
+    public List<BoardDTO> list(String type) {
+        List<BoardDTO> dtoList = boardRepository.findAllByBoardType(type).stream().map(dto -> modelMapper.map(dto, BoardDTO.class)).collect(Collectors.toList());
+        return dtoList;
 
+//        String[] types = pageRequestDTO.getSearch_types();
+//        String search_word = pageRequestDTO.getSearch_word();
+//        PageRequest pageable = pageRequestDTO.getPageable();
+//        String type = pageRequestDTO.getType();
+//        Page<BoardEntity> result = boardRepository.search(pageable, types, search_word);
+//        List<BoardDTO> dtoList = result.getContent().stream()
+//                .map(board -> modelMapper.map(board, BoardDTO.class))
+//                .collect(Collectors.toList());
+//        return PageResponseDTO.<BoardDTO>withAll()
+//                .pageRequestDTO(pageRequestDTO)
+//                .dtoList(dtoList)
+//                .type(type)
+//                .total_count((int)result.getTotalElements())
+//                .build();
 
     }
 }

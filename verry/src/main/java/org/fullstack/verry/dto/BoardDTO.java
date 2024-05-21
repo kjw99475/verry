@@ -23,14 +23,14 @@ public class BoardDTO {
     @NotEmpty
     private String memberId;
     @NotEmpty
-    private String type;
+    private String boardType;
 
     private String orgFileName;
     private String saveFileName;
 
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime reg_date;
+    private LocalDateTime regDate;
     @JsonIgnore
-    private LocalDateTime modify_date;
-    private Long reply_cnt;
+    private LocalDateTime modifyDate;
+
 }
