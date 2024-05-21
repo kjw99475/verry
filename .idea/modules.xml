@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/verry.iml" filepath="$PROJECT_DIR$/.idea/verry.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/verry.verry.iml" filepath="$PROJECT_DIR$/.idea/modules/verry.verry.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/verry.verry.main~1.iml" filepath="$PROJECT_DIR$/.idea/modules/verry.verry.main~1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/verry.verry.test~1.iml" filepath="$PROJECT_DIR$/.idea/modules/verry.verry.test~1.iml" />
     </modules>
   </component>
 </project>
