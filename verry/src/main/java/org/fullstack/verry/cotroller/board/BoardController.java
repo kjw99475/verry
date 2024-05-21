@@ -13,7 +13,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Log4j2
 @Controller
@@ -22,15 +25,27 @@ public class BoardController {
     private final BoardServiceIf boardService;
 
     @GetMapping("/bbs/list")
-    public void list(PageRequestDTO pageRequestDTO, Model model) {
+    public void list(@RequestParam(name="block", defaultValue = "1") int block, Model model) {
         log.info("=================================================");
         log.info("BoardController >> list START");
 
-        pageRequestDTO.setType("b");
-        PageResponseDTO<BoardDTO> pageResponseDTO = boardService.list(pageRequestDTO);
+        String type = "b";
+        List<BoardDTO> pageResponseDTO = boardService.list(type, (block-1)*10);
+        int block_start = (int)(Math.ceil(block / (double)10) -1 ) * 10 + 1;
+        int total_count = boardService.countAll(type);
+        int block_end = 0;
+        if (total_count < 1) {
+            block_end = 1;
+        } else {
+            block_end = (int)Math.ceil(block/(double)10)*10;
+            block_end = (block_end < 1 ? 1 : block_end);
+            block_end = (total_count > block_end ? block_end : total_count);
+        }
 
         log.info("pageResponseDTO : {}", pageResponseDTO);
         model.addAttribute("pageResponseDTO", pageResponseDTO);
+        model.addAttribute("block_start", block_start);
+        model.addAttribute("block_end", block_end);
 
         log.info("BoardController >> list END");
         log.info("=================================================");
@@ -58,7 +73,7 @@ public class BoardController {
         log.info("=================================================");
         log.info("BoardController >> registPOST START");
 
-        boardDTO.setType("b");
+        boardDTO.setBoardType("b");
         if (bindingResult.hasErrors()) {
             log.info("BoardController >> registPOST ERROR");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
@@ -78,6 +93,37 @@ public class BoardController {
         return "redirect:/bbs/list";
     }
 
+    @GetMapping("/bbs/modify")
+    public void modifyGET(int idx, Model model) {
+        log.info("modifyGET");
+        BoardDTO boardDTO = boardService.view(idx);
+        model.addAttribute("boardDTO", boardDTO);
+    }
+
+    @PostMapping("/bbs/modify")
+    public String modifyPOST(@Valid BoardDTO boardDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+        log.info("=================================================");
+        log.info("BoardController >> modifyPOST START");
+
+        boardDTO.setBoardType("b");
+        if (bindingResult.hasErrors()) {
+            log.info("BoardController >> modifyPOST ERROR");
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            log.info("BoardController >> modifyPOST END");
+            log.info("============================================");
+            return "redirect:/bbs/modify?idx=" + boardDTO.getIdx();
+        }
+        int result_idx = boardService.modify(boardDTO);
+        redirectAttributes.addFlashAttribute("result_idx", result_idx);
+
+
+
+        log.info("BoardController >> modifyPOST END");
+        log.info("=================================================");
+
+        return "/bbs/view?idx=" + boardDTO.getIdx();
+    }
+
     @GetMapping("/bbs/delete")
     public void delete(int idx, Model model) {
         boardService.delete(idx);
@@ -85,12 +131,27 @@ public class BoardController {
 
 
     @GetMapping("/notice/list")
-    public void listNotice(PageRequestDTO pageRequestDTO, Model model) {
+    public void listNotice(@RequestParam(name="block", defaultValue = "1") int block, PageRequestDTO pageRequestDTO, Model model) {
         log.info("=================================================");
         log.info("BoardController >> list START");
 
-        pageRequestDTO.setType("n");
-        PageResponseDTO<BoardDTO> pageResponseDTO = boardService.list(pageRequestDTO);
+        String type = "n";
+        List<BoardDTO> pageResponseDTO = boardService.list(type, (block-1)*10);
+        int block_start = (int)(Math.ceil(block / (double)10) -1 ) * 10 + 1;
+        int total_count = boardService.countAll(type);
+        int block_end = 0;
+        if (total_count < 1) {
+            block_end = 1;
+        } else {
+            block_end = (int)Math.ceil(block/(double)10)*10;
+            block_end = (block_end < 1 ? 1 : block_end);
+            block_end = (total_count > block_end ? block_end : total_count);
+        }
+
+        log.info("pageResponseDTO : {}", pageResponseDTO);
+        model.addAttribute("pageResponseDTO", pageResponseDTO);
+        model.addAttribute("block_start", block_start);
+        model.addAttribute("block_end", block_end);
 
         log.info("pageResponseDTO : {}", pageResponseDTO);
         model.addAttribute("pageResponseDTO", pageResponseDTO);
@@ -121,7 +182,7 @@ public class BoardController {
         log.info("=================================================");
         log.info("BoardController >> registPOST START");
 
-        boardDTO.setType("n");
+        boardDTO.setBoardType("n");
         if (bindingResult.hasErrors()) {
             log.info("BoardController >> registPOST ERROR");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
@@ -140,6 +201,38 @@ public class BoardController {
 
         return "redirect:/notice/list";
     }
+
+    @GetMapping("/notice/modify")
+    public void modifyGETNotice(int idx, Model model) {
+        log.info("modifyGET");
+        BoardDTO boardDTO = boardService.view(idx);
+        model.addAttribute("boardDTO", boardDTO);
+    }
+
+    @PostMapping("/notice/modify")
+    public String modifyPOSTNotice(@Valid BoardDTO boardDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+        log.info("=================================================");
+        log.info("BoardController >> modifyPOST START");
+
+        boardDTO.setBoardType("b");
+        if (bindingResult.hasErrors()) {
+            log.info("BoardController >> modifyPOST ERROR");
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            log.info("BoardController >> modifyPOST END");
+            log.info("============================================");
+            return "redirect:/notice/modify?idx=" + boardDTO.getIdx();
+        }
+        int result_idx = boardService.modify(boardDTO);
+        redirectAttributes.addFlashAttribute("result_idx", result_idx);
+
+
+
+        log.info("BoardController >> modifyPOST END");
+        log.info("=================================================");
+
+        return "/notice/view?idx=" + boardDTO.getIdx();
+    }
+
 
     @GetMapping("/notice/delete")
     public void deleteNotice(int idx, Model model) {

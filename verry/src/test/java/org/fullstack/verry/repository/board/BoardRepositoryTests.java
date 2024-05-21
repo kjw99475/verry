@@ -27,7 +27,7 @@ public class BoardRepositoryTests {
                 .title("제목 테스트")
                 .content("내용 테스트")
                 .memberId("test")
-                .type("b")
+                .boardType("b")
                 .build();
         BoardEntity bbsResult = boardRepository.save(bbs);
         log.info("result : {}" + bbsResult);

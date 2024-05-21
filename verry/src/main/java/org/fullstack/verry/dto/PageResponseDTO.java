@@ -28,7 +28,7 @@ public class PageResponseDTO<E> {
         this.pageRequestDTO = pageRequestDTO;
         this.total_count = total_count;
         this.dtoList = dtoList;
-        pageRequestDTO.setType(type);
+        pageRequestDTO.setType(pageRequestDTO.getType());
     }
 
 }

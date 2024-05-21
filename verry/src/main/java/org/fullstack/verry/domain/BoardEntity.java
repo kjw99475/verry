@@ -31,7 +31,7 @@ public class BoardEntity{
     private String memberId;
 
     @Column(length = 2, nullable = true)
-    private String type;
+    private String boardType;
 
     @Column(length = 2000, nullable = true)
     private String orgFileName;
@@ -46,6 +46,7 @@ public class BoardEntity{
     @LastModifiedDate
     @Column(name="modify_date", nullable = true, insertable = false, updatable = true)
     private LocalDateTime modifyDate;
+
 
     public void modify(String title, String content, String orgFileName, String saveFileName) {
         this.title = title;
