@@ -2,6 +2,7 @@ package org.fullstack.verry.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,8 +18,10 @@ public class MemberDTO {
 //    @PositiveOrZero
     private int memberIdx;
     @NotBlank(message = "아이디는 필수 입력입니다")
+    @Size(min = 5, message = "아이디는 5~12자리로 입력해주세요")
     private String memberId;
     @NotBlank(message = "비밀번호는 필수 입력입니다")
+    @Size(min = 8, message = "비밀번호는 8~20자리로 입력해주세요")
     private String pwd;
     @NotBlank(message = "이메일은 필수 입력입니다")
     private String email;
