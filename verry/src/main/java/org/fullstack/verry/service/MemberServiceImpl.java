@@ -14,12 +14,19 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class MemberServiceImpl {
+public class MemberServiceImpl implements MemberServiceIf {
     private final ModelMapper modelMapper;
     private final MemberRepository memberRepository;
+    @Override
     public int join(MemberDTO memberDTO) {
         MemberEntity member = modelMapper.map(memberDTO, MemberEntity.class);
         int id = memberRepository.save(member).getMemberIdx();
         return id;
+    }
+
+    @Override
+    public MemberDTO memberinfo(String memberId) {
+        MemberDTO memberinfo = modelMapper.map(memberRepository.findByMemberId(memberId), MemberDTO.class);
+        return memberinfo;
     }
 }
