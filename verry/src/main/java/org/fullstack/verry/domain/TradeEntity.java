@@ -56,11 +56,13 @@ public class TradeEntity {
     @Column(name="modify_date", nullable = true, insertable = false, updatable = true)
     private LocalDateTime modifyDate;
 
-    public void modify(String title, String content, String orgFileName, String saveFileName) {
+    public void modify(String title, String content, String orgFileName, String saveFileName, String category, int price) {
         this.title = title;
         this.content = content;
         this.orgFileName = orgFileName;
         this.saveFileName = saveFileName;
+        this.category = category;
+        this.price = price;
         this.modifyDate = LocalDateTime.now();
     }
 }

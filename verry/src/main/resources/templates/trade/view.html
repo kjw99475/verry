@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaef/layout"
+      layout:decorate="~{layout/basic.html}">
+
+<div layout:fragment="content">
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="/img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Vegetable’s Package</h2>
+                        <div class="breadcrumb__option">
+                            <a href="./index.html">Home</a>
+                            <a href="./index.html">Vegetables</a>
+                            <span>Vegetable’s Package</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Product Details Section Begin -->
+    <section class="product-details spad">
+        <div class="container">
+            <div class="d-flex justify-content-end mb-2">
+                <a th:href="|@{/trade/modify(trade_idx=${tradeDTO.tradeIdx})}|">
+                    <button class="btn btn-outline-secondary mx-2">수정</button>
+                </a>
+                <form name="frmDelete" id="frmDelete" action="/trade/delete" method="post">
+                    <input type="hidden" name="tradeIdx" th:value="${tradeDTO.tradeIdx}"/>
+                    <button type="button" class="btn btn-outline-danger" onclick="goDelete()">삭제</button>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-6">
+                    <div class="product__details__pic">
+                        <div class="product__details__pic__item">
+                            <img class="product__details__pic__item--large"
+                                 th:src="'/img/product/'+${tradeDTO.saveFileName}+''" alt="상품 이미지" width="555" height="575">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-6">
+                    <div class="product__details__text">
+                        <h3>[[${tradeDTO.title}]]</h3>
+                        <ul style="border-top: 0; margin-top: 0; padding-top: 0 " class="mb-3">
+                            <li><b>작성자</b> <span>[[${tradeDTO.memberId}]]</span></li>
+                            <li><b>작성일</b> <span>[[${tradeDTO.regDate}]]</span></li>
+                            <li><b>조회수</b> <span>[[${tradeDTO.readCnt}]]</span></li>
+                        </ul>
+                        <div class="product__details__price">￦[[${tradeDTO.price}]]</div>
+                        <div class="checkout__input">
+                            <textarea name="content" id="content" cols="150" rows="8" style="resize: none;">[[${tradeDTO.content}]]</textarea>
+                        </div>
+                        <div class="product__details__quantity">
+                            <div class="quantity">
+                                <div class="pro-qty">
+                                    <input type="text" value="1">
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#" class="primary-btn">ADD TO CARD</a>
+                        <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <div class="my-4">
+                                <button class="btn btn-info registReplyBtn">댓글 등록</button>
+                            </div>
+                            <ul class="list-group replyList">
+
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col">
+                            <ul class="pagination replyPaging"></ul>
+                        </div>
+                    </div>
+
+                    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+                    <script src="/js/reply.js"></script>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- Product Details Section End -->
+
+    <!-- Related Product Section Begin -->
+    <section class="related-product">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title related__product__title">
+                        <h2>Related Product</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-6" th:each="list:${relatedList}" th:if="${!relatedList.isEmpty()}">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" th:data-setbg="'/img/product/' + ${list.saveFileName} + ''">
+                            <ul class="product__item__pic__hover">
+                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__item__text">
+                            <h6><a th:href="|@{/trade/view(trade_idx=${list.tradeIdx})}|">[[${list.title}]]</a></h6>
+                            <h5>￦[[${list.price}]]</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6" th:if="${relatedList.isEmpty()}" >
+                    관련 상품이 없습니다.
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Related Product Section End -->
+</div>
+
+<script layout:fragment="script" th:inline="javascript">
+    function goDelete() {
+        const confirmFlag = confirm("해당 글을 삭제하시겠습니까?");
+
+        if(confirmFlag) {
+            console.log("?");
+            const frm = document.getElementById("frmDelete");
+            frm.submit();
+        }
+    }
+
+    const trade_idx = [[${tradeDTO.tradeIdx}]];
+    const replyList = document.querySelector(".replyList");
+    const replyPaging = document.querySelector(".replyPaging");
+
+    function printReplyArea(page, page_size, goLast) {
+        getReplyList({trade_idx, page, page_size, goLast})
+              .then(
+                    data => {
+                        console.log(data);
+                        printReplyList(data.dtoList);
+                        printPaging(data.pageRequestDTO);
+                    }
+              )
+              .catch(e => {console.log(e);})
+    }
+
+    printReplyArea(1, 10);
+
+    function printReplyList(dtoList) {
+        let replyLi = "";
+        if (dtoList && dtoList.length > 0) {
+            for(const dto of dtoList) {
+                replyLi += `<li class="list-group-item d-flex replyItem">
+                    <span class="col-2">${dto.tradeReplyIdx}</span>
+                    <span class="col-6" data-idx="${dto.tradeIdx}">${dto.comment}
+                    <button class="badge progress-bar-success replyDelete " style="background-color: #0a53be" onclick="replyDeleteOK(${dto.tradeReplyIdx})">X</button>
+                    </span>
+                    <span class="col-2">${dto.memberId}</span>
+                    <span class="col-2">${dto.regDate}</span>
+                    </li>`;
+            }
+        } else {
+            replyLi += `<li class="list-group-item d-flex replyItem">
+                    <span class="col-12">등록된 댓글이 없습니다.</span>
+                    </li>`;
+        }
+
+        replyList.innerHTML = replyLi;
+    }
+
+    function printPaging(dto) {
+        console.log("printPaging >>> ", dto);
+
+        let pagePrevLi = "";
+        let pageNextLi = "";
+        let pageLiList = "";
+        let pageArea = "";
+
+        if(dto.prev_page_flag) {
+            pagePrevLi += `<li class="page-item">
+                       <a class="page-link" data-page="${dto.page_block_start-1}" href="#" onclick="printReplyArea(${dto.page_block_start-10}, 10)">PREV</a>
+                       </li>`
+        } else {
+            pagePrevLi += `<li class="page-item">
+                       <a class="page-link" data-page="${dto.page_block_start-10}" href="#">PREV</a>
+                       </li>`
+        }
+
+        for(let i=dto.page_block_start; i<=dto.page_block_end; i++) {
+            if(dto.page == i) {
+                pageLiList += `<li class="page-item active">
+                            <a class="page-link" data-page="${i}" href="#">${i}</a>
+                            </li>`
+            } else {
+                pageLiList += `<li class="page-item ">
+                            <a class="page-link" data-page="${i}" href="#" onclick="printReplyArea(${i}, 10)">${i}</a>
+                            </li>`
+            }
+        }
+
+        if(dto.next_page_flag) {
+            pageNextLi += `<li class="page-item">
+                       <a class="page-link" data-page="${dto.page_block_end+1}" href="#" onclick="printReplyArea(${dto.page_block_end+1}, 10)">NEXT</a>
+                       </li>`
+        } else {
+            pageNextLi += `<li class="page-item">
+                       <a class="page-link" data-page="${dto.page_block_end+1}" href="#">NEXT</a>
+                       </li>`
+        }
+
+        pageArea = pagePrevLi + pageLiList + pageNextLi;
+
+        replyPaging.innerHTML = pageArea;
+    }
+
+    function replyDeleteOK(idx) {
+        replyDelete(idx);
+        printReplyArea(1, 10, "true");
+    }
+</script>

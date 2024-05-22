@@ -14,7 +14,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Log4j2
@@ -53,6 +55,42 @@ public class TradeServiceImpl implements TradeService {
                 .dtoList(dtoList)
                 .total_count((int)result.getTotalElements())
                 .build();
-//        return null;
+    }
+
+    @Override
+    public TradeDTO view(int trade_idx) {
+        Optional<TradeEntity> result = tradeRepository.findById(trade_idx);
+
+        TradeEntity trade = result.orElse(null);
+
+        TradeDTO tradeDTO = modelMapper.map(trade, TradeDTO.class);
+
+        return tradeDTO;
+    }
+
+    @Override
+    public List<TradeDTO> relatedProducts(String category, int trade_idx) {
+        // 관련상품 리스트
+        List<TradeEntity> list = tradeRepository.findDistinctTop4ByCategoryAndTradeIdxNotOrderByTradeIdxDesc(category, trade_idx);
+
+        List<TradeDTO> relatedList = list.stream().map(trade -> modelMapper.map(trade, TradeDTO.class)).collect(Collectors.toList());
+
+        return relatedList;
+    }
+
+    @Override
+    public int modify(TradeDTO tradeDTO) {
+        Optional<TradeEntity> result = tradeRepository.findById(tradeDTO.getTradeIdx());
+        TradeEntity trade = result.orElse(null);
+        trade.modify(tradeDTO.getTitle(), tradeDTO.getContent(), tradeDTO.getOrgFileName(), tradeDTO.getSaveFileName(), tradeDTO.getCategory(), tradeDTO.getPrice());
+
+        int tradeIdx = tradeRepository.save(trade).getTradeIdx();
+
+        return tradeIdx;
+    }
+
+    @Override
+    public void deleteOne(int trade_idx) {
+        tradeRepository.deleteById(trade_idx);
     }
 }
