@@ -27,11 +27,12 @@
     <div class="contact-form spad">
         <div class="container">
 
-            <form action="/bbs/regist" method="post">
+            <form action="/bbs/regist" method="post" enctype="multipart/form-data">
 
                 <div class="row">
                     <div class="col-lg-12 col-md-12">
                         <input type="hidden" name="memberId" value="test">
+<!--                        <input type="hidden" name="memberId" th:value="${session.memberId}">-->
                         <input type="hidden" name="boardType" value="b">
                         <label for="title">제목</label>
                         <input type="text" placeholder="제목을 입력해주세요" id="title" name="title">
@@ -40,6 +41,11 @@
                     <div class="col-lg-12">
                         <label for="content">내용</label>
                         <textarea placeholder="내용을 입력해주세요." id="content" name="content"></textarea>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <label for="content">파일 업로드</label>
+                        <input type="file" name="file" id="file" multiple>
                     </div>
 
                     <div class="col-lg-12 float-end d-flex justify-content-end">

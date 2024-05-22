@@ -27,10 +27,18 @@
                     </div>
 
                     <div class="col-lg-6 col-md-6">
-                        <label>등록일 : <input type="text" readonly  id="regDate" name="regDate" th:value="${#strings.toString(boardDTO.regDate).substring(0,10)}" style="width:fit-content; border: 0px; border-bottom: 1px solid #ebebeb;"></label>
+                        <label>등록일 : <input type="text" readonly  id="regDate" name="regDate" th:value="${boardDTO.regDate}" style="width:fit-content; border: 0px; border-bottom: 1px solid #ebebeb;"></label>
                     </div>
 
                     <div class="col-lg-12 mx-3"  th:utext="${boardDTO.content}">
+                    </div>
+
+
+
+                    <div th:if="${boardDTO.orgFileName != null}" class="col-lg-12 mx-3" >
+                        <span><a th:href="|@{/bbs/download(idx=${boardDTO.idx})}|" target="_blank">[[${boardDTO.orgFileName}]]</a></span>
+<!--                        <a download th:href="@{/uploads/board/${boardDTO.orgFileName}}">파일 다운로드</a>-->
+<!--                        <div>[[${boardDTO.orgFileName}]]</div>-->
                     </div>
 
 
