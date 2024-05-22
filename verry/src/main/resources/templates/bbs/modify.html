@@ -4,7 +4,6 @@
       layout:decorate="~{basic.html}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
     <script src="https://cdn.tiny.cloud/1/wjuflumw0txwktnvnufwfo5lj04kqmup66rnaj1jf6pnwv5d/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
@@ -80,14 +79,14 @@
                     </div>
 
 
-                    <div th:if="${boardDTO.orgFileName != null and !#strings.toString(boardDTO.orgFileName).equals('') and !#strings.toString(boardDTO.orgFileName).isEmpty()}" class="col-lg-12 mx-3" id="fileView" >
+                    <div th:if="${boardDTO.orgFileName != null and !#strings.toString(boardDTO.orgFileName).equals('') and !#strings.toString(boardDTO.orgFileName).isEmpty()}" class="col-lg-12 mt-4" id="fileView" >
                         파일 : [[${boardDTO.orgFileName}]] <button class="btn text-danger" type="button" id="btnDelete" onclick="askDelete()">X</button>
                         <input type="hidden" name="upload" th:value="${boardDTO.orgFileName}">
                         <input type="hidden" name="upload2" th:value="${boardDTO.saveFileName}">
                     </div>
-                    <div class="col-lg-12">
+                    <div class="col-lg-12 mt-4">
                         <label for="content">파일 재업로드</label>
-                        <input type="file" name="file" id="file" multiple>
+                        <input type="file" name="file" id="file" class="form-control" multiple>
                     </div>
 
                     <div class="col-lg-12 d-flex justify-content-end">

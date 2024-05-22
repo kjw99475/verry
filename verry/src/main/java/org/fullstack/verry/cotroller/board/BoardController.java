@@ -49,6 +49,8 @@ public class BoardController {
         model.addAttribute("block_start", block_start);
         model.addAttribute("block_end", block_end);
         model.addAttribute("total_count", total_count);
+        model.addAttribute("block", block);
+        model.addAttribute("pageName", "community");
 
         log.info("BoardController >> list END");
         log.info("=================================================");
@@ -61,6 +63,7 @@ public class BoardController {
 
         BoardDTO boardDTO = boardService.view(idx);
         model.addAttribute("boardDTO", boardDTO);
+        model.addAttribute("pageName", "community");
 
         log.info("boardDTO : {}", boardDTO);
         log.info("BoardController >> view END");
@@ -124,6 +127,7 @@ public class BoardController {
         log.info("modifyGET");
         BoardDTO boardDTO = boardService.view(idx);
         model.addAttribute("boardDTO", boardDTO);
+        model.addAttribute("pageName", "community");
     }
 
     @PostMapping("/bbs/modify")
@@ -217,6 +221,8 @@ public class BoardController {
         model.addAttribute("block_start", block_start);
         model.addAttribute("block_end", block_end);
         model.addAttribute("total_count", total_count);
+        model.addAttribute("block", block);
+        model.addAttribute("pageName", "notice");
 
         log.info("pageResponseDTO : {}", pageResponseDTO);
         model.addAttribute("pageResponseDTO", pageResponseDTO);
@@ -232,6 +238,7 @@ public class BoardController {
 
         BoardDTO boardDTO = boardService.view(idx);
         model.addAttribute("boardDTO", boardDTO);
+        model.addAttribute("pageName", "notice");
 
         log.info("BoardController >> view END");
         log.info("=================================================");
@@ -249,6 +256,7 @@ public class BoardController {
 
     @GetMapping("/notice/regist")
     public void registGETNotice(PageRequestDTO pageRequestDTO, Model model) {
+        model.addAttribute("pageName", "notice");
         log.info("registGET");
     }
 
@@ -294,6 +302,7 @@ public class BoardController {
         log.info("modifyGET");
         BoardDTO boardDTO = boardService.view(idx);
         model.addAttribute("boardDTO", boardDTO);
+        model.addAttribute("pageName", "notice");
     }
 
     @PostMapping("/notice/modify")

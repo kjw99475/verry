@@ -4,7 +4,6 @@
       layout:decorate="~{basic.html}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
 </head>
 <body>
 
@@ -46,9 +45,13 @@
                         </thead>
 
                         <tbody >
-                        <tr style="height:50px;"  th:each="dto:${pageResponseDTO}">
+                        <tr th:if="${pageResponseDTO} eq null">
+                            <td colspan="4">등록된 글이 없습니다.</td>
+                        </tr>
+
+                        <tr style="height:50px;"  th:each="dto, iterStat:${pageResponseDTO}">
                             <td class="shoping__cart__total">
-                                [[${dto.idx}]]
+                                [[${total_count -(block-1)*10 -iterStat.index}]]
                             </td>
                             <td class="shoping__cart__item">
                                 <a th:href="|@{/bbs/view(idx=${dto.idx})}|">
@@ -85,7 +88,7 @@
                 </a>
 
                 <th:block th:each="i : ${#numbers.sequence(block_start, block_end)}">
-                    <a th:href='@{/bbs/list(block=${i})}'>[[${i}]]</a>
+                    <a th:href='@{/bbs/list(block=${i})}' >[[${i}]]</a>
                 </th:block>
 
                 <a th:href='@{/bbs/list(block=${block_end})}'>

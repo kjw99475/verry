@@ -4,7 +4,6 @@
       layout:decorate="~{basic.html}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
 </head>
 <body>
 
@@ -30,12 +29,13 @@
                         <label>등록일 : <input type="text" readonly  id="regDate" name="regDate" th:value="${boardDTO.regDate}" style="width:fit-content; border: 0px; border-bottom: 1px solid #ebebeb;"></label>
                     </div>
 
-                    <div class="col-lg-12 mx-3"  th:utext="${boardDTO.content}">
+                    <div class="col-lg-12 mx-3 overflow-auto" style="max-height: 500px;" th:utext="${boardDTO.content}">
                     </div>
 
 
 
-                    <div th:if="${boardDTO.orgFileName != null}" class="col-lg-12 mx-3" >
+                    <div th:if="${boardDTO.orgFileName != null and !#strings.toString(boardDTO.orgFileName).equals('') and !#strings.toString(boardDTO.orgFileName).isEmpty()}" class="col-lg-12 mx-3 mt-4" >
+                        <label>파일 : </label>
                         <span><a th:href="|@{/bbs/download(idx=${boardDTO.idx})}|" target="_blank">[[${boardDTO.orgFileName}]]</a></span>
 <!--                        <a download th:href="@{/uploads/board/${boardDTO.orgFileName}}">파일 다운로드</a>-->
 <!--                        <div>[[${boardDTO.orgFileName}]]</div>-->
@@ -44,20 +44,21 @@
 
                     <div class="col-lg-12 d-flex justify-content-between mt-5" >
 
-
-                        <button type="button" class="btn btn-outline-danger mx-2" onclick="delete_bbs()">삭제</button>
-                        <script>
-                            const frm = document.querySelector("frm_delete");
-                            function delete_bbs() {
-                                let chk_del = confirm("정말 삭제하시겠습니까?");
-                                if(chk_del) {
-                                    frm_delete.submit();
+                        <div>
+                            <button type="button" class="btn btn-outline-danger mx-2" onclick="delete_bbs()" th:if="${session.memberId == boardDTO.memberId} or ${session.memberType == 'a'} ">삭제</button>
+                            <script>
+                                const frm = document.querySelector("frm_delete");
+                                function delete_bbs() {
+                                    let chk_del = confirm("정말 삭제하시겠습니까?");
+                                    if(chk_del) {
+                                        frm_delete.submit();
+                                    }
                                 }
-                            }
-                        </script>
+                            </script>
+                        </div>
 
                         <div>
-                            <a th:href='@{/bbs/modify(idx=${boardDTO.idx})}' >
+                            <a th:href='@{/bbs/modify(idx=${boardDTO.idx})}' th:if="${session.memberId == boardDTO.memberId} or ${session.memberType == 'a'} " >
                                 <button type="button" class="btn btn-success mx-2" >수정하기</button>
                             </a>
                             <button type="button" class="btn btn-secondary" onclick="location.href='/bbs/list'">목록</button>
@@ -77,7 +78,7 @@
 
             <div class="row mt-3">
                 <div class="col">
-                    <ul class="pagination replyPaging">
+                    <ul class="pagination replyPaging justify-content-center">
 
                     </ul>
                 </div>
