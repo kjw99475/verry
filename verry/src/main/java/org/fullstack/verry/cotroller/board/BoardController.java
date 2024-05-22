@@ -122,7 +122,7 @@ public class BoardController {
         log.info("BoardController >> modifyPOST END");
         log.info("=================================================");
 
-        return "/bbs/view?idx=" + boardDTO.getIdx();
+        return "redirect:/bbs/view?idx=" + boardDTO.getIdx();
     }
 
     @GetMapping("/bbs/delete")
@@ -231,7 +231,7 @@ public class BoardController {
         log.info("BoardController >> modifyPOST END");
         log.info("=================================================");
 
-        return "/notice/view?idx=" + boardDTO.getIdx();
+        return "redirect:/notice/view?idx=" + boardDTO.getIdx();
     }
 
 

@@ -21,19 +21,22 @@
                         <input type="text" readonly placeholder="제목을 입력해주세요" id="title" name="title" th:value="${boardDTO.title}" style="border: 0px; border-bottom: 1px solid #ebebeb;">
                     </div>
 
-                    <div class="col-lg-12" >
-                        <textarea placeholder="내용을 입력해주세요." readonly id="content" name="content" th:utext="${boardDTO.content}"></textarea>
+                    <div class="col-lg-12 text-start" style="border: 1px solid #ebebeb; border-radius: 4px">
+                        <div readonly id="content" name="content" th:utext="${boardDTO.content}"></div>
                     </div>
 
-                    <div class="col-lg-12 d-flex justify-content-end">
-                        <button type="button" class="site-btn mx-3" onclick="location.href='/notice/modify?idx='${boardDTO.idx}">수정하기</button>
-                        <button type="button" class="site-btn" onclick="location.href='/notice/list'">목록</button>
+                    <div class="col-lg-12 d-flex justify-content-end mt-5" >
+                        <a th:href='@{/notice/modify(idx=${boardDTO.idx})}'>
+                            <button type="button" class="btn site-btn mx-2" >수정하기</button>
+                        </a>
+                        <button type="button" class="btn btn-secondary" onclick="location.href='/notice/list'">목록</button>
                     </div>
 
                 </div>
             </form>
 
-<!--            ===================== 댓글 리스트 영역 start =====================-->
+
+            <!--            ===================== 댓글 리스트 영역 start =====================-->
 
             <h5 class="my-3">댓글 리스트</h5>
             <div class="border-top ">
@@ -52,7 +55,8 @@
                 </div>
             </div>
 
-<!--            ===================== 댓글 리스트 영역 end =====================-->
+            <!--            ===================== 댓글 리스트 영역 end =====================-->
+
 
         </div>
     </div>
