@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack.verry.dto.MemberDTO;
 import org.fullstack.verry.service.MemberServiceImpl;
+import org.fullstack.verry.service.board.BoardServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class MemberController {
     @Autowired
     private MemberServiceImpl memberService;
+    @Autowired
+    private BoardServiceImpl boardServiceImpl;
 
     @GetMapping("/join")
     public void join(MemberDTO memberDTO,
@@ -82,11 +85,29 @@ public class MemberController {
         return "redirect:/basic";
     }
     @GetMapping("/modify")
-    public void modify(){
-
+    public void modify(HttpSession session,
+                       Model model){
+        String memberId = (String)session.getAttribute("memberId");
+        MemberDTO memberinfo = memberService.memberinfo(memberId);
+        model.addAttribute("memberDTO",memberinfo);
     }
     @PostMapping("/modify")
-    public void postmodify(){
+    public String postmodify(HttpSession session,
+                           MemberDTO memberDTO,
+                           @RequestParam(value = "pwdChangeYN", defaultValue = "N") String pwdChangeYN){
+        String memberId = (String)session.getAttribute("memberId");
+        MemberDTO memberinfo = memberService.memberinfo(memberId);
+        log.info("memberDTO : {}",memberDTO);
+        if(pwdChangeYN.equals("Y")){
+            memberinfo.setPwd(memberDTO.getPwd());
+        }
+        memberinfo.setAddr(memberDTO.getAddr()==""?memberinfo.getAddr():memberDTO.getAddr());
+        memberinfo.setAddrDetail(memberDTO.getAddrDetail()==""?memberinfo.getAddrDetail():memberDTO.getAddrDetail());
+        memberinfo.setEmail(memberDTO.getEmail()==""?memberinfo.getEmail():memberDTO.getEmail());
+        memberinfo.setName(memberDTO.getName()==""?memberinfo.getName():memberDTO.getName());
+        memberinfo.setZipcode(memberDTO.getZipcode()==""?memberinfo.getZipcode():memberDTO.getZipcode());
+        int idx = memberService.join(memberinfo);
 
+        return "redirect:/member/modify";
     }
 }
