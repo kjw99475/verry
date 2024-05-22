@@ -22,15 +22,15 @@
                         <input type="text" readonly  id="title" name="title" th:value="${boardDTO.title}" style="border: 0px; border-bottom: 1px solid #ebebeb;">
                     </div>
 
-                    <div class="col-lg-12 col-md-12">
-                        <label>작성자 : <input type="text" readonly  id="memberId" name="memberId" th:value="${boardDTO.memberId}" style="width:fit-content; border: 0px; border-bottom: 1px solid #ebebeb;"></label>
+                    <div class="col-lg-6 col-md-6">
+                        <label class="mx-3">작성자 : <input type="text" readonly  id="memberId" name="memberId" th:value="${boardDTO.memberId}" style="width:fit-content; border: 0px; border-bottom: 1px solid #ebebeb;"></label>
                     </div>
 
-                    <div class="col-lg-12 col-md-12">
+                    <div class="col-lg-6 col-md-6">
                         <label>등록일 : <input type="text" readonly  id="regDate" name="regDate" th:value="${#strings.toString(boardDTO.regDate).substring(0,10)}" style="width:fit-content; border: 0px; border-bottom: 1px solid #ebebeb;"></label>
                     </div>
 
-                    <div class="col-lg-12"  th:utext="${boardDTO.content}">
+                    <div class="col-lg-12 mx-3"  th:utext="${boardDTO.content}">
                     </div>
 
 
