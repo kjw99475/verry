@@ -18,7 +18,7 @@ import java.util.Map;
 @Log4j2
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/board/replies")
+@RequestMapping("/bbs/replies")
 public class BoardReplyController {
 
     private final BoardReplyServiceIf boardReplyService;
@@ -29,8 +29,6 @@ public class BoardReplyController {
             @Valid @RequestBody BoardReplyDTO replyDTO,
             BindingResult bindingResult
             ) throws BindException {
-//        Map<String, Integer> map = Map.of("idx", 1);
-//        return ResponseEntity.ok(map);
 
         if (bindingResult.hasErrors()) {
             throw new BindException(bindingResult);
@@ -48,13 +46,13 @@ public class BoardReplyController {
 
     @GetMapping("/list/{idx}")
     public PageResponseDTO<BoardReplyDTO> replyList(
-            @PathVariable("idx") int bbs_idx,
+            @PathVariable("idx") int idx,
             PageRequestDTO pageRequestDTO
     ) {
         log.info("================================================");
         log.info("BoardReplyController >> replyList START");
 
-        PageResponseDTO<BoardReplyDTO> responseDTO = boardReplyService.getListOfReply(bbs_idx, pageRequestDTO);
+        PageResponseDTO<BoardReplyDTO> responseDTO = boardReplyService.getListOfReply(idx, pageRequestDTO);
 
         log.info("responseDTO : {}", responseDTO);
         log.info("BoardReplyController >> replyList END");
@@ -63,11 +61,14 @@ public class BoardReplyController {
     }
 
 
-    @DeleteMapping("/delete/{idx}")
-    public Map<String, Integer> replyDelete(@PathVariable("idx") int idx) {
-        boardReplyService.delete(idx);
+    @DeleteMapping("/delete/{board_reply_idx}")
+    public Map<String, Integer> replyDelete(@PathVariable("board_reply_idx") int board_reply_idx) {
+        boardReplyService.delete(board_reply_idx);
         Map<String, Integer> map = new HashMap<>();
-        map.put("idx", idx);
+        map.put("idx", board_reply_idx);
+
+        log.info("map : {}", map);
+
         return map;
     }
 }
