@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
                 @Index(name="board_reply_idx_tbl_board_reply_board_idx", columnList = "boardIdx")
         }
 )
-public class BoardReplyEntity {
+public class BoardReplyEntity extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,9 +32,6 @@ public class BoardReplyEntity {
     @Column(length = 20, nullable = true)
     private String memberId;
 
-    @CreatedDate
-    @Column(name="reg_date", updatable = false, columnDefinition = "DATETIME NULL DEFAULT NOW()")
-    private LocalDateTime regDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private BoardEntity board;

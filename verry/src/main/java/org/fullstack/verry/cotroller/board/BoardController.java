@@ -1,12 +1,16 @@
 package org.fullstack.verry.cotroller.board;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.aspectj.util.FileUtil;
 import org.fullstack.verry.dto.BoardDTO;
 import org.fullstack.verry.dto.PageRequestDTO;
 import org.fullstack.verry.dto.PageResponseDTO;
 import org.fullstack.verry.service.board.BoardServiceIf;
+import org.fullstack.verry.utils.FileUploadUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -59,8 +64,19 @@ public class BoardController {
         BoardDTO boardDTO = boardService.view(idx);
         model.addAttribute("boardDTO", boardDTO);
 
+        log.info("boardDTO : {}", boardDTO);
         log.info("BoardController >> view END");
         log.info("=================================================");
+    }
+
+    @GetMapping("/bbs/download")
+    public void downloadBbs(int idx,
+                            HttpServletResponse resp,
+                            HttpServletRequest req
+                           ) {
+        BoardDTO boardDTO = boardService.view(idx);
+
+        FileUploadUtil.download(req, resp, boardDTO.getOrgFileName(), boardDTO.getSaveFileName(), "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\board");
     }
 
     @GetMapping("/bbs/regist")
@@ -69,7 +85,7 @@ public class BoardController {
     }
 
     @PostMapping("/bbs/regist")
-    public String registPOST(@Valid BoardDTO boardDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+    public String registPOST(@Valid BoardDTO boardDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, @RequestParam("file") MultipartFile multipartFile, Model model) {
         log.info("=================================================");
         log.info("BoardController >> registPOST START");
 
@@ -82,6 +98,17 @@ public class BoardController {
             log.info("============================================");
             return "redirect:/bbs/regist";
         }
+
+
+        String saveFileName = "";
+
+        if(multipartFile!= null && !multipartFile.isEmpty()) {
+            saveFileName = FileUploadUtil.saveFile(multipartFile, "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\board");
+            boardDTO.setOrgFileName(multipartFile.getOriginalFilename());
+            boardDTO.setSaveFileName(saveFileName);
+        }
+
+
         int result_idx = boardService.regist(boardDTO);
         redirectAttributes.addFlashAttribute("result_idx", result_idx);
 
@@ -102,7 +129,13 @@ public class BoardController {
     }
 
     @PostMapping("/bbs/modify")
-    public String modifyPOST(@Valid BoardDTO boardDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+    public String modifyPOST(@Valid BoardDTO boardDTO,
+                             BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes,
+                             @RequestParam(value = "upload", defaultValue = "") String upload,
+                             @RequestParam(value = "upload2", defaultValue = "") String upload2,
+                             @RequestParam("file") MultipartFile file,
+                             Model model) {
         log.info("=================================================");
         log.info("BoardController >> modifyPOST START");
 
@@ -114,6 +147,21 @@ public class BoardController {
             log.info("============================================");
             return "redirect:/bbs/modify?idx=" + boardDTO.getIdx();
         }
+
+
+        String saveFileName = "";
+
+        if(file!= null && !file.isEmpty()) {
+            saveFileName = FileUploadUtil.saveFile(file, "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\board");
+            boardDTO.setOrgFileName(file.getOriginalFilename());
+            boardDTO.setSaveFileName(saveFileName);
+        } else {
+            boardDTO.setOrgFileName(upload);
+            boardDTO.setSaveFileName(upload2);
+        }
+
+
+
         int result_idx = boardService.modify(boardDTO);
         redirectAttributes.addFlashAttribute("result_idx", result_idx);
 
@@ -174,31 +222,53 @@ public class BoardController {
         log.info("=================================================");
     }
 
+    @GetMapping("/notice/download")
+    public void downloadNotice(int idx,
+                            HttpServletResponse resp,
+                            HttpServletRequest req
+    ) {
+        BoardDTO boardDTO = boardService.view(idx);
+
+        FileUploadUtil.download(req, resp, boardDTO.getOrgFileName(), boardDTO.getSaveFileName(), "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\notice");
+    }
+
     @GetMapping("/notice/regist")
     public void registGETNotice(PageRequestDTO pageRequestDTO, Model model) {
         log.info("registGET");
     }
 
     @PostMapping("/notice/regist")
-    public String registPOSTNotice(@Valid BoardDTO boardDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+    public String registPOSTNotice(@Valid BoardDTO boardDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, @RequestParam("file") MultipartFile multipartFile, Model model) {
         log.info("=================================================");
-        log.info("BoardController >> registPOST START");
+        log.info("BoardController >> registPOSTNotice START");
 
         boardDTO.setBoardType("n");
         if (bindingResult.hasErrors()) {
-            log.info("BoardController >> registPOST ERROR");
+            log.info("BoardController >> registPOSTNotice ERROR");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-            log.info("BoardController >> registPOST END");
+            log.info(bindingResult.getAllErrors());
+            log.info("BoardController >> registPOSTNotice END");
             log.info("============================================");
             return "redirect:/notice/regist";
         }
+
+
+        String saveFileName = "";
+
+        if(multipartFile!= null && !multipartFile.isEmpty()) {
+            saveFileName = FileUploadUtil.saveFile(multipartFile, "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\notice");
+            boardDTO.setOrgFileName(multipartFile.getOriginalFilename());
+            boardDTO.setSaveFileName(saveFileName);
+        }
+
+
         int result_idx = boardService.regist(boardDTO);
         redirectAttributes.addFlashAttribute("result_idx", result_idx);
 
 
         log.info("boardDTO : {}", boardDTO);
         log.info("result_idx : {}" , result_idx);
-        log.info("BoardController >> registPOST END");
+        log.info("BoardController >> registPOSTNotice END");
         log.info("=================================================");
 
         return "redirect:/notice/list";
@@ -212,28 +282,50 @@ public class BoardController {
     }
 
     @PostMapping("/notice/modify")
-    public String modifyPOSTNotice(@Valid BoardDTO boardDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+    public String modifyPOSTNotice(@Valid BoardDTO boardDTO,
+                             BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes,
+                             @RequestParam(value = "upload", defaultValue = "") String upload,
+                             @RequestParam(value = "upload2", defaultValue = "") String upload2,
+                             @RequestParam("file") MultipartFile file,
+                             Model model) {
         log.info("=================================================");
-        log.info("BoardController >> modifyPOST START");
+        log.info("BoardController >> modifyPOSTNotice START");
 
-        boardDTO.setBoardType("b");
+        boardDTO.setBoardType("n");
         if (bindingResult.hasErrors()) {
-            log.info("BoardController >> modifyPOST ERROR");
+            log.info("BoardController >> modifyPOSTNotice ERROR");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-            log.info("BoardController >> modifyPOST END");
+            log.info("BoardController >> modifyPOSTNotice END");
             log.info("============================================");
             return "redirect:/notice/modify?idx=" + boardDTO.getIdx();
         }
+
+
+        String saveFileName = "";
+
+        if(file!= null && !file.isEmpty()) {
+            saveFileName = FileUploadUtil.saveFile(file, "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\notice");
+            boardDTO.setOrgFileName(file.getOriginalFilename());
+            boardDTO.setSaveFileName(saveFileName);
+        } else {
+            boardDTO.setOrgFileName(upload);
+            boardDTO.setSaveFileName(upload2);
+        }
+
+
+
         int result_idx = boardService.modify(boardDTO);
         redirectAttributes.addFlashAttribute("result_idx", result_idx);
 
 
 
-        log.info("BoardController >> modifyPOST END");
+        log.info("BoardController >> modifyPOSTNotice END");
         log.info("=================================================");
 
         return "redirect:/notice/view?idx=" + boardDTO.getIdx();
     }
+    
 
 
     @PostMapping("/notice/delete")

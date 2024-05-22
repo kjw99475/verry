@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -28,9 +29,9 @@ public class BoardDTO {
     private String orgFileName;
     private String saveFileName;
 
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime regDate;
-    @JsonIgnore
+
+    private LocalDate regDate;
+
     private LocalDateTime modifyDate;
 
 }
