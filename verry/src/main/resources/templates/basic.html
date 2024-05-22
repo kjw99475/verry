@@ -59,21 +59,21 @@
 <!-- Humberger End -->
 
 <!-- Header Section Begin -->
-<header class="header position-sticky bg-white" style="top:0; z-index: 10000;">
+<header class="header position-sticky bg-white d" style="top:0; z-index: 98;">
     <div class="container">
         <div class="row">
             <div class="col-lg-3">
                 <div class="header__logo">
-                    <a href="#"><img src="/img/verrylogo.png" alt=""></a>
+                    <a th:href="@{/basic}"><img src="/img/verrylogo.png" alt=""></a>
                 </div>
             </div>
             <div class="col-lg-6">
                 <nav class="header__menu">
                     <ul>
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#">Shop</a></li>
-                        <li><a href="#">Notice</a></li>
-                        <li><a href="#">Community</a></li>
+                        <li class="active"><a th:href="@{/basic}">Home</a></li>
+                        <li><a th:href="@{trade/list}">Shop</a></li>
+                        <li><a th:href="@{notice/list}">Notice</a></li>
+                        <li><a th:href="@{/bbs/list}">Community</a></li>
                     </ul>
                 </nav>
             </div>
@@ -101,7 +101,7 @@
                 <div class="breadcrumb__text hero__text">
                     <span>FRUIT FRESH</span>
                     <h2>Vegetable <br />100% Organic</h2>
-                    <a href="#" class="primary-btn">SHOP NOW</a>
+                    <a th:href="@{trade/list}" class="primary-btn">SHOP NOW</a>
                 </div>
             </div>
         </div>
@@ -119,68 +119,24 @@
                 <div class="featured__controls">
                     <ul>
                         <li class="active" data-filter="*">All</li>
-                        <li data-filter=".category1">Category1</li>
-                        <li data-filter=".category2">Category2</li>
-                        <li data-filter=".category3">Category3</li>
-                        <li data-filter=".category4">Category4</li>
-                        <li data-filter=".category5">Category5</li>
-                        <li data-filter=".category6">Category6</li>
+                        <li data-filter=".category1">category1</li>
+                        <li data-filter=".category2">category2</li>
+                        <li data-filter=".category3">category3</li>
+                        <li data-filter=".category4">category4</li>
+                        <li data-filter=".category5">category5</li>
+                        <li data-filter=".category6">category6</li>
                     </ul>
                 </div>
             </div>
         </div>
         <div class="row featured__filter">
-            <div class="col-lg-3 col-md-4 col-sm-6 mix category1">
+            <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${tradeDTO.dtoList}" th:classappend="${content.category}" th:if="${content.category}">
                 <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="/img/featured/feature-1.jpg"></div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
+                    <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-1.jpg">
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix category2">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="/img/featured/feature-2.jpg"></div>
                     <div class="featured__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix category3">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="/img/featured/feature-3.jpg"></div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix category4">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="/img/featured/feature-4.jpg"></div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix category5">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="/img/featured/feature-5.jpg"></div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix category6">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="/img/featured/feature-6.jpg"></div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
+                        <h6><a th:href="@{/trade/view(idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
+                        <h5>[[${#numbers.formatCurrency(content.price)}]]</h5>
                     </div>
                 </div>
             </div>
@@ -189,112 +145,45 @@
 </section>
 <!-- Featured Section End -->
 
-<!-- Blog Section Begin -->
-<section class="from-blog spad">
+<section class="from-blog spad d-flex text-left">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
+        <div>
+            <div>
                 <div class="section-title from-blog__title">
                     <h2>Notice</h2>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-6">
-                <div class="blog__item">
-                    <div class="blog__item__text">
-                        <ul>
-                            <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                            <li><i class="fa fa-comment-o"></i> 5</li>
-                        </ul>
-                        <h5><a href="#">Cooking tips make cooking simple</a></h5>
-                        <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6">
-                <div class="blog__item">
-                    <div class="blog__item__text">
-                        <ul>
-                            <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                            <li><i class="fa fa-comment-o"></i> 5</li>
-                        </ul>
-                        <h5><a href="#">6 ways to prepare breakfast for 30</a></h5>
-                        <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6">
-                <div class="blog__item">
-                    <div class="blog__item__text">
-                        <ul>
-                            <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                            <li><i class="fa fa-comment-o"></i> 5</li>
-                        </ul>
-                        <h5><a href="#">Visit the clean farm in the US</a></h5>
-                        <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
-                    </div>
+        <div class="flex-column">
+            <div th:each="content:${noticeDTO}">
+                <div>
+                    <a th:href="@{/notice/view(idx=${content.idx})}">
+                        <p>
+                            <i class="fa fa-calendar-o"></i> [[${#strings.substring(content.regDate, 0, 10)}]]
+                            <i class="fa fa-comment-o ml-3"></i> [[${#strings.abbreviate(content.title, 30)}]]
+                        </p>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-</section>
-<!-- Blog Section End -->
-
-<!-- Blog Section Begin -->
-<section class="from-blog spad">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
+        <div>
+            <div>
                 <div class="section-title from-blog__title">
                     <h2>Community</h2>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-6">
-                <div class="blog__item">
-                    <div class="blog__item__pic">
-                        <img src="/img/blog/blog-1.jpg" alt="">
-                    </div>
-                    <div class="blog__item__text">
-                        <ul>
-                            <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                            <li><i class="fa fa-comment-o"></i> 5</li>
-                        </ul>
-                        <h5><a href="#">Cooking tips make cooking simple</a></h5>
-                        <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6">
-                <div class="blog__item">
-                    <div class="blog__item__pic">
-                        <img src="/img/blog/blog-2.jpg" alt="">
-                    </div>
-                    <div class="blog__item__text">
-                        <ul>
-                            <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                            <li><i class="fa fa-comment-o"></i> 5</li>
-                        </ul>
-                        <h5><a href="#">6 ways to prepare breakfast for 30</a></h5>
-                        <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6">
-                <div class="blog__item">
-                    <div class="blog__item__pic">
-                        <img src="/img/blog/blog-3.jpg" alt="">
-                    </div>
-                    <div class="blog__item__text">
-                        <ul>
-                            <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                            <li><i class="fa fa-comment-o"></i> 5</li>
-                        </ul>
-                        <h5><a href="#">Visit the clean farm in the US</a></h5>
-                        <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
-                    </div>
+        <div class="flex-column">
+            <div th:each="content:${boardDTO}">
+                <div>
+                    <a th:href="@{/bbs/view(idx=${content.idx})}">
+                        <p>
+                            <i class="fa fa-calendar-o"></i> [[${#strings.substring(content.regDate, 0, 10)}]]
+                            <i class="fa fa-comment-o ml-3"></i> [[${#strings.abbreviate(content.title, 30)}]]
+                        </p>
+                    </a>
                 </div>
             </div>
         </div>
@@ -310,7 +199,7 @@
             <div class="col-lg-4 col-md-6 col-sm-6">
                 <div class="footer__about">
                     <div class="footer__about__logo">
-                        <a href="#"><img style="filter: grayscale(100%); height: 40px;" src="/img/verrylogo.png" alt=""></a>
+                        <a th:href="@{/basic}"><img style="filter: grayscale(100%); height: 40px;" src="/img/verrylogo.png" alt=""></a>
                     </div>
                     <ul class="w-100">
                         <li><span class="font-weight-bold">(주)베리마켓</span> 서울특별시 금천구 디지털로9길 23</li>
@@ -323,10 +212,10 @@
                 <div class="footer__widget">
                     <h6>Useful Links</h6>
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Shop</a></li>
-                        <li><a href="#">Notice</a></li>
-                        <li><a href="#">Community</a></li>
+                        <li><a th:href="@{/basic}">Home</a></li>
+                        <li><a th:href="@{trade/list}">Shop</a></li>
+                        <li><a th:href="@{notice/list}">Notice</a></li>
+                        <li><a th:href="@{/bbs/list}">Community</a></li>
                     </ul>
                     <ul>
                         <li><a href="#">이용약관</a></li>
