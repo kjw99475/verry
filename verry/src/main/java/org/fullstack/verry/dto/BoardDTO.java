@@ -3,6 +3,7 @@ package org.fullstack.verry.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,8 +19,10 @@ import java.time.LocalDateTime;
 public class BoardDTO {
     private int idx;
     @NotEmpty
+    @Size(min=1, max=100)
     private String title;
     @NotEmpty
+    @Size(min=1, max=2000)
     private String content;
     @NotEmpty
     private String memberId;
