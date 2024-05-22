@@ -19,13 +19,18 @@
 
                 <div class="row">
                     <div class="col-lg-12 col-md-12">
-                        <input type="text" readonly placeholder="제목을 입력해주세요" id="title" name="title" th:value="${boardDTO.title}" style="border: 0px; border-bottom: 1px solid #ebebeb;">
+                        <input type="text" readonly  id="title" name="title" th:value="${boardDTO.title}" style="border: 0px; border-bottom: 1px solid #ebebeb;">
                     </div>
 
-                    <div class="col-lg-12">
-                        <div class="col-lg-12 text-start">
-                            <div readonly id="content" name="content" th:utext="${boardDTO.content}"></div>
-                        </div>
+                    <div class="col-lg-12 col-md-12">
+                        <label>작성자 : <input type="text" readonly  id="memberId" name="memberId" th:value="${boardDTO.memberId}" style="width:fit-content; border: 0px; border-bottom: 1px solid #ebebeb;"></label>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12">
+                        <label>등록일 : <input type="text" readonly  id="regDate" name="regDate" th:value="${#strings.toString(boardDTO.regDate).substring(0,10)}" style="width:fit-content; border: 0px; border-bottom: 1px solid #ebebeb;"></label>
+                    </div>
+
+                    <div class="col-lg-12"  th:utext="${boardDTO.content}">
                     </div>
 
 
@@ -79,6 +84,112 @@
 
         </div>
     </div>
+
+
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="my-4">
+                <button class="btn btn-info registReplyBtn">댓글 등록</button>
+            </div>
+            <ul class="list-group replyList">
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col">
+            <ul class="pagination replyPaging">
+
+            </ul>
+        </div>
+    </div>
+<!--    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>-->
+<!--    <script src="/static/js/reply.js"></script>-->
 </div>
+
+<!--<script layout:fragment="script" th:inline="javascript">-->
+<!--    const bbs_idx = [[${boardDTO.idx}]];-->
+<!--    const replyList = document.querySelector(".replyList");-->
+<!--    const replyPaging = document.querySelector(".replyPaging");-->
+
+<!--    function printReplyArea(page, page_size, goLast) {  //비동기 통신으로 갖고와-->
+<!--        getReplyList({bbs_idx, page, page_size, goLast})-->
+<!--            .then(-->
+<!--                data=> {-->
+<!--                    console.log(data);-->
+<!--                    printReplyList(data.dtoList);-->
+<!--                    printPaging(data.pageRequestDTO);-->
+<!--                }-->
+<!--            )-->
+<!--            .catch(e=>{console.log(e);});   //try-catch와 같아-->
+<!--    }-->
+
+<!--    printReplyArea(1, 10);-->
+
+<!--    function printReplyList(dtoList) {-->
+<!--        let replyLi = "";-->
+<!--        let reDate = "";-->
+<!--        if (dtoList && dtoList.length > 0) {-->
+<!--            for (const dto of dtoList) {-->
+<!--                reDate = (dto.regDate != null && dto.regDate != "" && dto.regDate != undefined && dto.regDate != "undefined" ? dto.regDate.toString().substring(0, 10) : "-");-->
+<!--                replyLi += `<li class="list-group-item d-flex replyItem">-->
+<!--                        <span class="col-2">${dto.boardReplyIdx}</span>-->
+<!--                        <span class="col-6" data-idx="${dto.boardReplyIdx}">${dto.comment}-->
+<!--                                    <span class="badge progress-bar-success replyDelete"-->
+<!--                                                style="background-color: #0a53be"-->
+<!--                                                onclick="replyDeleteOK(${dto.boardReplyIdx})">X</span>-->
+<!--                        </span>-->
+<!--                        <span class="col-2">${dto.memberId}</span>-->
+<!--                        <span class="col-2">${reDate}</span>-->
+<!--                        </li>`;-->
+<!--            }-->
+
+<!--        } else {-->
+<!--            replyLi += `<li class="list-group-item d-flex replyItem"> <span class="col-12">등록된 댓글이 없습니다.</span></li>`;-->
+<!--        }-->
+<!--        replyList.innerHTML = replyLi;-->
+<!--    }-->
+
+<!--    function printPaging(data) {-->
+<!--        console.log("printPaging >>> " , data);-->
+
+<!--        let pagePrevLi = "";-->
+<!--        let pageNextLi = "";-->
+<!--        let pageLiList = "";-->
+<!--        let pageArea = "";-->
+
+<!--        if (data.prev_page_flag) {-->
+<!--            pagePrevLi += `<li class="page-item"><a class="page-link" data-page="${data.page_block_start-10}"onclick="printReplyArea(${data.page_block_start - 10}, 10)">PREV</a></li>`-->
+<!--        }-->
+<!--        else {-->
+<!--            pagePrevLi += `<li class="page-item"><a class="page-link" data-page="${data.page_block_start-10}"  >PREV</a></li>`-->
+<!--        }-->
+
+<!--        for (let i=data.page_block_start; i<=data.page_block_end; i++) {-->
+<!--            if (data.page == i) {-->
+<!--                pageLiList += `<li class="page-item active"> <a class="page-link" data-page="${i}" >${i}</a> </li>`-->
+<!--            } else {-->
+<!--                pageLiList += `<li class="page-item"> <a class="page-link" data-page="${i}" onclick="printReplyArea(${i}, 10)">${i}</a> </li>`-->
+<!--            }-->
+<!--        }-->
+
+<!--        if (data.next_page_flag) {-->
+<!--            pageNextLi += `<li class="page-item"><a class="page-link" data-page="${data.page_block_end+1}" onclick="printReplyArea(${data.page_block_end + 1}, 10)">NEXT</a></li>`-->
+<!--        }-->
+<!--        else {-->
+<!--            pageNextLi += `<li class="page-item"><a class="page-link" data-page="${data.page_block_start+1}"  >NEXT</a></li>`-->
+<!--        }-->
+
+<!--        pageArea = pagePrevLi + pageLiList + pageNextLi;-->
+<!--        replyPaging.innerHTML = pageArea;-->
+<!--    }-->
+
+<!--    function replyDeleteOK(idx) {-->
+<!--        replyDelete(idx);-->
+<!--        printReplyArea(1, 10, "true");     //맨 마지막 페이지에 있는 하나를 삭제했을 때 페이징 오류가 생기는거 방지하기 위해 1페이지로 이동!-->
+<!--    }-->
+<!--</script>-->
+
 </body>
 </html>
