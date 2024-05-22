@@ -14,7 +14,7 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Integer>, Bo
 
     //List<BoardEntity> findAllByBoardType(String type);
 
-    @Query(value = "select * from tbl_board where board_type=:bType limit :start, :end", nativeQuery = true)
+    @Query(value = "select * from tbl_board where board_type=:bType order by idx desc limit :start, :end ", nativeQuery = true)
     List<BoardEntity> findAllByBoardTypeAndLimit(String bType, int start, int end);
 
     int countAllByBoardType(String boardType);
