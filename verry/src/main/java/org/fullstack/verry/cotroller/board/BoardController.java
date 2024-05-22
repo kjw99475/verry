@@ -106,7 +106,7 @@ public class BoardController {
         log.info("=================================================");
         log.info("BoardController >> modifyPOST START");
 
-        boardDTO.setBoardType("b");
+//        boardDTO.setBoardType("b");
         if (bindingResult.hasErrors()) {
             log.info("BoardController >> modifyPOST ERROR");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
@@ -142,12 +142,12 @@ public class BoardController {
         int block_start = (int)(Math.ceil(block / (double)10) -1 ) * 10 + 1;
         int total_count = boardService.countAll(type);
         int block_end = 0;
-        if (total_count < 1) {
+        if (total_count/10 < 1) {
             block_end = 1;
         } else {
             block_end = (int)Math.ceil(block/(double)10)*10;
             block_end = (block_end < 1 ? 1 : block_end);
-            block_end = (total_count > block_end ? block_end : total_count);
+            block_end = (total_count/10 +1 > block_end ? block_end : total_count/10 +1);
         }
 
         log.info("pageResponseDTO : {}", pageResponseDTO);
