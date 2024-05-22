@@ -125,9 +125,10 @@ public class BoardController {
         return "redirect:/bbs/view?idx=" + boardDTO.getIdx();
     }
 
-    @GetMapping("/bbs/delete")
-    public void delete(int idx, Model model) {
+    @PostMapping("/bbs/delete")
+    public String delete(int idx, RedirectAttributes redirectAttributes) {
         boardService.delete(idx);
+        return "redirect:/bbs/list";
     }
 
 
@@ -235,8 +236,9 @@ public class BoardController {
     }
 
 
-    @GetMapping("/notice/delete")
-    public void deleteNotice(int idx, Model model) {
+    @PostMapping("/notice/delete")
+    public String deleteNotice(int idx, RedirectAttributes redirectAttributes) {
         boardService.delete(idx);
+        return "redirect:/notice/list";
     }
 }
