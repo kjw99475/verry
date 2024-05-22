@@ -30,7 +30,7 @@ public class BoardController {
         log.info("BoardController >> list START");
 
         String type = "b";
-        List<BoardDTO> pageResponseDTO = boardService.list(type, (block-1)*10);
+        List<BoardDTO> pageResponseDTO = boardService.list(type, (block-1)*10, 10);
         int block_start = (int)(Math.ceil(block / (double)10) -1 ) * 10 + 1;
         int total_count = boardService.countAll(type);
         int block_end = 0;
@@ -77,6 +77,7 @@ public class BoardController {
         if (bindingResult.hasErrors()) {
             log.info("BoardController >> registPOST ERROR");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            log.info(bindingResult.getAllErrors());
             log.info("BoardController >> registPOST END");
             log.info("============================================");
             return "redirect:/bbs/regist";
@@ -136,7 +137,7 @@ public class BoardController {
         log.info("BoardController >> list START");
 
         String type = "n";
-        List<BoardDTO> pageResponseDTO = boardService.list(type, (block-1)*10);
+        List<BoardDTO> pageResponseDTO = boardService.list(type, (block-1)*10, 10);
         int block_start = (int)(Math.ceil(block / (double)10) -1 ) * 10 + 1;
         int total_count = boardService.countAll(type);
         int block_end = 0;
