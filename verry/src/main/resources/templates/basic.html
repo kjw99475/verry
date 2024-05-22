@@ -81,8 +81,8 @@
             </div>
             <div class="col-lg-3 header__menu">
                 <ul>
-                    <li th:if="${session.memberId}"><a href="#"><i class="fa fa-user"></i> Mypage</a></li>
-                    <li th:if="${session.memberId}"><a href="#">Logout</a></li>
+                    <li th:if="${session.memberId}"><a th:href="@{member/modify}"><i class="fa fa-user"></i> Mypage</a></li>
+                    <li th:if="${session.memberId}"><a th:href="@{member/logout}">Logout</a></li>
                     <li th:unless="${session.memberId}"><a th:href="@{/member/login}"><i class="fa fa-user"></i> Login</a></li>
                 </ul>
             </div>
