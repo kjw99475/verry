@@ -52,8 +52,6 @@ public class TradeReplyController {
         Map<String, Integer> map = new HashMap<>();
         map.put("idx", trade_reply_idx);
 
-        log.info("map : {}", map);
-
         return map;
     }
 }

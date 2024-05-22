@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaef/layout"
-      layout:decorate="~{layout/basic.html}">
+      layout:decorate="~{/basic.html}">
 
 <div layout:fragment="content">
     <!-- Breadcrumb Section Begin -->
@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="breadcrumb__text">
-                        <h2>Vegetable’s Package</h2>
+                        <h2>중고상품 상세</h2>
                         <div class="breadcrumb__option">
                             <a href="./index.html">Home</a>
                             <a href="./index.html">Vegetables</a>
@@ -72,7 +72,10 @@
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <div class="my-4">
-                                <button class="btn btn-info registReplyBtn">댓글 등록</button>
+                                <form action="/trade/replies/regist" method="post">
+                                    <textarea name="comment" id="comment" cols="150" rows="5" style="resize: none;"></textarea>
+                                    <button type="button" class="btn btn-info registReplyBtn" th:onclick="'replyRegistOK('+${tradeDTO.tradeIdx}+')'">댓글 등록</button>
+                                </form>
                             </div>
                             <ul class="list-group replyList">
 
@@ -228,6 +231,11 @@
 
     function replyDeleteOK(idx) {
         replyDelete(idx);
+        printReplyArea(1, 10, "true");
+    }
+
+    function replyRegistOK(idx) {
+        replyRegist(idx);
         printReplyArea(1, 10, "true");
     }
 </script>

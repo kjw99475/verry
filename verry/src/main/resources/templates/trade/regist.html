@@ -1,105 +1,87 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaef/layout"
+      layout:decorate="~{/basic.html}">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Ogani Template">
-    <meta name="keywords" content="Ogani, unica, creative, html">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ogani | Template</title>
-
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
-
-    <!-- Css Styles -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="/css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
-</head>
-
-<body>
-<!-- Page Preloder -->
-<div id="preloder">
-    <div class="loader"></div>
-</div>
-
-<!-- Breadcrumb Section Begin -->
-<section class="breadcrumb-section set-bg" data-setbg="/img/breadcrumb.jpg">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <div class="breadcrumb__text">
-                    <h2>Regist</h2>
-                    <div class="breadcrumb__option">
-                        <a href="./index.html">Home</a>
-                        <span>Product Regist</span>
+<div layout:fragment="content">
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="/img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Regist</h2>
+                        <div class="breadcrumb__option">
+                            <a href="./index.html">Home</a>
+                            <span>Product Regist</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<!-- Breadcrumb Section End -->
+    </section>
+    <!-- Breadcrumb Section End -->
 
-<!-- Checkout Section Begin -->
-<section class="checkout spad">
-    <div class="container">
-        <div class="checkout__form">
-            <h4>중고상품 등록</h4>
-            <form name="frmRegist" id="frmRegist" action="/trade/regist" method="post" enctype="multipart/form-data">
-                <div class="row">
-                    <div class="col-lg-12 col-md-6">
+    <!-- Checkout Section Begin -->
+    <section class="checkout spad">
+        <div class="container">
+            <div class="checkout__form">
+                <h4>중고상품 등록</h4>
+                <form name="frmRegist" id="frmRegist" action="/trade/regist" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-6">
 
-                        <div class="checkout__input">
-                            <p>상품 사진<span>*</span></p>
-                            <input type="file" name="file" id="file" accept=".jpg, .png">
-                        </div>
-                        <div class="checkout__input">
-                            <p>제목<span>*</span></p>
-                            <input type="text" name="title" id="title">
-                        </div>
-                        <div class="checkout__input">
-                            <p>상품 설명<span>*</span></p>
-                            <textarea name="content" id="content" cols="150" rows="8"></textarea>
-                        </div>
-                        <div class="checkout__input">
-                            <p>가격<span>*</span></p>
-                            <input type="text" name="price" id="price">
-                        </div>
-                        <div class="checkout__input">
-                            <p>카테고리<span>*</span></p>
-                            <select name="category">
-                                <option value="category1">카테고리1</option>
-                                <option value="category2">카테고리2</option>
-                                <option value="category3">카테고리3</option>
-                                <option value="category4">카테고리4</option>
-                                <option value="category5">카테고리5</option>
-                                <option value="category6">카테고리6</option>
-                            </select>
+                            <div class="checkout__input">
+                                <p>상품 사진<span>*</span></p>
+                                <input type="file" name="file" id="file" accept=".jpg, .png">
+                            </div>
+                            <div class="checkout__input">
+                                <p>제목<span>*</span></p>
+                                <input type="text" name="title" id="title">
+                            </div>
+                            <div class="checkout__input">
+                                <p>상품 설명<span>*</span></p>
+                                <textarea name="content" id="content" cols="150" rows="8"></textarea>
+                            </div>
+                            <div class="checkout__input">
+                                <p>가격<span>*</span></p>
+                                <input type="text" name="price" id="price">
+                            </div>
+                            <div class="checkout__input">
+                                <p>카테고리<span>*</span></p>
+                                <select name="category">
+                                    <option value="category1">카테고리1</option>
+                                    <option value="category2">카테고리2</option>
+                                    <option value="category3">카테고리3</option>
+                                    <option value="category4">카테고리4</option>
+                                    <option value="category5">카테고리5</option>
+                                    <option value="category6">카테고리6</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <button type="submit" class="site-btn">등록</button>
-            </form>
+                    <button type="submit" class="site-btn">등록</button>
+                </form>
+            </div>
         </div>
-    </div>
-</section>
-<!-- Checkout Section End -->
+    </section>
+    <!-- Checkout Section End -->
+</div>
 
-<!-- Js Plugins -->
-<script src="/js/jquery-3.3.1.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/jquery.nice-select.min.js"></script>
-<script src="/js/jquery-ui.min.js"></script>
-<script src="/js/jquery.slicknav.js"></script>
-<script src="/js/mixitup.min.js"></script>
-<script src="/js/owl.carousel.min.js"></script>
-<script src="/js/main.js"></script>
-</body>
-</html>
+<script layout:fragment="script" th:inline="javascript">
+    const errors = [[${errors}]];
+    console.log("errors : {}", errors);
+
+    let errMsg = "";
+    if (errors) {
+        for (let i =0; i<errors.length; i++) {
+            console.log(`${errors[i].code}`);
+            // if(`${errors[i]}.code} === "typeMismatch"`) {
+            //     // alert("미스매치");
+            //     `${errors[i].defaultMessage} = "테스트"`;
+            // }
+        errMsg += `${errors[i].defaultMessage}\n`;
+    }
+    alert(errMsg);
+    }
+</script>
