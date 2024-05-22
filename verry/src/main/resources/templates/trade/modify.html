@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaef/layout"
+      layout:decorate="~{/basic.html}">
+
+<div layout:fragment="content">
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="/img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Regist</h2>
+                        <div class="breadcrumb__option">
+                            <a href="./index.html">Home</a>
+                            <span>Product Regist</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Checkout Section Begin -->
+    <section class="checkout spad">
+        <div class="container">
+            <div class="checkout__form">
+                <h4>중고상품 수정</h4>
+                <form name="frmModify" id="frmModify" action="/trade/modify" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="tradeIdx" th:value="${tradeDTO.tradeIdx}"/>
+                    <input type="hidden" name="orgFileName" th:value="${tradeDTO.orgFileName}"/>
+                    <input type="hidden" name="saveFileName" th:value="${tradeDTO.saveFileName}"/>
+                    <div class="row mb-3">
+                        <div class="col-lg-12 col-md-6">
+                            <div class="checkout__input">
+                                <p>상품 사진<span>*</span></p>
+                                <input type="file" name="file" id="file" accept=".jpg, .png">
+                            </div>
+                            <div class="checkout__input">
+                                <p>제목<span>*</span></p>
+                                <input type="text" name="title" id="title" th:value="${tradeDTO.title}">
+                            </div>
+                            <div class="checkout__input">
+                                <p>상품 설명<span>*</span></p>
+                                <textarea name="content" id="content" cols="150" rows="8">[[${tradeDTO.content}]]</textarea>
+                            </div>
+                            <div class="checkout__input">
+                                <p>가격<span>*</span></p>
+                                <input type="text" name="price" id="price" th:value="${tradeDTO.price}">
+                            </div>
+                            <div class="checkout__input">
+                                <p>카테고리<span>*</span></p>
+                                <select name="category">
+                                    <option value="category1" th:selected="${tradeDTO.category == 'category1'}">카테고리1</option>
+                                    <option value="category2" th:selected="${tradeDTO.category == 'category2'}">카테고리2</option>
+                                    <option value="category3" th:selected="${tradeDTO.category == 'category3'}">카테고리3</option>
+                                    <option value="category4" th:selected="${tradeDTO.category == 'category4'}">카테고리4</option>
+                                    <option value="category5" th:selected="${tradeDTO.category == 'category5'}">카테고리5</option>
+                                    <option value="category6" th:selected="${tradeDTO.category == 'category6'}">카테고리6</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-lg btn-success">수정</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- Checkout Section End -->
+</div>

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Log4j2
 @Controller
 @RequiredArgsConstructor
@@ -39,12 +41,10 @@ public class TradeController {
 
     @PostMapping("/regist")
     public String registPost(TradeDTO tradeDTO, @RequestParam("file") MultipartFile multipartFile) {
-        // TODO: 다중 파일 업로드?
-
         String saveFileName = "";
 
         if(!multipartFile.isEmpty()) {
-            saveFileName = FileUploadUtil.saveFile(multipartFile, "trade");
+            saveFileName = FileUploadUtil.saveFile(multipartFile, "product");
             tradeDTO.setOrgFileName(multipartFile.getOriginalFilename());
             tradeDTO.setSaveFileName(saveFileName);
         } else {
@@ -58,5 +58,60 @@ public class TradeController {
         } else {
             return "redirect:/trade/regist";
         }
+    }
+
+    @GetMapping("/view")
+    public void view(int trade_idx, PageRequestDTO pageRequestDTO, Model model) {
+        TradeDTO tradeDTO = tradeService.view(trade_idx);
+
+        List<TradeDTO> relatedList = tradeService.relatedProducts(tradeDTO.getCategory(), trade_idx);
+
+        model.addAttribute("tradeDTO", tradeDTO);
+        model.addAttribute("relatedList", relatedList);
+    }
+
+    @GetMapping("/modify")
+    public void modify(int trade_idx, Model model) {
+        TradeDTO tradeDTO = tradeService.view(trade_idx);
+
+        model.addAttribute("tradeDTO", tradeDTO);
+    }
+
+    @PostMapping("/modify")
+    public String modifyPost(TradeDTO tradeDTO, @RequestParam("file") MultipartFile multipartFile) {
+        String saveFileName = "";
+
+        if(!multipartFile.isEmpty()) {
+            saveFileName = FileUploadUtil.saveFile(multipartFile, "product");
+            FileUploadUtil.deleteFile(tradeDTO.getSaveFileName(), "product");
+            tradeDTO.setOrgFileName(multipartFile.getOriginalFilename());
+            tradeDTO.setSaveFileName(saveFileName);
+        } else {
+            // 기존 파일 유지
+            tradeDTO.setOrgFileName(tradeDTO.getOrgFileName());
+            tradeDTO.setSaveFileName(tradeDTO.getSaveFileName());
+        }
+
+        int result = tradeService.modify(tradeDTO);
+
+        if(result > 0) {
+            return "redirect:/trade/view?trade_idx="+tradeDTO.getTradeIdx();
+        } else {
+            return "redirect:/trade/modify?trade_idx="+tradeDTO.getTradeIdx();
+        }
+    }
+
+    @PostMapping("/delete")
+    public String delete(int tradeIdx) {
+        log.info("trade_idx : {}", tradeIdx);
+
+        TradeDTO dto = tradeService.view(tradeIdx);
+        if(dto != null) {
+            FileUploadUtil.deleteFile(dto.getSaveFileName(), "product");
+        }
+
+        tradeService.deleteOne(tradeIdx);
+
+        return "redirect:/trade/list";
     }
 }

@@ -18,6 +18,9 @@
                 'alignleft aligncenter alignright alignjustify | ' +
                 'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
         });
+
+
+
     </script>
 </head>
 <body>
@@ -61,5 +64,17 @@
     </div>
 </div>
 <script  src="/resources/resources/jquery/jquery-3.7.1.min.js"></script>
+<script th:fragment="script"  th:inline="javascript">
+    const errors = [[${errors}]];
+    console.log("errors : {}", errors);
+
+    let errMsg = "";
+    if (errors) {
+        for (let i =0; i<errors.length; i++) {
+            errMsg += `${errors[i].field} 은(는) ${errors[i].code}\n`;
+        }
+        alert(errMsg);
+    }
+</script>
 </body>
 </html>
