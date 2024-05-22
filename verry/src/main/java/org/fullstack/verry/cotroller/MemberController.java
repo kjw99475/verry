@@ -25,11 +25,8 @@ public class MemberController {
 
     @GetMapping("/join")
     public void join(MemberDTO memberDTO,
-//                     List<Object> errors,
                      Model model){
         log.info("memberDTO : {}",memberDTO.toString());
-//        log.info("errors : {}",errors);
-//        model.addAttribute("errors", errors);
         model.addAttribute("memberDTO",memberDTO);
     }
     @PostMapping("/join")
