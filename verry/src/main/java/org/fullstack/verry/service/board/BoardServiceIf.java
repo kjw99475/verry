@@ -11,6 +11,6 @@ public interface BoardServiceIf {
     BoardDTO view(int idx);
     int modify(BoardDTO boardDTO);
     void delete(int idx);
-    List<BoardDTO> list(String type, int block);
+    List<BoardDTO> list(String type, int block, int end);
     int countAll(String type);
 }

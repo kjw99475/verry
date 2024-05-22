@@ -55,8 +55,8 @@ public class BoardServiceImpl implements BoardServiceIf{
     }
 
     @Override
-    public List<BoardDTO> list(String type, int block) {
-        List<BoardDTO> dtoList = boardRepository.findAllByBoardTypeAndLimit(type, block).stream().map(dto -> modelMapper.map(dto, BoardDTO.class)).collect(Collectors.toList());
+    public List<BoardDTO> list(String type, int block, int end) {
+        List<BoardDTO> dtoList = boardRepository.findAllByBoardTypeAndLimit(type, block, end).stream().map(dto -> modelMapper.map(dto, BoardDTO.class)).collect(Collectors.toList());
         return dtoList;
 
 //        String[] types = pageRequestDTO.getSearch_types();
