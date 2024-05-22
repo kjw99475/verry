@@ -30,6 +30,7 @@
 <!-- Shoping Cart Section Begin -->
 <section class="shoping-cart spad">
     <div class="container">
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="shoping__cart__table">
@@ -45,18 +46,20 @@
                         </thead>
 
                         <tbody >
-                        <tr style="height:50px;">
+                        <tr style="height:50px;"  th:each="dto:${pageResponseDTO}">
                             <td class="shoping__cart__total">
-                                35
+                                [[${dto.idx}]]
                             </td>
                             <td class="shoping__cart__item">
-                                <h5>글 제목</h5>
+                                <a th:href="|@{/bbs/view(idx=${dto.idx})}|">
+                                    <h5>[[${dto.title}]]</h5>
+                                </a>
                             </td>
                             <td class="shoping__cart__quantity">
-                                홍길동 작성자 글자수 테스트
+                                [[${dto.memberId}]]
                             </td>
                             <td class="shoping__cart__quantity">
-                                2024-05-05
+                                [[${dto.regDate}]]
                             </td>
 
 
@@ -68,6 +71,27 @@
             </div>
         </div>
 
+
+<!--        =================== 페이징 영역 start ================-->
+        <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group product__pagination" role="group" aria-label="First group">
+
+                <a th:href='@{/bbs/list(block=${block_start})}'>
+                    <i class="fa fa-long-arrow-left" ></i>
+                </a>
+
+                <th:block th:each="i : ${#numbers.sequence(block_start, block_end)}">
+                    <a th:href='@{/bbs/list(block=${i})}'>[[${i}]]</a>
+                </th:block>
+
+                <a th:href='@{/bbs/list(block=${block_end})}'>
+                    <i class="fa fa-long-arrow-right" ></i>
+                </a>
+
+            </div>
+        </div>
+
+<!--        =================== 페이징 영역 end ================-->
 
     </div>
 </section>
