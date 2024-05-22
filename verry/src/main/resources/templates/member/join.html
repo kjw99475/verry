@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        function address() {
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    document.getElementById("zipcode").value=data.zonecode;
+                    document.getElementById("addr").value = data.address;
+                }
+            }).open();
+        }
+    </script>
+</head>
+<body>
+<div th:if="${memberDTO.memberId != null}">
+    <div>회원 가입 실패</div>
+</div>
+<form method="post" action="/member/join">
+    <label for="memberId">아이디</label>
+    <input type="text" name="memberId" id="memberId"/>
+    <span id="div_err_memberId"></span>
+    <br>
+    <label for="pwd">비번</label>
+    <input type="password" name="pwd" id="pwd"/>
+    <span id="div_err_pwd"></span>
+    <br>
+    <label for="name">이름</label>
+    <input type="text" name="name" id="name"/>
+    <span id="div_err_name"></span>
+    <br>
+    <label for="birthday">생년월일</label>
+    <input type="date" name="birthday" id="birthday"/>
+    <br>
+    <label for="email">이메일</label>
+    <input type="email" name="email" id="email"/>
+    <br>
+    <label for="zipcode">우편번호</label>
+    <input type="text" name="zipcode" id="zipcode" onclick="address()"/>
+    <br>
+    <label for="addr">주소</label>
+    <input type="text" name="addr" id="addr" onclick="address()"/>
+    <br>
+    <label for="addrDetail">상세주소</label>
+    <input type="text" name="addrDetail" id="addrDetail"/>
+    <br>
+    <input type="submit" value="등록">
+</form>
+<script th:inline="javascript">
+    const serverValidResult = {};
+    let errors = [[${errors}]];
+    errors.forEach(function(item){
+        let err = document.getElementById("div_err_"+item.field)
+        if(err != null) {
+            err.style.color="red"
+            err.innerHTML = item.defaultMessage;
+    }
+        serverValidResult[item.field] = item.defaultMessage;
+    });
+</script>
+</body>
+</html>
