@@ -37,13 +37,15 @@
 <div class="humberger__menu__overlay"></div>
 <div class="humberger__menu__wrapper">
     <div class="humberger__menu__logo">
-        <a href="#"><img src="/img/verrylogo.png" alt=""></a>
+        <a th:href="@{/basic}"><img src="/img/verrylogo.png" alt=""></a>
     </div>
     <div class="humberger__menu__widget">
-        <div class="header__top__right__auth d-flex">
-            <a href="#"><i class="fa fa-user"></i> Login</a>
-<!--            <a href="#"><i class="fa fa-user"></i> Mypage</a>-->
-<!--            <a class="ml-4" href="#">Logout</a>-->
+        <div class="header__top__right__auth d-flex" th:if="${session.memberId}">
+            <a href="#"><i class="fa fa-user"></i> Mypage</a>
+            <a class="ml-4" th:href="@{/member/logout}">Logout</a>
+        </div>
+        <div class="header__top__right__auth d-flex" th:unless="${session.memberId}">
+            <a th:href="@{/member/login}"><i class="fa fa-user"></i> Login</a>
         </div>
     </div>
     <nav class="humberger__menu__nav mobile-menu">
@@ -79,9 +81,9 @@
             </div>
             <div class="col-lg-3 header__menu">
                 <ul>
-                    <li><a href="#"><i class="fa fa-user"></i> Login</a></li>
-<!--                    <li><a href="#"><i class="fa fa-user"></i> Mypage</a></li>-->
-<!--                    <li><a href="#">Logout</a></li>-->
+                    <li th:if="${session.memberId}"><a href="#"><i class="fa fa-user"></i> Mypage</a></li>
+                    <li th:if="${session.memberId}"><a href="#">Logout</a></li>
+                    <li th:unless="${session.memberId}"><a th:href="@{/member/login}"><i class="fa fa-user"></i> Login</a></li>
                 </ul>
             </div>
         </div>
