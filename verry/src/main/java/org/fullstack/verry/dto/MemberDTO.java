@@ -1,6 +1,7 @@
 package org.fullstack.verry.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -18,10 +19,10 @@ public class MemberDTO {
 //    @PositiveOrZero
     private int memberIdx;
     @NotBlank(message = "아이디는 필수 입력입니다")
-    @Size(min = 5, message = "아이디는 5~12자리로 입력해주세요")
+    @Pattern(regexp = "^[a-z0-9]{4,12}", message = "5~12자 이내의 영어 소문자 및 숫자만 입력이 가능합니다.")
     private String memberId;
     @NotBlank(message = "비밀번호는 필수 입력입니다")
-    @Size(min = 8, message = "비밀번호는 8~20자리로 입력해주세요")
+    @Pattern(regexp="^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$", message = "영문 + 숫자 + 특수문자 조합으로 최소 8자리 이상만 허용됩니다.")
     private String pwd;
     @NotBlank(message = "이메일은 필수 입력입니다")
     private String email;
