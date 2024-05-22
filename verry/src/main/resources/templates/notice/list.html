@@ -9,21 +9,21 @@
 
 <div layout:fragment="content">
     <!-- Breadcrumb Section Begin -->
-    <!--<section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
+    <section class="breadcrumb-section set-bg" data-setbg="/img/strawberry3.jpg">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="breadcrumb__text">
-                        <h2>Shopping Cart</h2>
+                        <h2>공지사항 게시판</h2>
                         <div class="breadcrumb__option">
-                            <a href="./index.html">Home</a>
-                            <span>Shopping Cart</span>
+                            <a href="/basic">Home</a>
+                            <span> Notice List</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>-->
+    </section>
     <!-- Breadcrumb Section End -->
 
     <!-- Shoping Cart Section Begin -->
@@ -88,7 +88,8 @@
                     </a>
 
                     <th:block th:each="i : ${#numbers.sequence(block_start, block_end)}">
-                        <a th:href='@{/notice/list(block=${i})}' >[[${i}]]</a>
+                        <a th:if="${block eq i}" class="active" th:href='@{/notice/list(block=${i})}' >[[${i}]]</a>
+                        <a th:unless="${block eq i}" th:href='@{/notice/list(block=${i})}' >[[${i}]]</a>
                     </th:block>
 
                     <a th:href='@{/notice/list(block=${block_end})}'>
