@@ -4,7 +4,6 @@
       layout:decorate="~{basic.html}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
     <script src="https://cdn.tiny.cloud/1/wjuflumw0txwktnvnufwfo5lj04kqmup66rnaj1jf6pnwv5d/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
@@ -18,6 +17,39 @@
                 'alignleft aligncenter alignright alignjustify | ' +
                 'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
         });
+
+
+
+        function askDelete() {
+            let deleteYN = confirm("파일을 정말 삭제하시겠습니까? 삭제 후 취소를 원할 시 재업로드 하셔야 합니다.");
+            if (deleteYN) {
+                deleteShare();
+            }
+        }
+
+        function deleteShare(){
+            event.preventDefault();
+            event.stopPropagation();
+            var idx = $('#idx').val(); //id값이 "id"인 입력란의 값을 저장
+            var spanInner = $('#fileView');
+            $.ajax({
+                url:'/notice/deleteFile', //Controller에서 요청 받을 주소
+                type:'post', //POST 방식으로 전달
+                data:{idx:idx},
+                dataType : 'text',
+                success:function(result){ //컨트롤러에서 넘어온 cnt값을 받는다
+                    spanInner.remove();
+                    console.log(result);
+                },
+                error : function(xhr, status, error) {
+                    console.log("xhr! : " + xhr);
+                    console.log("status! : " + status);
+                    console.log("error! : " + error);
+                }
+            })
+
+        }
+
     </script>
 </head>
 <body>
@@ -25,16 +57,37 @@
 
 <div layout:fragment="content">
 
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="/img/strawberry3.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>공지사항 게시판</h2>
+                        <div class="breadcrumb__option">
+                            <a href="/basic">Home</a>
+                            <a href="/notice/list">Notice List</a>
+                            <span>Notice Modify</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
 
     <div class="contact-form spad">
         <div class="container">
 
-            <form action="#" method="post" id="modify_notice">
+            <form action="#" method="post" id="modify_notice" enctype="multipart/form-data">
 
                 <div class="row">
                     <div class="col-lg-12 col-md-12">
+                        <input type="hidden" name="idx" id="idx" th:value="${boardDTO.idx}">
                         <input type="hidden" name="memberId" th:value="${boardDTO.memberId}">
-                        <input type="hidden" name="boardType" value="n">
+                        <input type="hidden" name="boardType" th:value="${boardDTO.boardType}">
+
                         <label for="title">제목</label>
                         <input type="text" placeholder="제목을 입력해주세요" id="title" name="title" th:value="${boardDTO.title}">
                     </div>
@@ -42,6 +95,17 @@
                     <div class="col-lg-12">
                         <label for="content">내용</label>
                         <textarea placeholder="내용을 입력해주세요." id="content" name="content" th:utext="${boardDTO.content}"></textarea>
+                    </div>
+
+
+                    <div th:if="${boardDTO.orgFileName != null and !#strings.toString(boardDTO.orgFileName).equals('') and !#strings.toString(boardDTO.orgFileName).isEmpty()}" class="col-lg-12 mt-4" id="fileView" >
+                        파일 : [[${boardDTO.orgFileName}]] <button class="btn text-danger" type="button" id="btnDelete" onclick="askDelete()">X</button>
+                        <input type="hidden" name="upload" th:value="${boardDTO.orgFileName}">
+                        <input type="hidden" name="upload2" th:value="${boardDTO.saveFileName}">
+                    </div>
+                    <div class="col-lg-12 mt-4">
+                        <label for="content">파일 재업로드</label>
+                        <input type="file" name="file" id="file" class="form-control" multiple>
                     </div>
 
                     <div class="col-lg-12 d-flex justify-content-end">
@@ -56,5 +120,37 @@
         </div>
     </div>
 </div>
+<script th:fragment="script"  th:inline="javascript">
+
+    //    function askDelete() {
+    //        let deleteYN = confirm("공유를 취소하시겠습니까?");
+    //        if (deleteYN) {
+    //            deleteShare();
+    //        }
+    //    }
+    //
+    //    function deleteShare(){
+    //        event.preventDefault();
+    //        event.stopPropagation();
+    //        var idx = $('#idx').val(); //id값이 "id"인 입력란의 값을 저장
+    //        var spanInner = $('#fileView');
+    //        $.ajax({
+    //            url:'/notice/deleteFile', //Controller에서 요청 받을 주소
+    //            type:'post', //POST 방식으로 전달
+    //            data:{idx:idx},
+    //            dataType : 'text',
+    //            success:function(result){ //컨트롤러에서 넘어온 cnt값을 받는다
+    //                spanInner.remove();
+    //                console.log(result);
+    //            },
+    //            error : function(xhr, status, error) {
+    //                console.log("xhr! : " + xhr);
+    //                console.log("status! : " + status);
+    //                console.log("error! : " + error);
+    //            }
+    //        })
+    //
+    //    }
+</script>
 </body>
 </html>

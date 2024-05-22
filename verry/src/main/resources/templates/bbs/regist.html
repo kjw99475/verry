@@ -4,7 +4,6 @@
       layout:decorate="~{/basic.html}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
     <script src="https://cdn.tiny.cloud/1/wjuflumw0txwktnvnufwfo5lj04kqmup66rnaj1jf6pnwv5d/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
@@ -18,10 +17,32 @@
                 'alignleft aligncenter alignright alignjustify | ' +
                 'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
         });
+
+
+
     </script>
 </head>
 <body>
 <div layout:fragment="content">
+
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="/img/strawberry.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>자유게시판</h2>
+                        <div class="breadcrumb__option">
+                            <a href="/basic">Home</a>
+                            <a href="/bbs/list">Bbs List</a>
+                            <span>Bbs Regist</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
 
 
     <div class="contact-form spad">
@@ -31,8 +52,8 @@
 
                 <div class="row">
                     <div class="col-lg-12 col-md-12">
-                        <input type="hidden" name="memberId" value="test">
-<!--                        <input type="hidden" name="memberId" th:value="${session.memberId}">-->
+<!--                        <input type="hidden" name="memberId" value="test">-->
+                        <input type="hidden" name="memberId" th:value="${session.memberId}">
                         <input type="hidden" name="boardType" value="b">
                         <label for="title">제목</label>
                         <input type="text" placeholder="제목을 입력해주세요" id="title" name="title">
@@ -43,7 +64,7 @@
                         <textarea placeholder="내용을 입력해주세요." id="content" name="content"></textarea>
                     </div>
 
-                    <div class="col-lg-12">
+                    <div class="col-lg-12 mt-4">
                         <label for="content">파일 업로드</label>
                         <input type="file" name="file" id="file" multiple>
                     </div>
@@ -60,6 +81,18 @@
         </div>
     </div>
 </div>
-<script  src="/resources/resources/jquery/jquery-3.7.1.min.js"></script>
+
+<script layout:fragment="script" th:inline="javascript">
+    const errors = [[${errors}]];
+    console.log("errors : {}", errors);
+
+    let errMsg = "";
+    if (errors) {
+        for (let i =0; i<errors.length; i++) {
+            errMsg += `${errors[i].field} 은(는) ${errors[i].code}\n`;
+        }
+        alert(errMsg);
+    }
+</script>
 </body>
 </html>
