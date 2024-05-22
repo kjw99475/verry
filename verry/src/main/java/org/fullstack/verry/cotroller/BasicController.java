@@ -38,6 +38,8 @@ public class BasicController {
         List<BoardDTO> boardDTO = boardService.list("b", 0, 3);
         model.addAttribute("boardDTO", boardDTO);
 
+        model.addAttribute("pageName", "home");
+
         log.info("=========================");
     }
 

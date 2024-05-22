@@ -72,10 +72,10 @@
             <div class="col-lg-6">
                 <nav class="header__menu">
                     <ul>
-                        <li class="active"><a th:href="@{/basic}">Home</a></li>
-                        <li><a th:href="@{/trade/list}">Shop</a></li>
-                        <li><a th:href="@{/notice/list}">Notice</a></li>
-                        <li><a th:href="@{/bbs/list}">Community</a></li>
+                        <li th:classappend="${pageName == 'home' ? 'active' : ''}"><a th:href="@{/basic}">Home</a></li>
+                        <li th:classappend="${pageName == 'shop' ? 'active' : ''}"><a th:href="@{/trade/list}">Shop</a></li>
+                        <li th:classappend="${pageName == 'notice' ? 'active' : ''}"><a th:href="@{/notice/list}">Notice</a></li>
+                        <li th:classappend="${pageName == 'community' ? 'active' : ''}"><a th:href="@{/bbs/list}">Community</a></li>
                     </ul>
                 </nav>
             </div>
