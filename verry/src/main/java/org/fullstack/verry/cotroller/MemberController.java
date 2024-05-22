@@ -1,5 +1,6 @@
 package org.fullstack.verry.cotroller;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -56,8 +57,27 @@ public class MemberController {
 
     }
     @PostMapping("/login")
-    public void postlogin(){
-
+    public String postlogin(@RequestParam(name = "id", defaultValue = "") String memberId,
+                            @RequestParam(name = "pwd", defaultValue = "") String pwd,
+                            HttpSession session,
+                            RedirectAttributes redirectAttributes){
+        if(!memberId.isEmpty()) {
+            MemberDTO memberinfo = memberService.memberinfo(memberId);
+            if (memberinfo != null) {
+                if (!pwd.equals(memberinfo.getPwd())) {
+                    redirectAttributes.addFlashAttribute("id", memberId);
+                    return "redirect:/member/login";
+                } else {
+                    session.setAttribute("memberName", memberinfo.getName());
+                    session.setAttribute("memberId", memberId);
+                    session.setAttribute("memberType", memberinfo.getMemberType());
+                    return "redirect:/trade/list";
+                }
+            } else {
+                redirectAttributes.addFlashAttribute("id", memberId);
+            }
+        }
+        return "redirect:/member/login";
     }
     @GetMapping("/modify")
     public void modify(){
