@@ -49,8 +49,8 @@
     <nav class="humberger__menu__nav mobile-menu">
         <ul>
             <li class="active"><a th:href="@{/basic}">Home</a></li>
-            <li><a th:href="@{trade/list}">Shop</a></li>
-            <li><a th:href="@{notice/list}">Notice</a></li>
+            <li><a th:href="@{/trade/list}">Shop</a></li>
+            <li><a th:href="@{/notice/list}">Notice</a></li>
             <li><a th:href="@{/bbs/list}">Community</a></li>
         </ul>
     </nav>
@@ -64,16 +64,16 @@
         <div class="row">
             <div class="col-lg-3">
                 <div class="header__logo">
-                    <a href="#"><img src="/img/verrylogo.png" alt=""></a>
+                    <a href="/basic"><img src="/img/verrylogo.png" alt=""></a>
                 </div>
             </div>
             <div class="col-lg-6">
                 <nav class="header__menu">
                     <ul>
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#">Shop</a></li>
-                        <li><a href="#">Notice</a></li>
-                        <li><a href="#">Community</a></li>
+                        <li class="active"><a th:href="@{/basic}">Home</a></li>
+                        <li><a th:href="@{/trade/list}">Shop</a></li>
+                        <li><a th:href="@{/notice/list}">Notice</a></li>
+                        <li><a th:href="@{/bbs/list}">Community</a></li>
                     </ul>
                 </nav>
             </div>
@@ -323,10 +323,10 @@
                 <div class="footer__widget">
                     <h6>Useful Links</h6>
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Shop</a></li>
-                        <li><a href="#">Notice</a></li>
-                        <li><a href="#">Community</a></li>
+                        <li><a href="/basic">Home</a></li>
+                        <li><a href="/trade/list">Shop</a></li>
+                        <li><a href="/notice/list">Notice</a></li>
+                        <li><a href="/bbs/list">Community</a></li>
                     </ul>
                     <ul>
                         <li><a href="#">이용약관</a></li>
