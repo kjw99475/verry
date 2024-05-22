@@ -22,7 +22,7 @@ public class FileUploadUtil {
         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         return attr.getRequest();
     }
-    public static String uploadFolder = "C:\\Uploads\\";
+    public static String uploadFolder = "C:\\HK\\verry\\verry\\src\\main\\resources\\static\\img\\";
 
 
     public static String saveFile(MultipartFile multipartFile, String path) {
@@ -33,11 +33,13 @@ public class FileUploadUtil {
         String[] uuids = uuid.toString().split("-");
         String newName = uuids[0];
 
+//        String directory = uploadFolder + path;
+
         File save_file = new File(uploadFolder + path + "\\" + newName + ext);
 
-        if(!save_file.exists()) {
-            save_file.mkdir();
-        }
+//        if(!save_file.exists()) {
+//            save_file.mkdir();
+//        }
 
         try {
             multipartFile.transferTo(save_file);
