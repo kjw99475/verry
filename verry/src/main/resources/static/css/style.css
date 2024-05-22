@@ -1643,7 +1643,10 @@ ol {
 }
 
 .product__pagination a:hover,
-.blog__pagination a:hover {
+.blog__pagination a:hover,
+.product__pagination .active,
+.blog__pagination .active
+{
 	background: #30931C;
 	border-color: #30931C;
 	color: #ffffff;
