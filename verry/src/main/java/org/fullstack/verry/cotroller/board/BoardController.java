@@ -14,10 +14,7 @@ import org.fullstack.verry.utils.FileUploadUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -51,6 +48,7 @@ public class BoardController {
         model.addAttribute("pageResponseDTO", pageResponseDTO);
         model.addAttribute("block_start", block_start);
         model.addAttribute("block_end", block_end);
+        model.addAttribute("total_count", total_count);
 
         log.info("BoardController >> list END");
         log.info("=================================================");
@@ -155,6 +153,7 @@ public class BoardController {
             saveFileName = FileUploadUtil.saveFile(file, "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\board");
             boardDTO.setOrgFileName(file.getOriginalFilename());
             boardDTO.setSaveFileName(saveFileName);
+            FileUploadUtil.deleteFile(upload2, "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\board");
         } else {
             boardDTO.setOrgFileName(upload);
             boardDTO.setSaveFileName(upload2);
@@ -175,8 +174,23 @@ public class BoardController {
 
     @PostMapping("/bbs/delete")
     public String delete(int idx, RedirectAttributes redirectAttributes) {
+        BoardDTO boardDTO = boardService.view(idx);
+        if (boardDTO.getSaveFileName() != null && !boardDTO.getSaveFileName().isEmpty()) {
+            FileUploadUtil.deleteFile(boardDTO.getSaveFileName(), "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\board");
+        }
         boardService.delete(idx);
         return "redirect:/bbs/list";
+    }
+
+    @RequestMapping(value = "/bbs/deleteFile", method = RequestMethod.POST, produces = "application/text;charset=UTF-8")
+    @ResponseBody
+    public String deleteFilePOST(@RequestParam int idx) {
+        BoardDTO boardDTO = boardService.view(idx);
+        FileUploadUtil.deleteFile(boardDTO.getSaveFileName(), "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\board");
+        boardDTO.setOrgFileName("");
+        boardDTO.setSaveFileName("");
+        boardService.regist(boardDTO);
+        return "ok";
     }
 
 
@@ -202,6 +216,7 @@ public class BoardController {
         model.addAttribute("pageResponseDTO", pageResponseDTO);
         model.addAttribute("block_start", block_start);
         model.addAttribute("block_end", block_end);
+        model.addAttribute("total_count", total_count);
 
         log.info("pageResponseDTO : {}", pageResponseDTO);
         model.addAttribute("pageResponseDTO", pageResponseDTO);
@@ -308,6 +323,7 @@ public class BoardController {
             saveFileName = FileUploadUtil.saveFile(file, "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\notice");
             boardDTO.setOrgFileName(file.getOriginalFilename());
             boardDTO.setSaveFileName(saveFileName);
+            FileUploadUtil.deleteFile(upload2, "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\notice");
         } else {
             boardDTO.setOrgFileName(upload);
             boardDTO.setSaveFileName(upload2);
@@ -330,7 +346,22 @@ public class BoardController {
 
     @PostMapping("/notice/delete")
     public String deleteNotice(int idx, RedirectAttributes redirectAttributes) {
+        BoardDTO boardDTO = boardService.view(idx);
+        if (boardDTO.getSaveFileName() != null && !boardDTO.getSaveFileName().isEmpty()) {
+            FileUploadUtil.deleteFile(boardDTO.getSaveFileName(), "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\notice");
+        }
         boardService.delete(idx);
         return "redirect:/notice/list";
+    }
+
+    @RequestMapping(value = "/notice/deleteFile", method = RequestMethod.POST, produces = "application/text;charset=UTF-8")
+    @ResponseBody
+    public String deleteFilePOSTNotice(@RequestParam int idx) {
+        BoardDTO boardDTO = boardService.view(idx);
+        FileUploadUtil.deleteFile(boardDTO.getSaveFileName(), "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\notice");
+        boardDTO.setOrgFileName("");
+        boardDTO.setSaveFileName("");
+        boardService.regist(boardDTO);
+        return "ok";
     }
 }
