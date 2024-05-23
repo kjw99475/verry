@@ -26,6 +26,7 @@ public class TradeReplyController {
     @PostMapping(value = "/regist", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, Integer> regist(@Valid @RequestBody TradeReplyDTO replyDTO,
                                        BindingResult bindingResult) throws BindException {
+        log.info("replyDTO : {}", replyDTO);
         if(bindingResult.hasErrors()) {
             throw new BindException(bindingResult);
         }

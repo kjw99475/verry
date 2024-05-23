@@ -40,7 +40,8 @@
                     <div class="product__details__pic">
                         <div class="product__details__pic__item">
                             <img class="product__details__pic__item--large"
-                                 th:src="'/img/product/'+${tradeDTO.saveFileName}+''" alt="상품 이미지" width="555" height="575">
+                                 th:src="'/img/product/'+${tradeDTO.saveFileName}+''" alt="상품 이미지" width="555"
+                                 height="575">
                         </div>
                     </div>
                 </div>
@@ -73,8 +74,9 @@
                         <div class="col-md-12">
                             <div class="my-4">
                                 <form action="/trade/replies/regist" method="post">
-                                    <textarea name="comment" id="comment" cols="150" rows="5" style="resize: none;"></textarea>
-                                    <button type="button" class="btn btn-info registReplyBtn" th:onclick="'replyRegistOK('+${tradeDTO.tradeIdx}+')'">댓글 등록</button>
+                                    <textarea name="comment" id="comment" cols="150" rows="5"
+                                              style="resize: none;"></textarea>
+                                    <button type="button" class="btn btn-info registReplyBtn">댓글 등록</button>
                                 </form>
                             </div>
                             <ul class="list-group replyList">
@@ -111,7 +113,8 @@
             <div class="row">
                 <div class="col-lg-3 col-md-4 col-sm-6" th:each="list:${relatedList}" th:if="${!relatedList.isEmpty()}">
                     <div class="product__item">
-                        <div class="product__item__pic set-bg" th:data-setbg="'/img/product/' + ${list.saveFileName} + ''">
+                        <div class="product__item__pic set-bg"
+                             th:data-setbg="'/img/product/' + ${list.saveFileName} + ''">
                             <ul class="product__item__pic__hover">
                                 <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                 <li><a href="#"><i class="fa fa-retweet"></i></a></li>
@@ -124,20 +127,46 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4 col-sm-6" th:if="${relatedList.isEmpty()}" >
+                <div class="col-lg-3 col-md-4 col-sm-6" th:if="${relatedList.isEmpty()}">
                     관련 상품이 없습니다.
                 </div>
             </div>
         </div>
     </section>
     <!-- Related Product Section End -->
+
+    <!-- 댓글 등록 모달창 -->
+    <div class="modal registerModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">댓글 등록</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">댓글 내용</span>
+                        <input type="text" class="form-control replyText">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">작성자</span>
+                        <input type="text" class="form-control replyer">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary registerBtn">등록</button>
+                    <button type="button" class="btn btn-outline-dark closeRegisterBtn">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script layout:fragment="script" th:inline="javascript">
     function goDelete() {
         const confirmFlag = confirm("해당 글을 삭제하시겠습니까?");
 
-        if(confirmFlag) {
+        if (confirmFlag) {
             console.log("?");
             const frm = document.getElementById("frmDelete");
             frm.submit();
@@ -157,7 +186,9 @@
                         printPaging(data.pageRequestDTO);
                     }
               )
-              .catch(e => {console.log(e);})
+              .catch(e => {
+                  console.log(e);
+              })
     }
 
     printReplyArea(1, 10);
@@ -165,7 +196,7 @@
     function printReplyList(dtoList) {
         let replyLi = "";
         if (dtoList && dtoList.length > 0) {
-            for(const dto of dtoList) {
+            for (const dto of dtoList) {
                 replyLi += `<li class="list-group-item d-flex replyItem">
                     <span class="col-2">${dto.tradeReplyIdx}</span>
                     <span class="col-6" data-idx="${dto.tradeIdx}">${dto.comment}
@@ -192,18 +223,18 @@
         let pageLiList = "";
         let pageArea = "";
 
-        if(dto.prev_page_flag) {
+        if (dto.prev_page_flag) {
             pagePrevLi += `<li class="page-item">
-                       <a class="page-link" data-page="${dto.page_block_start-1}" href="#" onclick="printReplyArea(${dto.page_block_start-10}, 10)">PREV</a>
+                       <a class="page-link" data-page="${dto.page_block_start - 1}" href="#" onclick="printReplyArea(${dto.page_block_start - 10}, 10)">PREV</a>
                        </li>`
         } else {
             pagePrevLi += `<li class="page-item">
-                       <a class="page-link" data-page="${dto.page_block_start-10}" href="#">PREV</a>
+                       <a class="page-link" data-page="${dto.page_block_start - 10}" href="#">PREV</a>
                        </li>`
         }
 
-        for(let i=dto.page_block_start; i<=dto.page_block_end; i++) {
-            if(dto.page == i) {
+        for (let i = dto.page_block_start; i <= dto.page_block_end; i++) {
+            if (dto.page == i) {
                 pageLiList += `<li class="page-item active">
                             <a class="page-link" data-page="${i}" href="#">${i}</a>
                             </li>`
@@ -214,13 +245,13 @@
             }
         }
 
-        if(dto.next_page_flag) {
+        if (dto.next_page_flag) {
             pageNextLi += `<li class="page-item">
-                       <a class="page-link" data-page="${dto.page_block_end+1}" href="#" onclick="printReplyArea(${dto.page_block_end+1}, 10)">NEXT</a>
+                       <a class="page-link" data-page="${dto.page_block_end + 1}" href="#" onclick="printReplyArea(${dto.page_block_end + 1}, 10)">NEXT</a>
                        </li>`
         } else {
             pageNextLi += `<li class="page-item">
-                       <a class="page-link" data-page="${dto.page_block_end+1}" href="#">NEXT</a>
+                       <a class="page-link" data-page="${dto.page_block_end + 1}" href="#">NEXT</a>
                        </li>`
         }
 
@@ -234,8 +265,37 @@
         printReplyArea(1, 10, "true");
     }
 
-    function replyRegistOK(idx) {
-        replyRegist(idx);
-        printReplyArea(1, 10, "true");
-    }
+    // 댓글 등록
+    const registerModal = new bootstrap.Modal(document.querySelector(".registerModal"));
+    const registerBtn = document.querySelector(".registerBtn");
+    const replyText = document.querySelector(".replyText");
+    const replyer = document.querySelector(".replyer");
+    const closeRegisterBtn = document.querySelector(".closeRegisterBtn");
+
+    document.querySelector(".registReplyBtn").addEventListener("click", function(e) {
+        registerModal.show();
+    });
+
+    closeRegisterBtn.addEventListener("click", function(e) {
+        registerModal.hide();
+    });
+
+    registerBtn.addEventListener("click", function(e) {
+        const replyObj = {
+            tradeIdx: trade_idx,
+            comment: replyText.value,
+            memberId: replyer.value
+        }
+
+        replyRegist(replyObj).then(result => {
+            alert(result.tradeIdx);
+            registerModal.hide();
+            replyText.value = "";
+            replyer.value = "";
+            printReplyArea(1, 10, true);
+        }).catch(e => {
+            alert("Exception....");
+        });
+    });
 </script>
+</html>

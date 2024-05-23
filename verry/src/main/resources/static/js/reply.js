@@ -13,8 +13,11 @@ async function getReplyList({trade_idx, page, page_size, goLast}) {
 async function replyDelete(idx) {
     const response = await axios.delete(`/trade/replies/delete/${idx}`);
 
-    console.log("reply.js : " + response);
-    console.log("reply.js : " + response.data);
+    return response.data;
+}
+
+async function replyRegist(replyObj) {
+    const response = await axios.post(`/trade/replies/regist`, replyObj);
 
     return response.data;
 }
