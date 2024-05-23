@@ -32,11 +32,11 @@
                         <div class="row">
                             <div class="col-lg-4 col-md-5">
                                 <div class="filter__sort">
-                                    <span>Sort By</span>
-                                    <select>
-                                        <option value="0">Default</option>
-                                        <option value="0">Default</option>
-                                    </select>
+<!--                                    <span>Sort By</span>-->
+<!--                                    <select>-->
+<!--                                        <option value="0">Default</option>-->
+<!--                                        <option value="0">Default</option>-->
+<!--                                    </select>-->
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4">
@@ -55,15 +55,12 @@
                     <div class="row">
                         <div th:each="dto:${pageResponseDTO.dtoList}" th:if="${!pageResponseDTO.dtoList.isEmpty()}" class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
+                                <a th:href="|@{/trade/view(trade_idx=${dto.tradeIdx})}|">
                                 <div class="product__item__pic set-bg" th:data-setbg="'/img/product/' + ${dto.saveFileName} + ''">
-                                    <ul class="product__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
                                 </div>
                                 <div class="product__item__text">
-                                    <h6><a th:href="|@{/trade/view(trade_idx=${dto.tradeIdx})}|">[[${dto.title}]]</a></h6>
+                                    <h6>[[${dto.title}]]</h6>
+                                </a>
                                     <h5>[[${dto.price}]]</h5>
                                 </div>
                             </div>
@@ -73,49 +70,28 @@
                         </div>
                     </div>
                     <!--        =================== 페이징 영역 start ================-->
-                    <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
-                        <div class="btn-group product__pagination" role="group" aria-label="First group">
+                    <div class="float-end d-flex justify-content-center">
+                        <ul class="pagination flex-wrap">
+                            <li class="page-item" th:if="${pageRequestDTO.prev_page_flag}">
+                                <a class="page-link" th:data-num="${pageRequestDTO.page_block_start-10}" th:href="|@{/trade/list}?page=${pageRequestDTO.page_block_start-10}|">Prev</a>
+                            </li>
+                            <li class="page-item" th:unless="${pageRequestDTO.prev_page_flag}">
+                                <a class="page-link" th:data-num="${pageRequestDTO.page_block_start-10}" disabled>Prev</a>
+                            </li>
 
-<!--                            <div class="float-end">-->
-<!--                                <ul class="pagination flex-wrap">-->
-<!--                                    <li class="page-item" th:if="${pageRequestDTO.prev_page_flag}">-->
-<!--                                        <a class="page-link" th:data-num="${pageRequestDTO.page_block_start-1}"></a>-->
-<!--                                    </li>-->
-
-<!--                                    <th:block th:each="i: ${#numbers.sequence(pageRequestDTO.page_block_start, pageRequestDTO.page_block_end)}">-->
-<!--                                        <li th:class="${pageRequestDTO.page == i} ? 'page-item active' : 'page-item'">-->
-<!--                                            <a class="page-link" th:data-num="${i}">[[${i}]]</a>-->
-<!--                                        </li>-->
-<!--                                    </th:block>-->
-
-<!--                                    <li class="page-item" th:if="${pageRequestDTO.next_page_flag}">-->
-<!--                                        <a class="page-link" th:data-num="${pageRequestDTO.page_block_end}"></a>-->
-<!--                                    </li>-->
-<!--                                </ul>-->
-<!--                            </div>-->
-                            <div class="float-end">
-                                <ul class="pagination flex-wrap">
-                                    <li class="page-item" th:if="${pageRequestDTO.prev_page_flag}">
-                                        <a class="page-link" th:data-num="${pageRequestDTO.page_block_start-10}" th:href="|@{/trade/list}?page=${pageRequestDTO.page_block_start-10}|">Prev</a>
-                                    </li>
-
-                                    <th:block th:each="i:${#numbers.sequence(pageRequestDTO.page_block_start, pageRequestDTO.page_block_end)}">
-                                        <li th:class="${pageRequestDTO.page == i} ? 'page-item active' : 'page-item'">
-                                            <a class="page-link" th:data-num="${i}" th:href="|@{/trade/list}?page=${i}|">[[${i}]]</a>
-                                        </li>
-                                    </th:block>
-                                    <li class="page-item" th:if="${pageRequestDTO.next_page_flag}">
-                                        <a class="page-link" th:data-num="${pageRequestDTO.page_block_end+1}" th:href="|@{/board/list}?page=${pageRequestDTO.page_block_end+1}|">Next</a>
-                                    </li>
-
-                                </ul>
-                            </div>
-
-                        </div>
+                            <th:block th:each="i:${#numbers.sequence(pageRequestDTO.page_block_start, pageRequestDTO.page_block_end)}">
+                                <li th:class="${pageRequestDTO.page == i} ? 'page-item active' : 'page-item'">
+                                    <a class="page-link" th:data-num="${i}" th:href="|@{/trade/list}?page=${i}|">[[${i}]]</a>
+                                </li>
+                            </th:block>
+                            <li class="page-item" th:if="${pageRequestDTO.next_page_flag}">
+                                <a class="page-link" th:data-num="${pageRequestDTO.page_block_end+1}" th:href="|@{/trade/list}?page=${pageRequestDTO.page_block_end+1}|">Next</a>
+                            </li>
+                            <li class="page-item" th:unless="${pageRequestDTO.next_page_flag}">
+                                <a class="page-link" th:data-num="${pageRequestDTO.page_block_end+1}" disabled>Next</a>
+                            </li>
+                        </ul>
                     </div>
-
-                    <!--        =================== 페이징 영역 end ================-->
-
                 </div>
             </div>
         </div>

@@ -2,6 +2,7 @@ package org.fullstack.verry.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
@@ -28,6 +29,7 @@ public class TradeReplyEntity {
 
     @CreatedDate
     @Column(name="reg_date", updatable = false, columnDefinition = "DATETIME NULL DEFAULT NOW()")
+    @ColumnDefault("CURRENT_TIMESTAMP")
     private LocalDateTime regDate;
     
     @Column(nullable = true)

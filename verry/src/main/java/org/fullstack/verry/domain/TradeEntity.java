@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 @Table(name="tbl_trade")
-public class TradeEntity {
+public class TradeEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,13 +48,6 @@ public class TradeEntity {
     @Column(length = 20, nullable = true)
     private int readCnt;
 
-    @CreatedDate
-    @Column(name="reg_date", updatable = false, columnDefinition = "DATETIME NULL DEFAULT NOW()")
-    private LocalDateTime regDate;
-
-    @LastModifiedDate
-    @Column(name="modify_date", nullable = true, insertable = false, updatable = true)
-    private LocalDateTime modifyDate;
 
     public void modify(String title, String content, String orgFileName, String saveFileName, String category, int price) {
         this.title = title;
@@ -63,6 +56,6 @@ public class TradeEntity {
         this.saveFileName = saveFileName;
         this.category = category;
         this.price = price;
-        this.modifyDate = LocalDateTime.now();
+        super.setModify_date(LocalDateTime.now());
     }
 }

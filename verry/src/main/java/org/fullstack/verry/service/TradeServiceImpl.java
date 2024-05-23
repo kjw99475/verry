@@ -38,13 +38,9 @@ public class TradeServiceImpl implements TradeService {
 
     @Override
     public PageResponseDTO<TradeDTO> list(PageRequestDTO pageRequestDTO) {
-        PageRequest pageable = pageRequestDTO.getPageable();
+        PageRequest pageable = pageRequestDTO.getPageable("tradeIdx");
 
-//        Page<TradeEntity> result = tradeRepository.findAll(PageRequest.of(pageRequestDTO.getPage(), pageRequestDTO.getPage_size(), Sort.by("tradeIdx").descending()));
         Page<TradeEntity> result = tradeRepository.findAll(pageable);
-
-//        log.info("result : {}", result.getContent());
-        log.info("result : {}", result.getContent());
 
         List<TradeDTO> dtoList = result.getContent().stream()
                 .map(trade -> modelMapper.map(trade, TradeDTO.class))
