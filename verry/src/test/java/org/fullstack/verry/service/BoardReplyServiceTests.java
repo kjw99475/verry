@@ -51,7 +51,6 @@ public class BoardReplyServiceTests {
         BoardReplyDTO replyDTO = BoardReplyDTO.builder()
                 .comment("서비스 댓글 테스트")
                 .memberId("test")
-                .regDate(LocalDateTime.now())
                 .boardIdx(14)
                 .build();
 
