@@ -19,4 +19,9 @@ public interface TradeService {
     int modify(TradeDTO tradeDTO);
 
     void deleteOne(int trade_idx);
+
+    // 메인페이지 리스트
+    PageResponseDTO<TradeDTO> mainShoplist(PageRequestDTO pageRequestDTO);
+    List<TradeDTO> mainCategoryList(String category);
+
 }

@@ -10,4 +10,5 @@ import java.util.List;
 
 public interface TradeRepository extends JpaRepository<TradeEntity, Integer> {
     List<TradeEntity> findDistinctTop4ByCategoryAndTradeIdxNotOrderByTradeIdxDesc(String category, int trade_idx);
+    List<TradeEntity> findDistinctTop8ByCategoryOrderByTradeIdxDesc(String category);
 }
