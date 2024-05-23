@@ -15,9 +15,6 @@ import java.time.LocalDateTime;
 @ToString
 @Table(
         name="tbl_board_reply"
-//        indexes = {
-//                @Index(name="board_reply_idx_tbl_board_reply_board_idx", columnList = "boardIdx")
-//        }
 )
 public class BoardReplyEntity extends BaseEntity {
 
@@ -32,12 +29,6 @@ public class BoardReplyEntity extends BaseEntity {
     @Column(length = 20, nullable = true)
     private String memberId;
 
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private BoardEntity board;
     private int boardIdx;
 
-//    @CreatedDate
-//    @Column(name="reg_date", updatable = false, columnDefinition = "DATETIME NULL DEFAULT NOW()")
-//    private LocalDateTime regDate;
 }

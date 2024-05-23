@@ -76,14 +76,11 @@ public class FileUploadUtil {
                 orgFileName = new String(orgFileName.getBytes("KSC5601"), "ISO-8859-1");
             }
 
-
             // 파일 다운로드용 응답 헤더 설정
             resp.reset();
             resp.setContentType("application/octet-stream");
             resp.setHeader("Content-Disposition", "attachment; filename=\"" + orgFileName + "\"");
             resp.setHeader("Content-Length", "" + file.length());
-
-//        out.clear();
 
             // response 객체로부터 새로운 출력 스트림 생성
             OutputStream os = resp.getOutputStream();

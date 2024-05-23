@@ -58,22 +58,6 @@ public class BoardServiceImpl implements BoardServiceIf{
     public List<BoardDTO> list(String type, int block, int end) {
         List<BoardDTO> dtoList = boardRepository.findAllByBoardTypeAndLimit(type, block, end).stream().map(dto -> modelMapper.map(dto, BoardDTO.class)).collect(Collectors.toList());
         return dtoList;
-
-//        String[] types = pageRequestDTO.getSearch_types();
-//        String search_word = pageRequestDTO.getSearch_word();
-//        PageRequest pageable = pageRequestDTO.getPageable();
-//        String type = pageRequestDTO.getType();
-//        Page<BoardEntity> result = boardRepository.search(pageable, types, search_word);
-//        List<BoardDTO> dtoList = result.getContent().stream()
-//                .map(board -> modelMapper.map(board, BoardDTO.class))
-//                .collect(Collectors.toList());
-//        return PageResponseDTO.<BoardDTO>withAll()
-//                .pageRequestDTO(pageRequestDTO)
-//                .dtoList(dtoList)
-//                .type(type)
-//                .total_count((int)result.getTotalElements())
-//                .build();
-
     }
 
     @Override
