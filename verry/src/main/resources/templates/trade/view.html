@@ -2,6 +2,23 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaef/layout"
       layout:decorate="~{/basic.html}">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tiny.cloud/1/wjuflumw0txwktnvnufwfo5lj04kqmup66rnaj1jf6pnwv5d/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea#content',
+            plugins: [
+                'advlist','autolink',
+                'lists','link','image','charmap','preview','anchor','searchreplace','visualblocks'
+                ,'fullscreen','insertdatetime','media','table','help','wordcount'
+            ],
+            toolbar: 'undo redo | formatpainter casechange blocks | bold italic backcolor | ' +
+                  'alignleft aligncenter alignright alignjustify | ' +
+                  'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
+        });
+    </script>
+</head>
 
 <div layout:fragment="content">
     <!-- Breadcrumb Section Begin -->
@@ -30,10 +47,10 @@
                 <a th:href="|@{/trade/list}|">
                     <button class="btn btn-outline-primary">목록</button>
                 </a>
-                <a th:href="|@{/trade/modify(trade_idx=${tradeDTO.tradeIdx})}|">
+                <a th:href="|@{/trade/modify(trade_idx=${tradeDTO.tradeIdx})}|" th:if="${session.memberId == tradeDTO.memberId}">
                     <button class="btn btn-outline-secondary mx-2">수정</button>
                 </a>
-                <form name="frmDelete" id="frmDelete" action="/trade/delete" method="post">
+                <form name="frmDelete" id="frmDelete" action="/trade/delete" method="post" th:if="${session.memberId == tradeDTO.memberId}">
                     <input type="hidden" name="tradeIdx" th:value="${tradeDTO.tradeIdx}"/>
                     <button type="button" class="btn btn-outline-danger" onclick="goDelete()">삭제</button>
                 </form>
@@ -56,18 +73,10 @@
                             <li><b>작성일</b> <span>[[${tradeDTO.regDate}]]</span></li>
                         </ul>
                         <div class="product__details__price">￦[[${tradeDTO.price}]]</div>
-                        <div class="checkout__input">
-                            <textarea name="content" id="content" cols="150" rows="8" style="resize: none;">[[${tradeDTO.content}]]</textarea>
-                        </div>
-                        <div class="product__details__quantity">
-                            <div class="quantity">
-                                <div class="pro-qty">
-                                    <input type="text" value="1">
-                                </div>
+                        <div class="checkout__input" style="border-top: 1px solid lightgrey">
+                            <div class="col-lg-12 mt-2 overflow-auto" style="max-height: 500px;" th:utext="${tradeDTO.content}">
                             </div>
                         </div>
-                        <a href="#" class="primary-btn">ADD TO CARD</a>
-                        <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
                     </div>
                 </div>
 
@@ -76,7 +85,7 @@
                         <div class="col-md-12">
                             <div class="my-4">
                                 <form action="/trade/replies/regist" method="post">
-                                    <button type="button" class="btn btn-info registReplyBtn">댓글 등록</button>
+                                    <button type="button" class="btn btn-info registReplyBtn" th:if="${session.memberId != null}">댓글 등록</button>
                                 </form>
                             </div>
                             <ul class="list-group replyList">
@@ -150,7 +159,7 @@
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">작성자</span>
-                        <input type="text" class="form-control replyer">
+                        <input type="text" class="form-control replyer" th:value="${session.memberId}" readonly>
                     </div>
                 </div>
                 <div class="modal-footer">

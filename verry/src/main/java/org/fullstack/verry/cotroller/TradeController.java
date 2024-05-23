@@ -36,8 +36,6 @@ public class TradeController {
         pageRequestDTO.setPage_size(9);
         PageResponseDTO<TradeDTO> pageResponseDTO = tradeService.list(pageRequestDTO);
 
-        log.info("pageResponseDTO : {}", pageResponseDTO);
-
         model.addAttribute("pageResponseDTO", pageResponseDTO);
         model.addAttribute("pageName", "shop");
     }
@@ -66,7 +64,8 @@ public class TradeController {
             tradeDTO.setOrgFileName(multipartFile.getOriginalFilename());
             tradeDTO.setSaveFileName(saveFileName);
         } else {
-            // TODO: 파일 없을 때 기본 이미지?
+            tradeDTO.setOrgFileName("product-10.jpg");
+            tradeDTO.setSaveFileName("product-10.jpg");
         }
 
         int result = tradeService.regist(tradeDTO);
@@ -98,7 +97,17 @@ public class TradeController {
     }
 
     @PostMapping("/modify")
-    public String modifyPost(TradeDTO tradeDTO, @RequestParam("file") MultipartFile multipartFile) {
+    public String modifyPost(@Valid TradeDTO tradeDTO,
+                             BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes,
+                             @RequestParam("file") MultipartFile multipartFile) {
+        if(bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            redirectAttributes.addFlashAttribute("tradeDTO", tradeDTO);
+
+            return "redirect:/trade/modify?trade_idx=" + tradeDTO.getTradeIdx();
+        }
+
         String saveFileName = "";
 
         if(!multipartFile.isEmpty()) {
