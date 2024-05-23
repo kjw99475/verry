@@ -78,13 +78,13 @@
                                 <div class="checkout__input">
                                     <label for="addr">주소</label>
                                     <br>
-                                    <input type="text" name="addr" id="addr" onclick="address()" th:value="${memberDTO.addr}"/>
+                                    <input type="text" name="addr" id="addr" onclick="address()" th:value="${memberDTO.addr}" readonly/>
                                     <span id="div_err_addr"></span>
                                 </div>
                                 <div class="checkout__input">
                                     <label for="addrDetail">상세주소</label>
                                     <br>
-                                    <input type="text" name="addrDetail" id="addrDetail" th:value="${memberDTO.addrDetail}"/>
+                                    <input type="text" name="addrDetail" id="addrDetail" th:value="${memberDTO.addrDetail}" readonly/>
                                     <span id="div_err_addrDetail"></span>
                                 </div>
                                 <div class="checkout__input text-center">

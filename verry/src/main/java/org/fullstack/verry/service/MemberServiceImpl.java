@@ -29,4 +29,9 @@ public class MemberServiceImpl implements MemberServiceIf {
         MemberDTO memberinfo = modelMapper.map(memberRepository.findByMemberId(memberId), MemberDTO.class);
         return memberinfo;
     }
+    @Override
+    public int membercount(String memberId){
+        int membercount = memberRepository.countByMemberId(memberId);
+        return membercount;
+    }
 }
