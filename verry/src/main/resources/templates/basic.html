@@ -81,8 +81,8 @@
             </div>
             <div class="col-lg-3 header__menu">
                 <ul>
-                    <li th:if="${session.memberId}"><a th:href="@{member/modify}"><i class="fa fa-user"></i> Mypage</a></li>
-                    <li th:if="${session.memberId}"><a th:href="@{member/logout}">Logout</a></li>
+                    <li th:if="${session.memberId}"><a th:href="@{/member/modify}"><i class="fa fa-user"></i> Mypage</a></li>
+                    <li th:if="${session.memberId}"><a th:href="@{/member/logout}">Logout</a></li>
                     <li th:unless="${session.memberId}"><a th:href="@{/member/login}"><i class="fa fa-user"></i> Login</a></li>
                 </ul>
             </div>
@@ -118,23 +118,95 @@
                 <div class="section-title">
                     <h2>Shop</h2>
                 </div>
-                <div class="featured__controls">
+                <div class="featured__controls" id="controls">
                     <ul>
-                        <li class="active" data-filter="*">All</li>
-                        <li data-filter=".category1">category1</li>
-                        <li data-filter=".category2">category2</li>
-                        <li data-filter=".category3">category3</li>
-                        <li data-filter=".category4">category4</li>
-                        <li data-filter=".category5">category5</li>
-                        <li data-filter=".category6">category6</li>
+                        <li class="active">All</li>
+                        <li>category1</li>
+                        <li>category2</li>
+                        <li>category3</li>
+                        <li>category4</li>
+                        <li>category5</li>
+                        <li >category6</li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="row featured__filter">
-            <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${tradeDTO.dtoList}" th:classappend="${content.category}" th:if="${content.category}">
+        <div class="row featured__filter" id="all">
+            <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${tradeDTO.dtoList}">
                 <div class="featured__item">
                     <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-1.jpg">
+                    </div>
+                    <div class="featured__item__text">
+                        <h6><a th:href="@{/trade/view(idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
+                        <h5>[[${#numbers.formatCurrency(content.price)}]]</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row featured__filter d-none" id="category1">
+            <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${category1List}" th:classappend="${content.category}" th:if="${content.category}">
+                <div class="featured__item">
+                    <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-1.jpg">
+                    </div>
+                    <div class="featured__item__text">
+                        <h6><a th:href="@{/trade/view(idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
+                        <h5>[[${#numbers.formatCurrency(content.price)}]]</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row featured__filter d-none" id="category2">
+            <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${category2List}" th:classappend="${content.category}" th:if="${content.category}">
+                <div class="featured__item">
+                    <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-2.jpg">
+                    </div>
+                    <div class="featured__item__text">
+                        <h6><a th:href="@{/trade/view(idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
+                        <h5>[[${#numbers.formatCurrency(content.price)}]]</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row featured__filter d-none" id="category3">
+            <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${category3List}" th:classappend="${content.category}" th:if="${content.category}">
+                <div class="featured__item">
+                    <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-3.jpg">
+                    </div>
+                    <div class="featured__item__text">
+                        <h6><a th:href="@{/trade/view(idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
+                        <h5>[[${#numbers.formatCurrency(content.price)}]]</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row featured__filter d-none" id="category4">
+            <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${category4List}" th:classappend="${content.category}" th:if="${content.category}">
+                <div class="featured__item">
+                    <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-4.jpg">
+                    </div>
+                    <div class="featured__item__text">
+                        <h6><a th:href="@{/trade/view(idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
+                        <h5>[[${#numbers.formatCurrency(content.price)}]]</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row featured__filter d-none" id="category5">
+            <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${category5List}" th:classappend="${content.category}" th:if="${content.category}">
+                <div class="featured__item">
+                    <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-5.jpg">
+                    </div>
+                    <div class="featured__item__text">
+                        <h6><a th:href="@{/trade/view(idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
+                        <h5>[[${#numbers.formatCurrency(content.price)}]]</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row featured__filter d-none" id="category6">
+            <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${category6List}" th:classappend="${content.category}" th:if="${content.category}">
+                <div class="featured__item">
+                    <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-6.jpg">
                     </div>
                     <div class="featured__item__text">
                         <h6><a th:href="@{/trade/view(idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
@@ -191,6 +263,54 @@
         </div>
     </div>
 </section>
+
+<script>
+    const controlDOM = document.getElementById('controls');
+    const allDOM = document.getElementById('all');
+    const category1DOM = document.getElementById('category1');
+    const category2DOM = document.getElementById('category2');
+    const category3DOM = document.getElementById('category3');
+    const category4DOM = document.getElementById('category4');
+    const category5DOM = document.getElementById('category5');
+    const category6DOM = document.getElementById('category6');
+
+
+    controlDOM.addEventListener("click", function(e) {
+        const category = e.target.innerHTML;
+        allDOM.classList.add('d-none');
+        category1DOM.classList.add('d-none');
+        category2DOM.classList.add('d-none');
+        category3DOM.classList.add('d-none');
+        category4DOM.classList.add('d-none');
+        category5DOM.classList.add('d-none');
+        category6DOM.classList.add('d-none');
+
+        switch (category) {
+            case 'All' :
+                allDOM.classList.remove('d-none');
+                break;
+            case 'category1' :
+                category1DOM.classList.remove('d-none');
+                break;
+            case 'category2' :
+                category2DOM.classList.remove('d-none');
+                break;
+            case 'category3' :
+                category3DOM.classList.remove('d-none');
+                break;
+            case 'category4' :
+                category4DOM.classList.remove('d-none');
+                break;
+            case 'category5' :
+                category5DOM.classList.remove('d-none');
+                break;
+            case 'category6' :
+                category6DOM.classList.remove('d-none');
+                break;
+        }
+    }, false)
+</script>
+
 </div>
 <!-- Blog Section End -->
 

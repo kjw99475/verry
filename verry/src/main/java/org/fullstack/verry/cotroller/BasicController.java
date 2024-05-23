@@ -2,6 +2,7 @@ package org.fullstack.verry.cotroller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.fullstack.verry.domain.TradeEntity;
 import org.fullstack.verry.dto.BoardDTO;
 import org.fullstack.verry.dto.PageRequestDTO;
 import org.fullstack.verry.dto.PageResponseDTO;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Log4j2
 @RequiredArgsConstructor
@@ -28,9 +30,22 @@ public class BasicController {
         log.info("=========================");
         log.info("BasicController >> basicGET");
 
-        PageResponseDTO<TradeDTO> tradeDTO = tradeService.list(pageRequestDTO);
+        PageResponseDTO<TradeDTO> tradeDTO = tradeService.mainShoplist(pageRequestDTO);
+        List<TradeDTO> dto = tradeDTO.getDtoList();
         model.addAttribute("tradeDTO", tradeDTO);
 
+        List<TradeDTO> category1List = tradeService.mainCategoryList("category1");
+        List<TradeDTO> category2List = tradeService.mainCategoryList("category2");
+        List<TradeDTO> category3List = tradeService.mainCategoryList("category3");
+        List<TradeDTO> category4List = tradeService.mainCategoryList("category4");
+        List<TradeDTO> category5List = tradeService.mainCategoryList("category5");
+        List<TradeDTO> category6List = tradeService.mainCategoryList("category6");
+        model.addAttribute("category1List", category1List);
+        model.addAttribute("category2List", category2List);
+        model.addAttribute("category3List", category3List);
+        model.addAttribute("category4List", category4List);
+        model.addAttribute("category5List", category5List);
+        model.addAttribute("category6List", category6List);
 
         List<BoardDTO> noticeDTO = boardService.list("n", 0, 3);
         model.addAttribute("noticeDTO", noticeDTO);

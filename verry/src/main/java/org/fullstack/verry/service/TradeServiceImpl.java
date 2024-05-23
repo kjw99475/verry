@@ -93,4 +93,34 @@ public class TradeServiceImpl implements TradeService {
     public void deleteOne(int trade_idx) {
         tradeRepository.deleteById(trade_idx);
     }
+
+
+    // 메인페이지 리스트
+    @Override
+    public PageResponseDTO<TradeDTO> mainShoplist(PageRequestDTO pageRequestDTO) {
+        pageRequestDTO.setPage_size(8);
+        PageRequest pageable = pageRequestDTO.getPageable();
+
+        Page<TradeEntity> result = tradeRepository.findAll(pageable);
+
+        log.info("result : {}", result.getContent());
+
+        List<TradeDTO> dtoList = result.getContent().stream()
+                .map(trade -> modelMapper.map(trade, TradeDTO.class))
+                .collect(Collectors.toList());
+
+        return PageResponseDTO.<TradeDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total_count((int)result.getTotalElements())
+                .build();
+    }
+
+    @Override
+    public List<TradeDTO> mainCategoryList(String category) {
+        List<TradeEntity> list = tradeRepository.findDistinctTop8ByCategoryOrderByTradeIdxDesc(category);
+        List<TradeDTO> categoryList = list.stream().map(trade -> modelMapper.map(trade, TradeDTO.class)).collect(Collectors.toList());
+
+        return categoryList;
+    }
 }
