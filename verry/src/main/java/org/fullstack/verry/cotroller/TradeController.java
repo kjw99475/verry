@@ -60,7 +60,7 @@ public class TradeController {
         String saveFileName = "";
 
         if(!multipartFile.isEmpty()) {
-            saveFileName = FileUploadUtil.saveFile(multipartFile, "product");
+            saveFileName = FileUploadUtil.saveFile(multipartFile, "img\\product");
             tradeDTO.setOrgFileName(multipartFile.getOriginalFilename());
             tradeDTO.setSaveFileName(saveFileName);
         } else {
@@ -111,8 +111,8 @@ public class TradeController {
         String saveFileName = "";
 
         if(!multipartFile.isEmpty()) {
-            saveFileName = FileUploadUtil.saveFile(multipartFile, "product");
-            FileUploadUtil.deleteFile(tradeDTO.getSaveFileName(), "product");
+            saveFileName = FileUploadUtil.saveFile(multipartFile, "img\\product");
+            FileUploadUtil.deleteFile(tradeDTO.getSaveFileName(), "img\\product");
             tradeDTO.setOrgFileName(multipartFile.getOriginalFilename());
             tradeDTO.setSaveFileName(saveFileName);
         } else {
@@ -135,7 +135,7 @@ public class TradeController {
 
         TradeDTO dto = tradeService.view(tradeIdx);
         if(dto != null) {
-            FileUploadUtil.deleteFile(dto.getSaveFileName(), "product");
+            FileUploadUtil.deleteFile(dto.getSaveFileName(), "img\\product");
         }
 
         tradeService.deleteOne(tradeIdx);

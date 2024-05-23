@@ -63,7 +63,7 @@ public class BoardController {
                            ) {
         BoardDTO boardDTO = boardService.view(idx);
 
-        FileUploadUtil.download(req, resp, boardDTO.getOrgFileName(), boardDTO.getSaveFileName(), "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\board");
+        FileUploadUtil.download(req, resp, boardDTO.getOrgFileName(), boardDTO.getSaveFileName(), "uploads\\board");
     }
 
     @GetMapping("/bbs/regist")
@@ -82,7 +82,7 @@ public class BoardController {
 
         String saveFileName = "";
         if(multipartFile!= null && !multipartFile.isEmpty()) {
-            saveFileName = FileUploadUtil.saveFile(multipartFile, "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\board");
+            saveFileName = FileUploadUtil.saveFile(multipartFile, "uploads\\board");
             boardDTO.setOrgFileName(multipartFile.getOriginalFilename());
             boardDTO.setSaveFileName(saveFileName);
         }
@@ -117,10 +117,10 @@ public class BoardController {
         String saveFileName = "";
 
         if(file!= null && !file.isEmpty()) {
-            saveFileName = FileUploadUtil.saveFile(file, "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\board");
+            saveFileName = FileUploadUtil.saveFile(file, "uploads\\board");
             boardDTO.setOrgFileName(file.getOriginalFilename());
             boardDTO.setSaveFileName(saveFileName);
-            FileUploadUtil.deleteFile(upload2, "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\board");
+            FileUploadUtil.deleteFile(upload2, "uploads\\board");
         } else {
             boardDTO.setOrgFileName(upload);
             boardDTO.setSaveFileName(upload2);
@@ -135,7 +135,7 @@ public class BoardController {
     public String delete(int idx, RedirectAttributes redirectAttributes) {
         BoardDTO boardDTO = boardService.view(idx);
         if (boardDTO.getSaveFileName() != null && !boardDTO.getSaveFileName().isEmpty()) {
-            FileUploadUtil.deleteFile(boardDTO.getSaveFileName(), "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\board");
+            FileUploadUtil.deleteFile(boardDTO.getSaveFileName(), "uploads\\board");
         }
         boardService.delete(idx);
         return "redirect:/bbs/list";
@@ -145,7 +145,8 @@ public class BoardController {
     @ResponseBody
     public String deleteFilePOST(@RequestParam int idx) {
         BoardDTO boardDTO = boardService.view(idx);
-        FileUploadUtil.deleteFile(boardDTO.getSaveFileName(), "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\board");
+        log.info(boardDTO.getSaveFileName());
+        FileUploadUtil.deleteFile(boardDTO.getSaveFileName(), "uploads\\board");
         boardDTO.setOrgFileName("");
         boardDTO.setSaveFileName("");
         boardService.regist(boardDTO);
@@ -192,7 +193,7 @@ public class BoardController {
     ) {
         BoardDTO boardDTO = boardService.view(idx);
 
-        FileUploadUtil.download(req, resp, boardDTO.getOrgFileName(), boardDTO.getSaveFileName(), "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\notice");
+        FileUploadUtil.download(req, resp, boardDTO.getOrgFileName(), boardDTO.getSaveFileName(), "uploads\\notice");
     }
 
     @GetMapping("/notice/regist")
@@ -212,7 +213,7 @@ public class BoardController {
         String saveFileName = "";
 
         if(multipartFile!= null && !multipartFile.isEmpty()) {
-            saveFileName = FileUploadUtil.saveFile(multipartFile, "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\notice");
+            saveFileName = FileUploadUtil.saveFile(multipartFile, "uploads\\notice");
             boardDTO.setOrgFileName(multipartFile.getOriginalFilename());
             boardDTO.setSaveFileName(saveFileName);
         }
@@ -247,10 +248,10 @@ public class BoardController {
         String saveFileName = "";
 
         if(file!= null && !file.isEmpty()) {
-            saveFileName = FileUploadUtil.saveFile(file, "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\notice");
+            saveFileName = FileUploadUtil.saveFile(file, "uploads\\notice");
             boardDTO.setOrgFileName(file.getOriginalFilename());
             boardDTO.setSaveFileName(saveFileName);
-            FileUploadUtil.deleteFile(upload2, "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\notice");
+            FileUploadUtil.deleteFile(upload2, "uploads\\notice");
         } else {
             boardDTO.setOrgFileName(upload);
             boardDTO.setSaveFileName(upload2);
@@ -268,7 +269,7 @@ public class BoardController {
     public String deleteNotice(int idx, RedirectAttributes redirectAttributes) {
         BoardDTO boardDTO = boardService.view(idx);
         if (boardDTO.getSaveFileName() != null && !boardDTO.getSaveFileName().isEmpty()) {
-            FileUploadUtil.deleteFile(boardDTO.getSaveFileName(), "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\notice");
+            FileUploadUtil.deleteFile(boardDTO.getSaveFileName(), "uploads\\notice");
         }
         boardService.delete(idx);
         return "redirect:/notice/list";
@@ -278,7 +279,7 @@ public class BoardController {
     @ResponseBody
     public String deleteFilePOSTNotice(@RequestParam int idx) {
         BoardDTO boardDTO = boardService.view(idx);
-        FileUploadUtil.deleteFile(boardDTO.getSaveFileName(), "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\notice");
+        FileUploadUtil.deleteFile(boardDTO.getSaveFileName(), "uploads\\notice");
         boardDTO.setOrgFileName("");
         boardDTO.setSaveFileName("");
         boardService.regist(boardDTO);
