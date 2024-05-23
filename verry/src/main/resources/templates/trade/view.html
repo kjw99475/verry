@@ -12,9 +12,9 @@
                     <div class="breadcrumb__text">
                         <h2>중고상품 상세</h2>
                         <div class="breadcrumb__option">
-                            <a href="./index.html">Home</a>
-                            <a href="./index.html">Vegetables</a>
-                            <span>Vegetable’s Package</span>
+                            <a href="/basic">Home</a>
+                            <a href="/trade/list">List</a>
+                            <span>Product's Detail</span>
                         </div>
                     </div>
                 </div>
@@ -27,6 +27,9 @@
     <section class="product-details spad">
         <div class="container">
             <div class="d-flex justify-content-end mb-2">
+                <a th:href="|@{/trade/list}|">
+                    <button class="btn btn-outline-primary">목록</button>
+                </a>
                 <a th:href="|@{/trade/modify(trade_idx=${tradeDTO.tradeIdx})}|">
                     <button class="btn btn-outline-secondary mx-2">수정</button>
                 </a>
@@ -51,7 +54,6 @@
                         <ul style="border-top: 0; margin-top: 0; padding-top: 0 " class="mb-3">
                             <li><b>작성자</b> <span>[[${tradeDTO.memberId}]]</span></li>
                             <li><b>작성일</b> <span>[[${tradeDTO.regDate}]]</span></li>
-                            <li><b>조회수</b> <span>[[${tradeDTO.readCnt}]]</span></li>
                         </ul>
                         <div class="product__details__price">￦[[${tradeDTO.price}]]</div>
                         <div class="checkout__input">
@@ -74,8 +76,6 @@
                         <div class="col-md-12">
                             <div class="my-4">
                                 <form action="/trade/replies/regist" method="post">
-                                    <textarea name="comment" id="comment" cols="150" rows="5"
-                                              style="resize: none;"></textarea>
                                     <button type="button" class="btn btn-info registReplyBtn">댓글 등록</button>
                                 </form>
                             </div>

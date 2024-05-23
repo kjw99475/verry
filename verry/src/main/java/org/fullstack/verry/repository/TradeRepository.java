@@ -2,6 +2,7 @@ package org.fullstack.verry.repository;
 
 import org.fullstack.verry.domain.TradeEntity;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
