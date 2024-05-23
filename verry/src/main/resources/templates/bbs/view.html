@@ -54,10 +54,8 @@
 
 
                     <div th:if="${boardDTO.orgFileName != null and !#strings.toString(boardDTO.orgFileName).equals('') and !#strings.toString(boardDTO.orgFileName).isEmpty()}" class="col-lg-12 mx-3 mt-4" >
-                        <label>파일 : </label>
+                        <label>첨부파일 : </label>
                         <span><a th:href="|@{/bbs/download(idx=${boardDTO.idx})}|" target="_blank">[[${boardDTO.orgFileName}]]</a></span>
-<!--                        <a download th:href="@{/uploads/board/${boardDTO.orgFileName}}">파일 다운로드</a>-->
-<!--                        <div>[[${boardDTO.orgFileName}]]</div>-->
                     </div>
 
 
@@ -104,7 +102,7 @@
 
         <div class="row mt-3">
             <div class="col">
-                <ul class="pagination replyPaging"></ul>
+                <ul class="pagination replyPaging justify-content-center"></ul>
             </div>
         </div>
 
@@ -145,6 +143,7 @@
     const replyList = document.querySelector(".replyList");
     const replyPaging = document.querySelector(".replyPaging");
 
+
     console.log(member_id, member_type);
 
     function printReplyArea(page, page_size, goLast) {  //비동기 통신으로 갖고와
@@ -156,21 +155,22 @@
                     printPaging(data.pageRequestDTO);
                 }
             )
-            .catch(e=>{console.log(e);});   //try-catch와 같아
+            .catch(e=>{console.log(e.message);});   //try-catch와 같아
     }
 
     printReplyArea(1, 10);
+
 
     function printReplyList(dtoList) {
         let replyLi = "";
         if (dtoList && dtoList.length > 0) {
             for (const dto of dtoList) {
                 replyLi += `<li class="list-group-item d-flex replyItem">
-                        <span class="col-2">${dto.boardReplyIdx}</span>
+
                         <span class="col-6" data-idx="${dto.boardIdx}">${dto.comment}
-                                    <span th:if="${member_id == dto.memberId} or ${member_type == 'a'}" class="badge progress-bar-success replyDelete"
-                                                style="background-color: #0a53be"
-                                                onclick="replyDeleteOK(${dto.boardReplyIdx})">X</span>
+                                    <button class="badge progress-bar-success replyDelete"
+                                                style="color: red; background-color: #ffffff; border: none"
+                                                onclick="replyDeleteAsk('${dto.boardReplyIdx}', '${dto.memberId}')">X</button>
                         </span>
                         <span class="col-2">${dto.memberId}</span>
                         <span class="col-2">${dto.regDate}</span>
@@ -184,6 +184,20 @@
                     </li>`;
         }
         replyList.innerHTML = replyLi;
+    }
+
+
+    function replyDeleteAsk(idx, id) {
+        console.log(idx, id);
+        if (id === member_id || member_type === "a") {
+            let yn = confirm("댓글을 삭제 하시겠습니까?");
+            if (yn) {
+                replyDeleteOK(idx);
+            }
+        }
+        else {
+            alert("자신의 댓글만 삭제할 수 있습니다.");
+        }
     }
 
     function printPaging(data) {
@@ -253,7 +267,6 @@
             alert("댓글 등록이 완료되었습니다.");
             registerModal.hide();
             replyText.value = "";
-            replyer.value = "";
             printReplyArea(1, 10, true);
         }).catch(e => {
             alert(e.message);

@@ -55,7 +55,7 @@
                                 </td>
                                 <td class="shoping__cart__item">
                                     <a th:href="|@{/notice/view(idx=${dto.idx})}|">
-                                        <h5>[[${dto.title}]]</h5>
+                                        <h5>[[${dto.title}]]</h5> <i th:if="${dto.orgFileName != null  and !#strings.toString(dto.orgFileName).equals('') and !#strings.toString(dto.orgFileName).isEmpty()}" class="fa-solid fa-paperclip"></i>
                                     </a>
                                 </td>
                                 <td class="shoping__cart__quantity">
@@ -100,7 +100,7 @@
             </div>
 
             <!--        =================== 페이징 영역 end ================-->
-
+            <script src="https://kit.fontawesome.com/be97bd8e1b.js" crossorigin="anonymous"></script>
         </div>
     </section>
     <!-- Shoping Cart Section End -->
