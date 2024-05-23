@@ -99,8 +99,6 @@ public class TradeServiceImpl implements TradeService {
 
         Page<TradeEntity> result = tradeRepository.findAll(pageable);
 
-        log.info("result : {}", result.getContent());
-
         List<TradeDTO> dtoList = result.getContent().stream()
                 .map(trade -> modelMapper.map(trade, TradeDTO.class))
                 .collect(Collectors.toList());

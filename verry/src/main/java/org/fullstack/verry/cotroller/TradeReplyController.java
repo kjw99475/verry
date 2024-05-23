@@ -26,7 +26,6 @@ public class TradeReplyController {
     @PostMapping(value = "/regist", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, Integer> regist(@Valid @RequestBody TradeReplyDTO replyDTO,
                                        BindingResult bindingResult) throws BindException {
-        log.info("replyDTO : {}", replyDTO);
         if(bindingResult.hasErrors()) {
             throw new BindException(bindingResult);
         }
@@ -43,7 +42,6 @@ public class TradeReplyController {
     public PageResponseDTO<TradeReplyDTO> replyList(@PathVariable(name = "trade_idx") int trade_idx, PageRequestDTO pageRequestDTO) {
         PageResponseDTO<TradeReplyDTO> responseDTO = tradeReplyService.getListOfReply(trade_idx, pageRequestDTO);
 
-        log.info("responseDTO : {}", responseDTO);
         return responseDTO;
     }
 

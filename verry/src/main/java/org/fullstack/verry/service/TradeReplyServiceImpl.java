@@ -49,8 +49,6 @@ public class TradeReplyServiceImpl implements TradeReplyService {
 
         Page<TradeReplyEntity> result = tradeReplyRepository.listOfBoardReply(trade_idx, pageable);
 
-        log.info("result : {}", result);
-
         int total_count = (result != null ? (int) result.getTotalElements() : 0);
 
         List<TradeReplyDTO> dtoList = null;
@@ -59,8 +57,6 @@ public class TradeReplyServiceImpl implements TradeReplyService {
                     .map(reply -> modelMapper.map(reply, TradeReplyDTO.class))
                     .collect(Collectors.toList());
         }
-
-        log.info("dtoList : {}", dtoList);
 
         return PageResponseDTO.<TradeReplyDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)

@@ -132,7 +132,6 @@ public class TradeController {
 
     @PostMapping("/delete")
     public String delete(int tradeIdx) {
-        log.info("trade_idx : {}", tradeIdx);
 
         TradeDTO dto = tradeService.view(tradeIdx);
         if(dto != null) {
