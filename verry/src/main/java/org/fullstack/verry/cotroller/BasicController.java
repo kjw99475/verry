@@ -34,12 +34,12 @@ public class BasicController {
         List<TradeDTO> dto = tradeDTO.getDtoList();
         model.addAttribute("tradeDTO", tradeDTO);
 
-        List<TradeDTO> category1List = tradeService.mainCategoryList("category1");
-        List<TradeDTO> category2List = tradeService.mainCategoryList("category2");
-        List<TradeDTO> category3List = tradeService.mainCategoryList("category3");
-        List<TradeDTO> category4List = tradeService.mainCategoryList("category4");
-        List<TradeDTO> category5List = tradeService.mainCategoryList("category5");
-        List<TradeDTO> category6List = tradeService.mainCategoryList("category6");
+        List<TradeDTO> category1List = tradeService.mainCategoryList("유아");
+        List<TradeDTO> category2List = tradeService.mainCategoryList("초등");
+        List<TradeDTO> category3List = tradeService.mainCategoryList("중등");
+        List<TradeDTO> category4List = tradeService.mainCategoryList("고등");
+        List<TradeDTO> category5List = tradeService.mainCategoryList("교과서/참고서");
+        List<TradeDTO> category6List = tradeService.mainCategoryList("기타");
         model.addAttribute("category1List", category1List);
         model.addAttribute("category2List", category2List);
         model.addAttribute("category3List", category3List);
