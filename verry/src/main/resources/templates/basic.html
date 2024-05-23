@@ -131,86 +131,100 @@
         </div>
         <div class="row featured__filter" id="all">
             <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${tradeDTO.dtoList}">
+                <a th:href="|@{/trade/view(trade_idx=${content.tradeIdx})}|">
                 <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-1.jpg">
+                    <div class="featured__item__pic set-bg" th:data-setbg="'/img/product/' + ${content.saveFileName} + ''">
                     </div>
                     <div class="featured__item__text">
-                        <h6><a th:href="@{/trade/view(trade_idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
+                        <h6>[[${content.title}]]</h6>
                         <h5>[[${#numbers.formatCurrency(content.price)}]]</h5>
                     </div>
                 </div>
+                </a>
             </div>
         </div>
         <div class="row featured__filter d-none" id="category1">
             <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${category1List}" th:classappend="category1" th:if="${content.category}">
+                <a th:href="|@{/trade/view(trade_idx=${content.tradeIdx})}|">
                 <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-1.jpg">
+                    <div class="featured__item__pic set-bg" th:data-setbg="'/img/product/' + ${content.saveFileName} + ''">
                     </div>
                     <div class="featured__item__text">
                         <h6><a th:href="@{/trade/view(trade_idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
                         <h5>[[${#numbers.formatCurrency(content.price)}]]</h5>
                     </div>
                 </div>
+                </a>
             </div>
         </div>
         <div class="row featured__filter d-none" id="category2">
             <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${category2List}" th:classappend="category2" th:if="${content.category}">
+                <a th:href="|@{/trade/view(trade_idx=${content.tradeIdx})}|">
                 <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-2.jpg">
+                    <div class="featured__item__pic set-bg" th:data-setbg="'/img/product/' + ${content.saveFileName} + ''">
                     </div>
                     <div class="featured__item__text">
                         <h6><a th:href="@{/trade/view(trade_idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
                         <h5>[[${#numbers.formatCurrency(content.price)}]]</h5>
                     </div>
                 </div>
+                </a>
             </div>
         </div>
         <div class="row featured__filter d-none" id="category3">
             <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${category3List}" th:classappend="category3" th:if="${content.category}">
+                <a th:href="|@{/trade/view(trade_idx=${content.tradeIdx})}|">
                 <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-3.jpg">
+                    <div class="featured__item__pic set-bg" th:data-setbg="'/img/product/' + ${content.saveFileName} + ''">
                     </div>
                     <div class="featured__item__text">
                         <h6><a th:href="@{/trade/view(trade_idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
                         <h5>[[${#numbers.formatCurrency(content.price)}]]</h5>
                     </div>
                 </div>
+                </a>
             </div>
         </div>
         <div class="row featured__filter d-none" id="category4">
             <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${category4List}" th:classappend="category4" th:if="${content.category}">
+                <a th:href="|@{/trade/view(trade_idx=${content.tradeIdx})}|">
                 <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-4.jpg">
+                    <div class="featured__item__pic set-bg" th:data-setbg="'/img/product/' + ${content.saveFileName} + ''">
                     </div>
                     <div class="featured__item__text">
                         <h6><a th:href="@{/trade/view(trade_idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
                         <h5>[[${#numbers.formatCurrency(content.price)}]]</h5>
                     </div>
                 </div>
+                </a>
             </div>
         </div>
         <div class="row featured__filter d-none" id="category5">
             <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${category5List}" th:classappend="category5" th:if="${content.category}">
+                <a th:href="|@{/trade/view(trade_idx=${content.tradeIdx})}|">
                 <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-5.jpg">
+                    <div class="featured__item__pic set-bg" th:data-setbg="'/img/product/' + ${content.saveFileName} + ''">
                     </div>
                     <div class="featured__item__text">
                         <h6><a th:href="@{/trade/view(trade_idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
                         <h5>[[${#numbers.formatCurrency(content.price)}]]</h5>
                     </div>
                 </div>
+                </a>
             </div>
         </div>
         <div class="row featured__filter d-none" id="category6">
             <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${category6List}" th:classappend="category6" th:if="${content.category}">
+                <a th:href="|@{/trade/view(trade_idx=${content.tradeIdx})}|">
                 <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-6.jpg">
+                    <div class="featured__item__pic set-bg" th:data-setbg="'/img/product/' + ${content.saveFileName} + ''">
                     </div>
                     <div class="featured__item__text">
                         <h6><a th:href="@{/trade/view(trade_idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
                         <h5>[[${#numbers.formatCurrency(content.price)}]]</h5>
                     </div>
                 </div>
+                </a>
             </div>
         </div>
     </div>

@@ -1651,6 +1651,24 @@ ol {
 	border-color: #30931C;
 	color: #ffffff;
 }
+.theme__color {
+	color: #30931C;
+	background-color: #fff;
+}
+
+.theme__color:hover, .theme__color.active, .theme__color:hover i,
+.arrow__color:hover, .arrow__color.active, .arrow__color:hover i
+{
+	background: #30931C;
+	border-color: #30931C;
+	color: #ffffff;
+}
+
+.arrow__color {
+	color : #b2b2b2;
+	background-color: #fff;
+}
+
 
 .product__pagination a:last-child,
 .blog__pagination a:last-child {
