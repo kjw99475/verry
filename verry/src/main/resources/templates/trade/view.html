@@ -96,7 +96,7 @@
 
                     <div class="row mt-3">
                         <div class="col">
-                            <ul class="pagination replyPaging"></ul>
+                            <ul class="pagination replyPaging justify-content-center"></ul>
                         </div>
                     </div>
 
@@ -185,6 +185,8 @@
     const trade_idx = [[${tradeDTO.tradeIdx}]];
     const replyList = document.querySelector(".replyList");
     const replyPaging = document.querySelector(".replyPaging");
+    const member_id = [[${session.memberId}]];
+    const member_type = [[${session.memberType}]];
 
     function printReplyArea(page, page_size, goLast) {
         getReplyList({trade_idx, page, page_size, goLast})
@@ -207,9 +209,9 @@
         if (dtoList && dtoList.length > 0) {
             for (const dto of dtoList) {
                 replyLi += `<li class="list-group-item d-flex replyItem">
-                    <span class="col-2">${dto.tradeReplyIdx}</span>
+
                     <span class="col-6" data-idx="${dto.tradeIdx}">${dto.comment}
-                    <button class="badge progress-bar-success replyDelete " style="background-color: #0a53be" onclick="replyDeleteOK(${dto.tradeReplyIdx})">X</button>
+                    <button class="badge progress-bar-success replyDelete " style="background-color: #ffffff; color:red; border:none;" onclick="replyDeleteAsk('${dto.tradeReplyIdx}', '${dto.memberId}')">X</button>
                     </span>
                     <span class="col-2">${dto.memberId}</span>
                     <span class="col-2">${dto.regDate}</span>
@@ -222,6 +224,19 @@
         }
 
         replyList.innerHTML = replyLi;
+    }
+
+    function replyDeleteAsk(idx, id) {
+        console.log(idx, id);
+        if (id === member_id || member_type === "a") {
+            let yn = confirm("댓글을 삭제 하시겠습니까?");
+            if (yn) {
+                replyDeleteOK(idx);
+            }
+        }
+        else {
+            alert("자신의 댓글만 삭제할 수 있습니다.");
+        }
     }
 
     function printPaging(dto) {
