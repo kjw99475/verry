@@ -47,10 +47,10 @@
                 <a th:href="|@{/trade/list}|">
                     <button class="btn btn-outline-primary">목록</button>
                 </a>
-                <a th:href="|@{/trade/modify(trade_idx=${tradeDTO.tradeIdx})}|" th:if="${session.memberId == tradeDTO.memberId}">
+                <a th:href="|@{/trade/modify(trade_idx=${tradeDTO.tradeIdx})}|" th:if="${session.memberId == tradeDTO.memberId} or ${session.memberType == 'a'}">
                     <button class="btn btn-outline-secondary mx-2">수정</button>
                 </a>
-                <form name="frmDelete" id="frmDelete" action="/trade/delete" method="post" th:if="${session.memberId == tradeDTO.memberId}">
+                <form name="frmDelete" id="frmDelete" action="/trade/delete" method="post" th:if="${session.memberId == tradeDTO.memberId} or ${session.memberType == 'a'}">
                     <input type="hidden" name="tradeIdx" th:value="${tradeDTO.tradeIdx}"/>
                     <button type="button" class="btn btn-outline-danger" onclick="goDelete()">삭제</button>
                 </form>
