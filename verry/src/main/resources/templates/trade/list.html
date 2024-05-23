@@ -32,11 +32,11 @@
                         <div class="row">
                             <div class="col-lg-4 col-md-5">
                                 <div class="filter__sort">
-<!--                                    <span>Sort By</span>-->
-<!--                                    <select>-->
-<!--                                        <option value="0">Default</option>-->
-<!--                                        <option value="0">Default</option>-->
-<!--                                    </select>-->
+                                    <!--                                    <span>Sort By</span>-->
+                                    <!--                                    <select>-->
+                                    <!--                                        <option value="0">Default</option>-->
+                                    <!--                                        <option value="0">Default</option>-->
+                                    <!--                                    </select>-->
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4">
@@ -56,13 +56,13 @@
                         <div th:each="dto:${pageResponseDTO.dtoList}" th:if="${!pageResponseDTO.dtoList.isEmpty()}" class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
                                 <a th:href="|@{/trade/view(trade_idx=${dto.tradeIdx})}|">
-                                <div class="product__item__pic set-bg" th:data-setbg="'/img/product/' + ${dto.saveFileName} + ''">
-                                </div>
-                                <div class="product__item__text">
-                                    <h6>[[${dto.title}]]</h6>
+                                    <div class="product__item__pic set-bg" th:data-setbg="'/img/product/' + ${dto.saveFileName} + ''">
+                                    </div>
+                                    <div class="product__item__text">
+                                        <h6>[[${dto.title}]]</h6>
+                                        <h5>[[${dto.price}]]</h5>
+                                    </div>
                                 </a>
-                                    <h5>[[${dto.price}]]</h5>
-                                </div>
                             </div>
                         </div>
                         <div th:if="${pageResponseDTO.dtoList.isEmpty()}">
