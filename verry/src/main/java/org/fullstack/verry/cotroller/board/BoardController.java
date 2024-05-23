@@ -28,9 +28,6 @@ public class BoardController {
 
     @GetMapping("/bbs/list")
     public void list(@RequestParam(name="block", defaultValue = "1") int block, Model model) {
-        log.info("=================================================");
-        log.info("BoardController >> list START");
-
         String type = "b";
         List<BoardDTO> pageResponseDTO = boardService.list(type, (block-1)*10, 10);
         int block_start = (int)(Math.ceil(block / (double)10) -1 ) * 10 + 1;
@@ -44,30 +41,19 @@ public class BoardController {
             block_end = (total_count/10 +1 > block_end ? block_end : total_count/10 +1);
         }
 
-        log.info("pageResponseDTO : {}", pageResponseDTO);
         model.addAttribute("pageResponseDTO", pageResponseDTO);
         model.addAttribute("block_start", block_start);
         model.addAttribute("block_end", block_end);
         model.addAttribute("total_count", total_count);
         model.addAttribute("block", block);
         model.addAttribute("pageName", "community");
-
-        log.info("BoardController >> list END");
-        log.info("=================================================");
     }
 
     @GetMapping("/bbs/view")
     public void view(int idx, PageRequestDTO pageRequestDTO, Model model) {
-        log.info("=================================================");
-        log.info("BoardController >> view START");
-
         BoardDTO boardDTO = boardService.view(idx);
         model.addAttribute("boardDTO", boardDTO);
         model.addAttribute("pageName", "community");
-
-        log.info("boardDTO : {}", boardDTO);
-        log.info("BoardController >> view END");
-        log.info("=================================================");
     }
 
     @GetMapping("/bbs/download")
@@ -82,50 +68,33 @@ public class BoardController {
 
     @GetMapping("/bbs/regist")
     public void registGET(PageRequestDTO pageRequestDTO, Model model) {
-        log.info("registGET");
+
     }
 
     @PostMapping("/bbs/regist")
     public String registPOST(@Valid BoardDTO boardDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, @RequestParam("file") MultipartFile multipartFile, Model model) {
-        log.info("=================================================");
-        log.info("BoardController >> registPOST START");
-
         boardDTO.setBoardType("b");
         if (bindingResult.hasErrors()) {
-            log.info("BoardController >> registPOST ERROR");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             redirectAttributes.addFlashAttribute("boardDTO", boardDTO);
-            log.info(bindingResult.getAllErrors());
-            log.info("BoardController >> registPOST END");
-            log.info("============================================");
             return "redirect:/bbs/regist";
         }
 
-
         String saveFileName = "";
-
         if(multipartFile!= null && !multipartFile.isEmpty()) {
             saveFileName = FileUploadUtil.saveFile(multipartFile, "D:\\java4\\verry\\verry\\src\\main\\resources\\static\\uploads\\board");
             boardDTO.setOrgFileName(multipartFile.getOriginalFilename());
             boardDTO.setSaveFileName(saveFileName);
         }
 
-
         int result_idx = boardService.regist(boardDTO);
         redirectAttributes.addFlashAttribute("result_idx", result_idx);
-
-
-        log.info("boardDTO : {}", boardDTO);
-        log.info("result_idx : {}" , result_idx);
-        log.info("BoardController >> registPOST END");
-        log.info("=================================================");
 
         return "redirect:/bbs/list";
     }
 
     @GetMapping("/bbs/modify")
     public void modifyGET(int idx, Model model) {
-        log.info("modifyGET");
         BoardDTO boardDTO = boardService.view(idx);
         model.addAttribute("boardDTO", boardDTO);
         model.addAttribute("pageName", "community");
@@ -139,18 +108,11 @@ public class BoardController {
                              @RequestParam(value = "upload2", defaultValue = "") String upload2,
                              @RequestParam("file") MultipartFile file,
                              Model model) {
-        log.info("=================================================");
-        log.info("BoardController >> modifyPOST START");
 
-//        boardDTO.setBoardType("b");
         if (bindingResult.hasErrors()) {
-            log.info("BoardController >> modifyPOST ERROR");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-            log.info("BoardController >> modifyPOST END");
-            log.info("============================================");
             return "redirect:/bbs/modify?idx=" + boardDTO.getIdx();
         }
-
 
         String saveFileName = "";
 
@@ -164,16 +126,8 @@ public class BoardController {
             boardDTO.setSaveFileName(upload2);
         }
 
-
-
         int result_idx = boardService.modify(boardDTO);
         redirectAttributes.addFlashAttribute("result_idx", result_idx);
-
-
-
-        log.info("BoardController >> modifyPOST END");
-        log.info("=================================================");
-
         return "redirect:/bbs/view?idx=" + boardDTO.getIdx();
     }
 
@@ -201,9 +155,6 @@ public class BoardController {
 
     @GetMapping("/notice/list")
     public void listNotice(@RequestParam(name="block", defaultValue = "1") int block, PageRequestDTO pageRequestDTO, Model model) {
-        log.info("=================================================");
-        log.info("BoardController >> list START");
-
         String type = "n";
         List<BoardDTO> pageResponseDTO = boardService.list(type, (block-1)*10, 10);
         int block_start = (int)(Math.ceil(block / (double)10) -1 ) * 10 + 1;
@@ -217,7 +168,6 @@ public class BoardController {
             block_end = (total_count/10 +1 > block_end ? block_end : total_count/10 +1);
         }
 
-        log.info("pageResponseDTO : {}", pageResponseDTO);
         model.addAttribute("pageResponseDTO", pageResponseDTO);
         model.addAttribute("block_start", block_start);
         model.addAttribute("block_end", block_end);
@@ -225,24 +175,14 @@ public class BoardController {
         model.addAttribute("block", block);
         model.addAttribute("pageName", "notice");
 
-        log.info("pageResponseDTO : {}", pageResponseDTO);
         model.addAttribute("pageResponseDTO", pageResponseDTO);
-
-        log.info("BoardController >> list END");
-        log.info("=================================================");
     }
 
     @GetMapping("/notice/view")
     public void viewNotice(int idx, PageRequestDTO pageRequestDTO, Model model) {
-        log.info("=================================================");
-        log.info("BoardController >> view START");
-
         BoardDTO boardDTO = boardService.view(idx);
         model.addAttribute("boardDTO", boardDTO);
         model.addAttribute("pageName", "notice");
-
-        log.info("BoardController >> view END");
-        log.info("=================================================");
     }
 
     @GetMapping("/notice/download")
@@ -258,24 +198,16 @@ public class BoardController {
     @GetMapping("/notice/regist")
     public void registGETNotice(PageRequestDTO pageRequestDTO, Model model) {
         model.addAttribute("pageName", "notice");
-        log.info("registGET");
     }
 
     @PostMapping("/notice/regist")
     public String registPOSTNotice(@Valid BoardDTO boardDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, @RequestParam("file") MultipartFile multipartFile, Model model) {
-        log.info("=================================================");
-        log.info("BoardController >> registPOSTNotice START");
 
         boardDTO.setBoardType("n");
         if (bindingResult.hasErrors()) {
-            log.info("BoardController >> registPOSTNotice ERROR");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-            log.info(bindingResult.getAllErrors());
-            log.info("BoardController >> registPOSTNotice END");
-            log.info("============================================");
             return "redirect:/notice/regist";
         }
-
 
         String saveFileName = "";
 
@@ -285,22 +217,14 @@ public class BoardController {
             boardDTO.setSaveFileName(saveFileName);
         }
 
-
         int result_idx = boardService.regist(boardDTO);
         redirectAttributes.addFlashAttribute("result_idx", result_idx);
-
-
-        log.info("boardDTO : {}", boardDTO);
-        log.info("result_idx : {}" , result_idx);
-        log.info("BoardController >> registPOSTNotice END");
-        log.info("=================================================");
 
         return "redirect:/notice/list";
     }
 
     @GetMapping("/notice/modify")
     public void modifyGETNotice(int idx, Model model) {
-        log.info("modifyGET");
         BoardDTO boardDTO = boardService.view(idx);
         model.addAttribute("boardDTO", boardDTO);
         model.addAttribute("pageName", "notice");
@@ -314,18 +238,11 @@ public class BoardController {
                              @RequestParam(value = "upload2", defaultValue = "") String upload2,
                              @RequestParam("file") MultipartFile file,
                              Model model) {
-        log.info("=================================================");
-        log.info("BoardController >> modifyPOSTNotice START");
-
         boardDTO.setBoardType("n");
         if (bindingResult.hasErrors()) {
-            log.info("BoardController >> modifyPOSTNotice ERROR");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-            log.info("BoardController >> modifyPOSTNotice END");
-            log.info("============================================");
             return "redirect:/notice/modify?idx=" + boardDTO.getIdx();
         }
-
 
         String saveFileName = "";
 
@@ -339,15 +256,8 @@ public class BoardController {
             boardDTO.setSaveFileName(upload2);
         }
 
-
-
         int result_idx = boardService.modify(boardDTO);
         redirectAttributes.addFlashAttribute("result_idx", result_idx);
-
-
-
-        log.info("BoardController >> modifyPOSTNotice END");
-        log.info("=================================================");
 
         return "redirect:/notice/view?idx=" + boardDTO.getIdx();
     }

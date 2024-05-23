@@ -7,5 +7,4 @@ import org.springframework.data.domain.Pageable;
 
 public interface BoardSearch {
     Page<BoardEntity> search(Pageable pageable, String[] types, String search_keyword);
-//    Page<BoardDTO> searchWithReplyCnt(Pageable pageable, String[] types, String search_keyword);
 }
