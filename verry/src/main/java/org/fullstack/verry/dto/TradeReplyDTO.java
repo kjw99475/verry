@@ -2,6 +2,7 @@ package org.fullstack.verry.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @Builder
 public class TradeReplyDTO {
     private int tradeReplyIdx;
-    @NotEmpty
+    @NotNull
     private int tradeIdx;
     @NotEmpty
     private String comment;

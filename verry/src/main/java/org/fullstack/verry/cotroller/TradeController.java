@@ -33,6 +33,7 @@ public class TradeController {
 
     @GetMapping("/list")
     public void list(PageRequestDTO pageRequestDTO, Model model) {
+        pageRequestDTO.setPage_size(9);
         PageResponseDTO<TradeDTO> pageResponseDTO = tradeService.list(pageRequestDTO);
 
         log.info("pageResponseDTO : {}", pageResponseDTO);
