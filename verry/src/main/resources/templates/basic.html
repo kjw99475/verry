@@ -95,15 +95,13 @@
 <!-- Header Section End -->
 
 <div class="container" layout:fragment="content">
-<!--<section class="breadcrumb-section hero__item set-bg" data-setbg="/img/strawberry.jpg">-->
 <section class="breadcrumb-section hero__item set-bg" data-setbg="/img/strawberry2.jpg">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12 text-center">
-                <div class="breadcrumb__text hero__text">
-                    <span>FRUIT FRESH</span>
-                    <h2>Vegetable <br />100% Organic</h2>
-                    <a th:href="@{/trade/list}" class="primary-btn">SHOP NOW</a>
+            <div class="text-center w-100">
+                <div class="breadcrumb__text hero__text p-5" style="background-color: rgba(0, 0, 0, 0.7)">
+                    <h2>WELCOME <br/>🍓Verry Market🍓</h2>
+                    <a th:href="@{/trade/list}" class="primary-btn mt-2">Go Shop</a>
                 </div>
             </div>
         </div>
@@ -121,12 +119,12 @@
                 <div class="featured__controls" id="controls">
                     <ul>
                         <li class="active">All</li>
-                        <li>category1</li>
-                        <li>category2</li>
-                        <li>category3</li>
-                        <li>category4</li>
-                        <li>category5</li>
-                        <li >category6</li>
+                        <li>유아</li>
+                        <li>초등</li>
+                        <li>중등</li>
+                        <li>고등</li>
+                        <li>교과서/참고서</li>
+                        <li>기타</li>
                     </ul>
                 </div>
             </div>
@@ -137,79 +135,79 @@
                     <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-1.jpg">
                     </div>
                     <div class="featured__item__text">
-                        <h6><a th:href="@{/trade/view(idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
+                        <h6><a th:href="@{/trade/view(trade_idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
                         <h5>[[${#numbers.formatCurrency(content.price)}]]</h5>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row featured__filter d-none" id="category1">
-            <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${category1List}" th:classappend="${content.category}" th:if="${content.category}">
+            <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${category1List}" th:classappend="category1" th:if="${content.category}">
                 <div class="featured__item">
                     <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-1.jpg">
                     </div>
                     <div class="featured__item__text">
-                        <h6><a th:href="@{/trade/view(idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
+                        <h6><a th:href="@{/trade/view(trade_idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
                         <h5>[[${#numbers.formatCurrency(content.price)}]]</h5>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row featured__filter d-none" id="category2">
-            <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${category2List}" th:classappend="${content.category}" th:if="${content.category}">
+            <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${category2List}" th:classappend="category2" th:if="${content.category}">
                 <div class="featured__item">
                     <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-2.jpg">
                     </div>
                     <div class="featured__item__text">
-                        <h6><a th:href="@{/trade/view(idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
+                        <h6><a th:href="@{/trade/view(trade_idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
                         <h5>[[${#numbers.formatCurrency(content.price)}]]</h5>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row featured__filter d-none" id="category3">
-            <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${category3List}" th:classappend="${content.category}" th:if="${content.category}">
+            <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${category3List}" th:classappend="category3" th:if="${content.category}">
                 <div class="featured__item">
                     <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-3.jpg">
                     </div>
                     <div class="featured__item__text">
-                        <h6><a th:href="@{/trade/view(idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
+                        <h6><a th:href="@{/trade/view(trade_idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
                         <h5>[[${#numbers.formatCurrency(content.price)}]]</h5>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row featured__filter d-none" id="category4">
-            <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${category4List}" th:classappend="${content.category}" th:if="${content.category}">
+            <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${category4List}" th:classappend="category4" th:if="${content.category}">
                 <div class="featured__item">
                     <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-4.jpg">
                     </div>
                     <div class="featured__item__text">
-                        <h6><a th:href="@{/trade/view(idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
+                        <h6><a th:href="@{/trade/view(trade_idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
                         <h5>[[${#numbers.formatCurrency(content.price)}]]</h5>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row featured__filter d-none" id="category5">
-            <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${category5List}" th:classappend="${content.category}" th:if="${content.category}">
+            <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${category5List}" th:classappend="category5" th:if="${content.category}">
                 <div class="featured__item">
                     <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-5.jpg">
                     </div>
                     <div class="featured__item__text">
-                        <h6><a th:href="@{/trade/view(idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
+                        <h6><a th:href="@{/trade/view(trade_idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
                         <h5>[[${#numbers.formatCurrency(content.price)}]]</h5>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row featured__filter d-none" id="category6">
-            <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${category6List}" th:classappend="${content.category}" th:if="${content.category}">
+            <div class="col-lg-3 col-md-4 col-sm-6 mix" th:each="content:${category6List}" th:classappend="category6" th:if="${content.category}">
                 <div class="featured__item">
                     <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-6.jpg">
                     </div>
                     <div class="featured__item__text">
-                        <h6><a th:href="@{/trade/view(idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
+                        <h6><a th:href="@{/trade/view(trade_idx=${content.tradeIdx})}">[[${content.title}]]</a></h6>
                         <h5>[[${#numbers.formatCurrency(content.price)}]]</h5>
                     </div>
                 </div>
@@ -277,6 +275,7 @@
 
     controlDOM.addEventListener("click", function(e) {
         const category = e.target.innerHTML;
+        console.log(category);
         allDOM.classList.add('d-none');
         category1DOM.classList.add('d-none');
         category2DOM.classList.add('d-none');
@@ -289,22 +288,22 @@
             case 'All' :
                 allDOM.classList.remove('d-none');
                 break;
-            case 'category1' :
+            case '유아' :
                 category1DOM.classList.remove('d-none');
                 break;
-            case 'category2' :
+            case '초등' :
                 category2DOM.classList.remove('d-none');
                 break;
-            case 'category3' :
+            case '중등' :
                 category3DOM.classList.remove('d-none');
                 break;
-            case 'category4' :
+            case '고등' :
                 category4DOM.classList.remove('d-none');
                 break;
-            case 'category5' :
+            case '교과서/참고서' :
                 category5DOM.classList.remove('d-none');
                 break;
-            case 'category6' :
+            case '기타' :
                 category6DOM.classList.remove('d-none');
                 break;
         }
@@ -332,16 +331,12 @@
             </div>
             <div class="col-lg-4 col-md-6 col-sm-6">
                 <div class="footer__widget">
-                    <h6>Useful Links</h6>
+                    <h6>Menu</h6>
                     <ul>
                         <li><a th:href="@{/basic}">Home</a></li>
                         <li><a th:href="@{/trade/list}">Shop</a></li>
                         <li><a th:href="@{/notice/list}">Notice</a></li>
                         <li><a th:href="@{/bbs/list}">Community</a></li>
-                    </ul>
-                    <ul>
-                        <li><a href="#">이용약관</a></li>
-                        <li><a href="#">개인정보처리방침</a></li>
                     </ul>
                 </div>
             </div>

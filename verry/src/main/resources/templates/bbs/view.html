@@ -86,56 +86,66 @@
 
                 </div>
             </form>
-
-
-            <!--            ===================== 댓글 리스트 영역 start =====================-->
-
-            <h5 class="my-3 mt-5">댓글 리스트</h5>
-            <div class="border-top replyList">
-
-            </div>
-
-            <div class="row mt-3">
-                <div class="col">
-                    <ul class="pagination replyPaging justify-content-center">
-
-                    </ul>
-                </div>
-            </div>
-
-            <!--            ===================== 댓글 리스트 영역 end =====================-->
-
-
         </div>
     </div>
+    <div class="col-lg-12">
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="my-4"  th:if="${session.memberId != null}">
+                    <form action="/bbs/replies/regist" method="post">
+                        <button type="button" class="btn btn-info registReplyBtn">댓글 등록</button>
+                    </form>
+                </div>
+                <ul class="list-group replyList">
 
+                </ul>
+            </div>
+        </div>
 
-<!--    <div class="row mt-3">-->
-<!--        <div class="col-md-12">-->
-<!--            <div class="my-4">-->
-<!--                <button class="btn btn-info registReplyBtn">댓글 등록</button>-->
-<!--            </div>-->
-<!--            <ul class="list-group replyList">-->
+        <div class="row mt-3">
+            <div class="col">
+                <ul class="pagination replyPaging"></ul>
+            </div>
+        </div>
 
-<!--            </ul>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div class="row mt-3">-->
-<!--        <div class="col">-->
-<!--            <ul class="pagination replyPaging">-->
-
-<!--            </ul>-->
-<!--        </div>-->
-<!--    </div>-->
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="/static/js/replyBoard.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="/js/replyBoard.js"></script>
+    </div>
+    <!-- 댓글 등록 모달창 -->
+    <div class="modal registerModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">댓글 등록</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">댓글 내용</span>
+                        <input type="text" class="form-control replyText">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">작성자</span>
+                        <input type="text" readonly class="form-control replyer" th:value="${session.memberId}">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary registerBtn">등록</button>
+                    <button type="button" class="btn btn-outline-dark closeRegisterBtn">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script layout:fragment="script" th:inline="javascript">
     const idx = [[${boardDTO.idx}]];
+    const member_id = [[${session.memberId}]];
+    const member_type = [[${session.memberType}]];
     const replyList = document.querySelector(".replyList");
     const replyPaging = document.querySelector(".replyPaging");
+
+    console.log(member_id, member_type);
 
     function printReplyArea(page, page_size, goLast) {  //비동기 통신으로 갖고와
         getReplyList({idx, page, page_size, goLast})
@@ -155,18 +165,23 @@
         let replyLi = "";
         if (dtoList && dtoList.length > 0) {
             for (const dto of dtoList) {
-                // reDate = (dto.regDate != null && dto.regDate != "" && dto.regDate != undefined && dto.regDate != "undefined" ? dto.regDate.toString().substring(0, 10) : "-");
-                regDate = dto.regDate;
-                replyLi += ` <div class="product__details__tab__desc border-bottom mt-2">
-                              <h6 class="mb-2">${dto.memberId} <button class="badge progress-bar-success replyDelete " style="background-color: #0a53be" onclick="replyDeleteOK(${dto.boardReplyIdx})">X</button></h6>
-                              <p>${dto.comment} </p>
-                              <p>${dto.regDate}</p>
-                               </div>`;
+                replyLi += `<li class="list-group-item d-flex replyItem">
+                        <span class="col-2">${dto.boardReplyIdx}</span>
+                        <span class="col-6" data-idx="${dto.boardIdx}">${dto.comment}
+                                    <span th:if="${member_id == dto.memberId} or ${member_type == 'a'}" class="badge progress-bar-success replyDelete"
+                                                style="background-color: #0a53be"
+                                                onclick="replyDeleteOK(${dto.boardReplyIdx})">X</span>
+                        </span>
+                        <span class="col-2">${dto.memberId}</span>
+                        <span class="col-2">${dto.regDate}</span>
+                        </li>`;
 
             }
 
         } else {
-            replyLi += `<li class="list-group-item d-flex replyItem"> <span class="col-12">등록된 댓글이 없습니다.</span></li>`;
+            replyLi += `<li class="list-group-item d-flex replyItem">
+                    <span class="col-12">등록된 댓글이 없습니다.</span>
+                    </li>`;
         }
         replyList.innerHTML = replyLi;
     }
@@ -209,6 +224,43 @@
         replyDelete(idx);
         printReplyArea(1, 10, "true");     //맨 마지막 페이지에 있는 하나를 삭제했을 때 페이징 오류가 생기는거 방지하기 위해 1페이지로 이동!
     }
+
+    // 댓글 등록
+    const registerModal = new bootstrap.Modal(document.querySelector(".registerModal"));
+    const registerBtn = document.querySelector(".registerBtn");
+    const replyText = document.querySelector(".replyText");
+    const replyer = document.querySelector(".replyer");
+    const closeRegisterBtn = document.querySelector(".closeRegisterBtn");
+
+    document.querySelector(".registReplyBtn").addEventListener("click", function(e) {
+        registerModal.show();
+    });
+
+    closeRegisterBtn.addEventListener("click", function(e) {
+        registerModal.hide();
+    });
+
+    registerBtn.addEventListener("click", function(e) {
+        const replyObj = {
+            boardIdx: idx,
+            comment: replyText.value,
+            memberId: replyer.value
+        }
+
+        console.log(replyObj);
+
+        replyRegist(replyObj).then(result => {
+            alert("댓글 등록이 완료되었습니다.");
+            registerModal.hide();
+            replyText.value = "";
+            replyer.value = "";
+            printReplyArea(1, 10, true);
+        }).catch(e => {
+            alert(e.message);
+        });
+    });
+
+
 </script>
 
 </body>

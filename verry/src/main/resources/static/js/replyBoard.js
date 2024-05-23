@@ -18,3 +18,12 @@ async function replyDelete(idx) {
 
     return response.data;
 }
+
+async function replyRegist(replyObj) {
+    const response = await axios.post(`/bbs/replies/regist`, replyObj);
+
+    console.log("reply.js : " + response);
+    console.log("reply.js : " + response.data);
+
+    return response.data;
+}

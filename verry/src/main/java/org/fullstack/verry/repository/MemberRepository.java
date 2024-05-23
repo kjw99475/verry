@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface MemberRepository extends JpaRepository<MemberEntity, Integer> {
     MemberEntity findByMemberId(String memberId);
+    int countByMemberId(String memberId);
 }

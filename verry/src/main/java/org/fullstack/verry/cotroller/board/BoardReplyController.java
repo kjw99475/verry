@@ -30,6 +30,7 @@ public class BoardReplyController {
             BindingResult bindingResult
             ) throws BindException {
 
+        log.info("replyDTO : {}", replyDTO);
         if (bindingResult.hasErrors()) {
             throw new BindException(bindingResult);
         }
@@ -38,7 +39,6 @@ public class BoardReplyController {
         int idx = boardReplyService.regist(replyDTO);
         map.put("idx", idx);
 
-        log.info("replyDTO : {}", replyDTO);
 
         return map;
     }
