@@ -46,6 +46,9 @@ public class MemberEntity extends BaseEntity{
     @Column(length = 10, nullable = false)
     private String birthday;
 
+    @Column(length = 13, nullable = false)
+    private String phone;
+
     @Column(length = 10, nullable = false)
     @ColumnDefault("'b'")
     private String memberType;

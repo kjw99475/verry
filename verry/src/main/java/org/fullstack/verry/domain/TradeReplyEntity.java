@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 @Table(name="tbl_trade_reply")
-public class TradeReplyEntity {
+public class TradeReplyEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,11 +27,6 @@ public class TradeReplyEntity {
     @Column(length = 20, nullable = true)
     private String memberId;
 
-    @CreatedDate
-    @Column(name="reg_date", updatable = false, columnDefinition = "DATETIME NULL DEFAULT NOW()")
-    @ColumnDefault("CURRENT_TIMESTAMP")
-    private LocalDateTime regDate;
-    
     @Column(nullable = true)
     private int tradeIdx;
 }
