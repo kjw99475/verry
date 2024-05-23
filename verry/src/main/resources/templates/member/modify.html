@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{basic.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        function address() {
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    document.getElementById("zipcode").value=data.zonecode;
+                    document.getElementById("addr").value = data.address;
+                    document.getElementById("addrDetail").focus();
+                }
+            }).open();
+        }
+    </script>
+</head>
+<body>
+<section class="checkout spad" layout:fragment="content">
+    <div class="container">
+        <div class="checkout__form">
+            <div class="section-title">
+                <h2>Member Modify</h2>
+            </div>
+            <form action="/member/modify" method="post">
+                <div class="row">
+                    <div class="col">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <label for="name">이름</label>
+                                    <br>
+                                    <input type="text" name="name" id="name" th:value="${memberDTO.name}"/>
+                                    <span id="div_err_name"></span>
+                                </div>
+                                <div class="checkout__input">
+                                    <label for="memberId">아이디</label>
+                                    <br>
+                                    <input type="text" name="memberId" id="memberId" th:value="${memberDTO.memberId}" disabled/>
+                                    <span id="div_err_memberId"></span>
+                                </div>
+                                <div class="checkout__input" style="display: none" id="password">
+                                    <label for="pwd">비밀번호</label>
+                                    <br>
+                                    <input type="password" name="pwd" id="pwd"/>
+                                    <span id="div_err_pwd"></span>
+                                </div>
+                                <div class="checkout__input" style="display: none" id="passwordCheck">
+                                    <label for="pwdcheck">비밀번호 확인</label>
+                                    <br>
+                                    <input type="password" name="pwdcheck" id="pwdcheck"/>
+                                    <span id="div_err_pwdcheck"></span>
+                                </div>
+                                <button class="btn btn-outline-success" type="button" name="pwd_change" id="pwd_change" onclick="pwdChange()">
+                                    비밀번호 변경
+                                </button>
+                                <div class="checkout__input">
+                                    <label for="birthday">생년월일</label>
+                                    <br>
+                                    <input type="date" name="birthday" id="birthday" th:value="${memberDTO.birthday}" disabled/>
+                                    <span id="div_err_birthday"></span>
+                                </div>
+                                <div class="checkout__input">
+                                    <label for="email">이메일</label>
+                                    <br>
+                                    <input type="email" name="email" id="email" th:value="${memberDTO.email}"/>
+                                    <span id="div_err_email"></span>
+                                </div>
+                                <div class="checkout__input">
+                                    <label for="zipcode">우편번호</label>
+                                    <br>
+                                    <input type="text" name="zipcode" id="zipcode" onclick="address()" th:value="${memberDTO.zipcode}"/>
+                                    <span id="div_err_zipcode"></span>
+                                </div>
+                                <div class="checkout__input">
+                                    <label for="addr">주소</label>
+                                    <br>
+                                    <input type="text" name="addr" id="addr" onclick="address()" th:value="${memberDTO.addr}"/>
+                                    <span id="div_err_addr"></span>
+                                </div>
+                                <div class="checkout__input">
+                                    <label for="addrDetail">상세주소</label>
+                                    <br>
+                                    <input type="text" name="addrDetail" id="addrDetail" th:value="${memberDTO.addrDetail}"/>
+                                    <span id="div_err_addrDetail"></span>
+                                </div>
+                                <div class="checkout__input text-center">
+                                    <button type="submit" class="btn primary-btn mx-2" >수정하기</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="pwdChangeYN" id="pwdChangeYN" value="N"/>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script layout:fragment="script" th:inline="javascript">
+    function pwdChange(){
+        document.getElementById("password").style.display="block";
+        document.getElementById("passwordCheck").style.display="block"
+        document.getElementById("pwd_change").style.display="none"
+        document.getElementById("pwdChangeYN").value="Y"
+    }
+
+        const serverValidResult = {};
+        let errors = [[${errors}]];
+        errors.forEach(function(item){
+            let err = document.getElementById("div_err_"+item.field)
+            if(err != null) {
+            err.style.color="red"
+            err.innerHTML = item.defaultMessage;
+        }
+            serverValidResult[item.field] = item.defaultMessage;
+        });
+</script>
+</body>
+</html>

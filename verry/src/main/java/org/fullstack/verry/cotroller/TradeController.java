@@ -1,5 +1,6 @@
 package org.fullstack.verry.cotroller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack.verry.dto.PageRequestDTO;
@@ -9,13 +10,18 @@ import org.fullstack.verry.service.TradeService;
 import org.fullstack.verry.utils.FileUploadUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Log4j2
 @Controller
@@ -32,15 +38,26 @@ public class TradeController {
         log.info("pageResponseDTO : {}", pageResponseDTO);
 
         model.addAttribute("pageResponseDTO", pageResponseDTO);
+        model.addAttribute("pageName", "shop");
     }
 
     @GetMapping("/regist")
-    public void regist() {
-
+    public void regist(Model model) {
+        model.addAttribute("pageName", "shop");
     }
 
     @PostMapping("/regist")
-    public String registPost(TradeDTO tradeDTO, @RequestParam("file") MultipartFile multipartFile) {
+    public String registPost(@Valid TradeDTO tradeDTO,
+                             BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes,
+                             @RequestParam("file") MultipartFile multipartFile) {
+        if(bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            redirectAttributes.addFlashAttribute("tradeDTO", tradeDTO);
+
+            return "redirect:/trade/regist";
+        }
+
         String saveFileName = "";
 
         if(!multipartFile.isEmpty()) {
@@ -68,6 +85,7 @@ public class TradeController {
 
         model.addAttribute("tradeDTO", tradeDTO);
         model.addAttribute("relatedList", relatedList);
+        model.addAttribute("pageName", "shop");
     }
 
     @GetMapping("/modify")
@@ -75,6 +93,7 @@ public class TradeController {
         TradeDTO tradeDTO = tradeService.view(trade_idx);
 
         model.addAttribute("tradeDTO", tradeDTO);
+        model.addAttribute("pageName", "shop");
     }
 
     @PostMapping("/modify")
