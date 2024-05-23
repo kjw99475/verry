@@ -14,6 +14,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Objects;
+
+import static java.util.regex.Pattern.matches;
+
 @Log4j2
 @Controller
 @RequiredArgsConstructor
@@ -35,13 +39,21 @@ public class MemberController {
                            BindingResult bindingResult,
                            RedirectAttributes redirectAttributes
                            ){
-        log.info("memberDTO : {}",memberDTO.toString());
+        int idcount = memberService.membercount(memberDTO.getMemberId());
         if (bindingResult.hasErrors()) {
             log.info("Errors");
             log.info("error : {}", bindingResult.getAllErrors());
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             redirectAttributes.addFlashAttribute("memberDTO", memberDTO);
+            if(idcount != 0){
+                redirectAttributes.addFlashAttribute("message", "사용불가능한 아이디입니다");
+            }
 
+            return "redirect:/member/join";
+        }
+        if(idcount != 0){
+            redirectAttributes.addFlashAttribute("memberDTO", memberDTO);
+            redirectAttributes.addFlashAttribute("message", "사용불가능한 아이디입니다");
             return "redirect:/member/join";
         }
         int id = memberService.join(memberDTO);
@@ -99,15 +111,31 @@ public class MemberController {
         MemberDTO memberinfo = memberService.memberinfo(memberId);
         log.info("memberDTO : {}",memberDTO);
         if(pwdChangeYN.equals("Y")){
-            memberinfo.setPwd(memberDTO.getPwd());
+            memberinfo.setPwd(memberDTO.getPwd().isEmpty()?memberinfo.getPwd():memberDTO.getPwd());
         }
-        memberinfo.setAddr(memberDTO.getAddr()==""?memberinfo.getAddr():memberDTO.getAddr());
-        memberinfo.setAddrDetail(memberDTO.getAddrDetail()==""?memberinfo.getAddrDetail():memberDTO.getAddrDetail());
-        memberinfo.setEmail(memberDTO.getEmail()==""?memberinfo.getEmail():memberDTO.getEmail());
-        memberinfo.setName(memberDTO.getName()==""?memberinfo.getName():memberDTO.getName());
-        memberinfo.setZipcode(memberDTO.getZipcode()==""?memberinfo.getZipcode():memberDTO.getZipcode());
+        memberinfo.setAddr(memberDTO.getAddr().isEmpty()?memberinfo.getAddr():memberDTO.getAddr());
+        memberinfo.setAddrDetail(memberDTO.getAddrDetail().isEmpty()?memberinfo.getAddrDetail():memberDTO.getAddrDetail());
+        memberinfo.setEmail(memberDTO.getEmail().isEmpty()?memberinfo.getEmail():memberDTO.getEmail());
+        memberinfo.setName(memberDTO.getName().isEmpty()?memberinfo.getName():memberDTO.getName());
+        memberinfo.setZipcode(memberDTO.getZipcode().isEmpty()?memberinfo.getZipcode():memberDTO.getZipcode());
+        memberinfo.setPhone(memberDTO.getPhone().isEmpty()?memberinfo.getPhone():memberDTO.getPhone());
         int idx = memberService.join(memberinfo);
 
         return "redirect:/member/modify";
+    }
+    @ResponseBody
+    @PostMapping("/idcheck")
+    public int idcheck(@RequestParam(name = "memberId", defaultValue = "") String memberId,
+                       HttpSession session){
+//        if(){
+            log.info(matches("^[a-z0-9]{4,12}", memberId));
+//        }
+        int idcount = memberService.membercount(memberId);
+        if(idcount == 0){
+            session.setAttribute("idcheck", "Y");
+        }else{
+            session.setAttribute("idcheck", "N");
+        }
+        return idcount;
     }
 }

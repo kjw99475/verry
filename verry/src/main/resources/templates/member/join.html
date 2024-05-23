@@ -39,8 +39,9 @@
                                 <div class="checkout__input">
                                     <label for="memberId">아이디</label>
                                     <br>
-                                    <input type="text" name="memberId" id="memberId" th:value="${memberDTO.memberId}"/>
-                                    <span id="div_err_memberId"></span>
+                                    <input type="text" name="memberId" id="memberId" th:value="${memberDTO.memberId}" onkeyup="idcheck()"/>
+                                    <br>
+                                    <span id="div_err_memberId" style="color: red">[[${message}]]</span>
                                 </div>
                                 <div class="checkout__input">
                                     <label for="pwd">비밀번호</label>
@@ -59,6 +60,18 @@
                                     <br>
                                     <input type="email" name="email" id="email" th:value="${memberDTO.email}"/>
                                     <span id="div_err_email"></span>
+                                </div>
+                                <div class="checkout__input">
+                                    <label for="phone1">전화번호</label>
+                                    <br>
+                                    <select class="col-4" name="phone1" id="phone1" onchange="phonenum()">
+                                        <option value="">선택</option>
+                                        <option value="010">010</option>
+                                        <option value="011">011</option>
+                                    </select>-
+                                    <input class="col-4" type="text" name="phone2" id="phone2" onchange="phonenum()"/>-
+                                    <input class="col-4" type="text" name="phone3" id="phone3" onchange="phonenum()"/>
+                                    <span id="div_err_phone"></span>
                                 </div>
                                 <div class="checkout__input">
                                     <label for="zipcode">우편번호</label>
@@ -85,6 +98,7 @@
                         </div>
                     </div>
                 </div>
+                <input type="hidden" name="phone" id="phone"/>
             </form>
         </div>
     </div>
@@ -94,13 +108,43 @@
         const serverValidResult = {};
         let errors = [[${errors}]];
         errors.forEach(function(item){
-        let err = document.getElementById("div_err_"+item.field)
-        if(err != null) {
-        err.style.color="red"
-        err.innerHTML = item.defaultMessage;
-    }
-        serverValidResult[item.field] = item.defaultMessage;
-    });
+            let err = document.getElementById("div_err_"+item.field)
+            if(err != null) {
+            err.style.color="red"
+            err.innerHTML = item.defaultMessage;
+        }
+            serverValidResult[item.field] = item.defaultMessage;
+        });
+
+        function phonenum(){
+            let phone1 = document.getElementById("phone1").value;
+            let phone2 = document.getElementById("phone2").value;
+            let phone3 = document.getElementById("phone3").value;
+            document.getElementById("phone").value=phone1+"-"+phone2+"-"+phone3;
+        }
+
+        function idcheck(){
+            let memberId = document.getElementById("memberId").value.trim();
+            $.ajax({
+                type: "POST",            // HTTP method type(GET, POST) 형식이다.
+                url: "/member/idcheck",      // 컨트롤러에서 대기중인 URL 주소이다.
+                data: {
+                    memberId:memberId
+                },            // Json 형식의 데이터이다.
+                success: function (result) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                    if(result == 0&&memberId != ""){
+                        document.getElementById("div_err_memberId").innerHTML="사용가능한 아이디입니다";
+                        document.getElementById("div_err_memberId").style.color="green";
+                    }else {
+                        document.getElementById("div_err_memberId").innerHTML="사용 불가능한 아이디입니다";
+                        document.getElementById("div_err_memberId").style.color="red";
+                    }
+                },
+                error: function (error) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                    console.log(error);
+                }
+            });
+        }
 </script>
 </body>
 </html>
