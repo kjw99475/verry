@@ -18,15 +18,15 @@ import java.time.LocalDateTime;
 @Builder
 public class BoardDTO {
     private int idx;
-    @NotEmpty
-    @Size(min=1, max=100)
+    @NotEmpty(message = "제목을 입력해 주세요.")
+    @Size( max=100, message = "제목은 100자 이내로 작성해 주세요.")
     private String title;
-    @NotEmpty
-    @Size(min=1, max=2000)
+    @NotEmpty(message = "내용을 입력해 주세요.")
+    @Size( max=2000, message = "내용은 2000자 이내로 작성해 주세요.")
     private String content;
-    @NotEmpty
+    @NotEmpty(message="로그인 해 주세요.")
     private String memberId;
-    @NotEmpty
+
     private String boardType;
 
     private String orgFileName;

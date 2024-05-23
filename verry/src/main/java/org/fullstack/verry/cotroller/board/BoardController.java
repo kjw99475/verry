@@ -94,6 +94,7 @@ public class BoardController {
         if (bindingResult.hasErrors()) {
             log.info("BoardController >> registPOST ERROR");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            redirectAttributes.addFlashAttribute("boardDTO", boardDTO);
             log.info(bindingResult.getAllErrors());
             log.info("BoardController >> registPOST END");
             log.info("============================================");
