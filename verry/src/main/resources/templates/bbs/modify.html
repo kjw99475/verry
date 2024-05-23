@@ -17,46 +17,11 @@
                 'alignleft aligncenter alignright alignjustify | ' +
                 'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
         });
-
-
-
-        function askDelete() {
-            let deleteYN = confirm("파일을 정말 삭제하시겠습니까? 삭제 후 취소를 원할 시 재업로드 하셔야 합니다.");
-            if (deleteYN) {
-                deleteShare();
-            }
-        }
-
-        function deleteShare(){
-            event.preventDefault();
-            event.stopPropagation();
-            var idx = $('#idx').val(); //id값이 "id"인 입력란의 값을 저장
-            var spanInner = $('#fileView');
-            $.ajax({
-                url:'/bbs/deleteFile', //Controller에서 요청 받을 주소
-                type:'post', //POST 방식으로 전달
-                data:{idx:idx},
-                dataType : 'text',
-                success:function(result){ //컨트롤러에서 넘어온 cnt값을 받는다
-                    spanInner.remove();
-                    console.log(result);
-                },
-                error : function(xhr, status, error) {
-                    console.log("xhr! : " + xhr);
-                    console.log("status! : " + status);
-                    console.log("error! : " + error);
-                }
-            })
-
-        }
-
     </script>
 </head>
 <body>
 
-
 <div layout:fragment="content">
-
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-section set-bg" data-setbg="/img/strawberry.jpg">
         <div class="container">
@@ -75,7 +40,6 @@
         </div>
     </section>
     <!-- Breadcrumb Section End -->
-
 
     <div class="contact-form spad">
         <div class="container">
@@ -96,7 +60,6 @@
                         <label for="content">내용</label>
                         <textarea placeholder="내용을 입력해주세요." id="content" name="content" th:utext="${boardDTO.content}"></textarea>
                     </div>
-
 
                     <div th:if="${boardDTO.orgFileName != null and !#strings.toString(boardDTO.orgFileName).equals('') and !#strings.toString(boardDTO.orgFileName).isEmpty()}" class="col-lg-12 mt-4" id="fileView" >
                         첨부파일 : [[${boardDTO.orgFileName}]] <button class="btn text-danger" type="button" id="btnDelete" onclick="askDelete()">X</button>
@@ -120,37 +83,35 @@
         </div>
     </div>
 </div>
-<script th:fragment="script"  th:inline="javascript">
+<script layout:fragment="script"  th:inline="javascript">
+    function askDelete() {
+        let deleteYN = confirm("파일을 정말 삭제하시겠습니까? 삭제 후 취소를 원할 시 재업로드 하셔야 합니다.");
+        if (deleteYN) {
+            deleteShare();
+        }
+    }
 
-//    function askDelete() {
-//        let deleteYN = confirm("공유를 취소하시겠습니까?");
-//        if (deleteYN) {
-//            deleteShare();
-//        }
-//    }
-//
-//    function deleteShare(){
-//        event.preventDefault();
-//        event.stopPropagation();
-//        var idx = $('#idx').val(); //id값이 "id"인 입력란의 값을 저장
-//        var spanInner = $('#fileView');
-//        $.ajax({
-//            url:'/bbs/deleteFile', //Controller에서 요청 받을 주소
-//            type:'post', //POST 방식으로 전달
-//            data:{idx:idx},
-//            dataType : 'text',
-//            success:function(result){ //컨트롤러에서 넘어온 cnt값을 받는다
-//                spanInner.remove();
-//                console.log(result);
-//            },
-//            error : function(xhr, status, error) {
-//                console.log("xhr! : " + xhr);
-//                console.log("status! : " + status);
-//                console.log("error! : " + error);
-//            }
-//        })
-//
-//    }
+    function deleteShare(){
+        event.preventDefault();
+        event.stopPropagation();
+        var idx = $('#idx').val();
+        var spanInner = $('#fileView');
+        $.ajax({
+            url:'/notice/deleteFile',
+            type:'post',
+            data:{idx:idx},
+            dataType : 'text',
+            success:function(result){
+                spanInner.remove();
+                console.log(result);
+            },
+            error : function(xhr, status, error) {
+                console.log("xhr! : " + xhr);
+                console.log("status! : " + status);
+                console.log("error! : " + error);
+            }
+        })
+    }
 </script>
 </body>
 </html>

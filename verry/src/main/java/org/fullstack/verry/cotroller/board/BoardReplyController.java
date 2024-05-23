@@ -21,6 +21,7 @@ import java.util.Map;
 @RequestMapping("/bbs/replies")
 public class BoardReplyController {
 
+
     private final BoardReplyServiceIf boardReplyService;
 
 
@@ -30,7 +31,6 @@ public class BoardReplyController {
             BindingResult bindingResult
             ) throws BindException {
 
-        log.info("replyDTO : {}", replyDTO);
         if (bindingResult.hasErrors()) {
             throw new BindException(bindingResult);
         }
@@ -38,7 +38,6 @@ public class BoardReplyController {
         Map<String, Integer> map = new HashMap<>();
         int idx = boardReplyService.regist(replyDTO);
         map.put("idx", idx);
-
 
         return map;
     }
@@ -49,14 +48,8 @@ public class BoardReplyController {
             @PathVariable("idx") int idx,
             PageRequestDTO pageRequestDTO
     ) {
-        log.info("================================================");
-        log.info("BoardReplyController >> replyList START");
 
         PageResponseDTO<BoardReplyDTO> responseDTO = boardReplyService.getListOfReply(idx, pageRequestDTO);
-
-        log.info("responseDTO : {}", responseDTO);
-        log.info("BoardReplyController >> replyList END");
-        log.info("================================================");
         return responseDTO;
     }
 
@@ -66,8 +59,6 @@ public class BoardReplyController {
         boardReplyService.delete(board_reply_idx);
         Map<String, Integer> map = new HashMap<>();
         map.put("idx", board_reply_idx);
-
-        log.info("map : {}", map);
 
         return map;
     }
