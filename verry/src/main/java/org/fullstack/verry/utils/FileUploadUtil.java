@@ -22,7 +22,7 @@ public class FileUploadUtil {
         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         return attr.getRequest();
     }
-    public static String uploadFolder = "";
+    public static String uploadFolder = "C:\\HK\\verry\\verry\\src\\main\\resources\\static\\img\\";
 
 
     public static String saveFile(MultipartFile multipartFile, String path) {
