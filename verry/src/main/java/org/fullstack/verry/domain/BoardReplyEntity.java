@@ -14,12 +14,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 @Table(
-        name="tbl_board_reply",
-        indexes = {
-                @Index(name="board_reply_idx_tbl_board_reply_board_idx", columnList = "boardIdx")
-        }
+        name="tbl_board_reply"
+//        indexes = {
+//                @Index(name="board_reply_idx_tbl_board_reply_board_idx", columnList = "boardIdx")
+//        }
 )
-public class BoardReplyEntity{
+public class BoardReplyEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,11 +33,11 @@ public class BoardReplyEntity{
     private String memberId;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private BoardEntity board;
-    //private int boardIdx;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    private BoardEntity board;
+    private int boardIdx;
 
-    @CreatedDate
-    @Column(name="reg_date", updatable = false, columnDefinition = "DATETIME NULL DEFAULT NOW()")
-    private LocalDateTime regDate;
+//    @CreatedDate
+//    @Column(name="reg_date", updatable = false, columnDefinition = "DATETIME NULL DEFAULT NOW()")
+//    private LocalDateTime regDate;
 }

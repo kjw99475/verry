@@ -89,7 +89,8 @@
     let errMsg = "";
     if (errors) {
         for (let i =0; i<errors.length; i++) {
-            errMsg += `${errors[i].field} 은(는) ${errors[i].code}\n`;
+            // errMsg += `${errors[i].field} 은(는) ${errors[i].code}\n`;
+            errMsg += `${errors[i].defaultMessage}\n`;
         }
         alert(errMsg);
     }
