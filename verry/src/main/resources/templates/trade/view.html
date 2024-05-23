@@ -297,10 +297,9 @@
         }
 
         replyRegist(replyObj).then(result => {
-            alert(result.tradeIdx);
+            alert("댓글 등록이 완료되었습니다.");
             registerModal.hide();
             replyText.value = "";
-            replyer.value = "";
             printReplyArea(1, 10, true);
         }).catch(e => {
             alert("Exception....");
