@@ -2,7 +2,23 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaef/layout"
       layout:decorate="~{/basic.html}">
-
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tiny.cloud/1/wjuflumw0txwktnvnufwfo5lj04kqmup66rnaj1jf6pnwv5d/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea#content',
+            plugins: [
+                'advlist','autolink',
+                'lists','link','image','charmap','preview','anchor','searchreplace','visualblocks'
+                ,'fullscreen','insertdatetime','media','table','help','wordcount'
+            ],
+            toolbar: 'undo redo | formatpainter casechange blocks | bold italic backcolor | ' +
+                  'alignleft aligncenter alignright alignjustify | ' +
+                  'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
+        });
+    </script>
+</head>
 <div layout:fragment="content">
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-section set-bg" data-setbg="/img/breadcrumb.jpg">
@@ -10,9 +26,9 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="breadcrumb__text">
-                        <h2>Regist</h2>
+                        <h2>중고상품 등록</h2>
                         <div class="breadcrumb__option">
-                            <a href="./index.html">Home</a>
+                            <a href="/trade/list">List</a>
                             <span>Product Regist</span>
                         </div>
                     </div>
@@ -28,7 +44,8 @@
             <div class="checkout__form">
                 <h4>중고상품 등록</h4>
                 <form name="frmRegist" id="frmRegist" action="/trade/regist" method="post" enctype="multipart/form-data">
-                    <div class="row">
+                    <input type="hidden" name="memberId" th:value="${session.memberId}">
+                    <div class="row mb-3">
                         <div class="col-lg-12 col-md-6">
 
                             <div class="checkout__input">
@@ -60,7 +77,8 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="site-btn">등록</button>
+                    <button type="submit" class="btn-lg btn-success">등록</button>
+                    <button type="button" class="btn-lg btn-success" onclick="location.href='/trade/list'">취소</button>
                 </form>
             </div>
         </div>
@@ -76,10 +94,6 @@
     if (errors) {
         for (let i =0; i<errors.length; i++) {
             console.log(`${errors[i].code}`);
-            // if(`${errors[i]}.code} === "typeMismatch"`) {
-            //     // alert("미스매치");
-            //     `${errors[i].defaultMessage} = "테스트"`;
-            // }
         errMsg += `${errors[i].defaultMessage}\n`;
     }
     alert(errMsg);

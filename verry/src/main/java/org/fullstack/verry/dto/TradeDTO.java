@@ -6,6 +6,7 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -24,11 +25,13 @@ public class TradeDTO {
     private String saveFileName;
     @NotBlank(message = "카테고리를 선택하세요.")
     private String category;
-    @NotNull(message = "가격을 입력하세요")
+
+    @Builder.Default
+    @NotNull(message = "적절한 가격을 입력해주세요.")
     @PositiveOrZero(message = "적절한 가격을 입력해주세요")
-    private int price;
+    private Integer price = 0;
     private String tradeState;
     private int readCnt;
-    private LocalDateTime regDate;
+    private LocalDate regDate;
     private LocalDateTime modifyDate;
 }
