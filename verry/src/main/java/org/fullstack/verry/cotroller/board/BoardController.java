@@ -72,7 +72,9 @@ public class BoardController {
     }
 
     @PostMapping("/bbs/regist")
-    public String registPOST(@Valid BoardDTO boardDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, @RequestParam("file") MultipartFile multipartFile, Model model) {
+    public String registPOST(@Valid BoardDTO boardDTO, BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes,
+                             @RequestParam("file") MultipartFile multipartFile, Model model) {
         boardDTO.setBoardType("b");
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
