@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack.verry.dto.MemberDTO;
+import org.fullstack.verry.service.MemberServiceIf;
 import org.fullstack.verry.service.MemberServiceImpl;
 import org.fullstack.verry.service.board.BoardServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ import static java.util.regex.Pattern.matches;
 @RequestMapping("/member")
 public class MemberController {
     @Autowired
-    private MemberServiceImpl memberService;
+    private MemberServiceIf memberService;
     @Autowired
     private BoardServiceImpl boardServiceImpl;
 
@@ -73,7 +74,7 @@ public class MemberController {
                             @RequestParam(name = "pwd", defaultValue = "") String pwd,
                             HttpSession session,
                             RedirectAttributes redirectAttributes){
-        if(!memberId.isEmpty()) {
+        if(!memberId.isEmpty()&&!pwd.isEmpty()) {
             MemberDTO memberinfo = memberService.memberinfo(memberId);
             if (memberinfo != null) {
                 if (!pwd.equals(memberinfo.getPwd())) {
@@ -86,8 +87,10 @@ public class MemberController {
                     return "redirect:/trade/list";
                 }
             } else {
-                redirectAttributes.addFlashAttribute("id", memberId);
+
             }
+        }else{
+            redirectAttributes.addFlashAttribute("id", memberId);
         }
         return "redirect:/member/login";
     }

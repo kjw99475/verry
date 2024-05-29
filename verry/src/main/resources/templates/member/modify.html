@@ -70,6 +70,12 @@
                                     <span id="div_err_email"></span>
                                 </div>
                                 <div class="checkout__input">
+                                    <label for="email">전화번호</label>
+                                    <br>
+                                    <input type="text" name="phone" id="phone" th:value="${memberDTO.phone}"/>
+                                    <span id="div_err_phone"></span>
+                                </div>
+                                <div class="checkout__input">
                                     <label for="zipcode">우편번호</label>
                                     <br>
                                     <input type="text" name="zipcode" id="zipcode" onclick="address()" th:value="${memberDTO.zipcode}"/>
@@ -84,7 +90,7 @@
                                 <div class="checkout__input">
                                     <label for="addrDetail">상세주소</label>
                                     <br>
-                                    <input type="text" name="addrDetail" id="addrDetail" th:value="${memberDTO.addrDetail}" readonly/>
+                                    <input type="text" name="addrDetail" id="addrDetail" th:value="${memberDTO.addrDetail}"/>
                                     <span id="div_err_addrDetail"></span>
                                 </div>
                                 <div class="checkout__input text-center">
@@ -118,6 +124,12 @@
         }
             serverValidResult[item.field] = item.defaultMessage;
         });
+    function phonenum(){
+        let phone1 = document.getElementById("phone1").value;
+        let phone2 = document.getElementById("phone2").value;
+        let phone3 = document.getElementById("phone3").value;
+        document.getElementById("phone").value=phone1+"-"+phone2+"-"+phone3;
+    }
 </script>
 </body>
 </html>
