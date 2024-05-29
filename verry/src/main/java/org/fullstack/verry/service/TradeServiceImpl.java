@@ -90,24 +90,15 @@ public class TradeServiceImpl implements TradeService {
         tradeRepository.deleteById(trade_idx);
     }
 
-
-    // 메인페이지 리스트
     @Override
-    public PageResponseDTO<TradeDTO> mainShoplist(PageRequestDTO pageRequestDTO) {
-        pageRequestDTO.setPage_size(8);
-        PageRequest pageable = pageRequestDTO.getPageable();
+    public List<TradeDTO> mainShoplist() {
+        List<TradeEntity> list = tradeRepository.findTop8ByOrderByTradeIdxDesc();
 
-        Page<TradeEntity> result = tradeRepository.findAll(pageable);
-
-        List<TradeDTO> dtoList = result.getContent().stream()
-                .map(trade -> modelMapper.map(trade, TradeDTO.class))
+        List<TradeDTO> dtoList = list.stream()
+                .map(vo -> modelMapper.map(vo, TradeDTO.class))
                 .collect(Collectors.toList());
 
-        return PageResponseDTO.<TradeDTO>withAll()
-                .pageRequestDTO(pageRequestDTO)
-                .dtoList(dtoList)
-                .total_count((int)result.getTotalElements())
-                .build();
+        return dtoList;
     }
 
     @Override

@@ -24,15 +24,13 @@ public class BasicController {
     private final TradeService tradeService;
     @GetMapping("/basic")
     public void basicGET(
-            Model model,
-            PageRequestDTO pageRequestDTO
+            Model model
     ) {
         log.info("=========================");
         log.info("BasicController >> basicGET");
 
-        PageResponseDTO<TradeDTO> tradeDTO = tradeService.mainShoplist(pageRequestDTO);
-        List<TradeDTO> dto = tradeDTO.getDtoList();
-        model.addAttribute("tradeDTO", tradeDTO);
+        List<TradeDTO> tradeList = tradeService.mainShoplist();
+        model.addAttribute("tradeList", tradeList);
 
         List<TradeDTO> category1List = tradeService.mainCategoryList("유아");
         List<TradeDTO> category2List = tradeService.mainCategoryList("초등");

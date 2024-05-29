@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface TradeRepository extends JpaRepository<TradeEntity, Integer> {
+    List<TradeEntity> findTop8ByOrderByTradeIdxDesc();
     List<TradeEntity> findDistinctTop4ByCategoryAndTradeIdxNotOrderByTradeIdxDesc(String category, int trade_idx);
     List<TradeEntity> findDistinctTop8ByCategoryOrderByTradeIdxDesc(String category);
 }
