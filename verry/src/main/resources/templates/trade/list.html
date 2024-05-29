@@ -37,7 +37,7 @@
                             </div>
                             <div class="col-lg-6 col-md-3">
                                 <div class="filter__option">
-                                    <button type="button" class="btn site-btn" onclick="location.href='/trade/regist'" th:if="${session.memberType == 'a'}">등록하기</button>
+                                    <button type="button" class="btn site-btn" onclick="location.href='/trade/regist'" th:if="${session.memberId != null}">등록하기</button>
                                 </div>
                             </div>
                         </div>
