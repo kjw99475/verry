@@ -1,6 +1,8 @@
 # verry
 java 풀스택 4기 2조 해법 &amp; 중고거래 
 
+시연 연상 : https://youtu.be/TzC0nKZAHxg
+
 1. 메인 페이지
 2. 회원 기능
    - 회원 구분 : 일반 / 관리자
